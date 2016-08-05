@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    
+    <string name="close_form">اس فارم کو بند کریں؟</string>
+    <string name="confirm_close">کیا اپ اس فارم کو بند کرنا چاہتے ہیں؟ بند کرنے کی صورت میں تمام غیر محفوظ کردہ تبدیلیاں ضائع ہوجائیں گی۔</string>
+    <string name="clear_form">اس فارم کو صاف کریں؟</string>
+    <string name="clear_close">کیا اپ اس فارم کو صاف کرنے چاہتے ہیں؟ صاف کرنے کی صورت میں تمام غیر محفوظ کردہ تبدیلیاں ضائع ہوجائیں گی۔</string>
+    <string name="save_form">اس فارم کو محفوظ کریں</string>
+    <string name="save_close">کیا اپ اس فارم کو محفوظ کرنا چاہتے ہیں؟</string>
+    <string name="option_hint">Select an option</string>
+    <string name="exit_application">پروگرام بند کریں</string>
+    <string name="exit_operation">آپ لاگ اوٹ کرنا چاہتے ہیں یا لاگ اوٹ کیے بغیر پروگرام بند کرنا چاہتے ہیں؟</string>
+    <string name="form_send_success">فارم کامیابی کے ساتھ محفوظ ہوگیا یے۔</string>
+    <string name="deleted">Data deleted successfully.</string>
+    <string name="delete_forms">Are you sure you want to delete all selected forms saved on phone?</string>
+    <string name="offline_forms">Some saved forms are waiting your attention</string>
+    <string name="send_form">پیغام بھیجیں</string>
+    <string name="send_close">کیا آپ اس پیغام کو بھیجنا چاہتے ہیں؟</string>
+    <string name="missing_union_council">Missing Union Council. Please contact admin to resolve the issue.</string>
+    <string name="patients_not_found">No Patients were found matching given parameters</string>
+
+</resources>

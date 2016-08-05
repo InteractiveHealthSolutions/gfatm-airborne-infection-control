@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="@dimen/tiny" >
+
+    <ScrollView
+        android:id="@+main_id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TableRow
+                android:id="@+main_id/childInfoTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <TextView
+                    android:id="@+id/first_button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12sp"
+                    android:gravity="center"
+                    android:text="@string/main_menu"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+main_id/childInfoTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <Button
+                    android:id="@+main_id/child_info"
+                    style="@style/button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:drawableTop="@drawable/vital_icon"
+                    android:tag="@string/child_info"
+                    android:text="@string/child_info"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+main_id/screeningATableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/forms_a"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_a_icon"
+                    android:text="@string/forms_a"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/forms_b"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_icon"
+                    android:text="@string/forms_b"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+main_id/reverseReferralTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <Button
+                    android:id="@+main_id/reverseReferral"
+                    style="@style/button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:drawableTop="@drawable/reverse_referrals_icon"
+                    android:tag="@string/reverse_referral"
+                    android:text="@string/reverse_referral"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+             <TableRow
+                android:id="@+main_id/referralCompletionTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <Button
+                    android:id="@+main_id/referralCompletion"
+                    style="@style/button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:drawableTop="@drawable/referral_completion_icon"
+                    android:tag="@string/referral_completion"
+                    android:text="@string/referral_completion"
+                    android:textSize="20sp" />
+            </TableRow> 
+            
+            <TableRow
+                android:id="@+main_id/reportsTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <Button
+                    android:id="@+main_id/reportsButton"
+                    style="@style/button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:drawableTop="@drawable/report_icon"
+                    android:tag="@string/reports"
+                    android:text="@string/reports"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+main_id/feedbackTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <Button
+                    android:id="@+main_id/feedback"
+                    style="@style/button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:drawableTop="@drawable/feedback_icon"
+                    android:tag="@string/feedback_form"
+                    android:text="@string/feedback_form"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/version_no"
+        android:textColor="@color/BlueShade" />
+            
+        </LinearLayout>
+    </ScrollView>
+
+</TableLayout>

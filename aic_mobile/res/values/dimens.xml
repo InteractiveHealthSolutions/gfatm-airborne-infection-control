@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+     <dimen name="micro">2dp</dimen>
+    <dimen name="tiny">6dp</dimen>
+    <dimen name="small">12dp</dimen>
+    <dimen name="medium">16dp</dimen>
+    <dimen name="large">20dp</dimen>
+    <dimen name="xlarge">24dp</dimen>
+    <dimen name="xxlarge">32dp</dimen>
+    <dimen name="huge">40dp</dimen>
+    <dimen name="gigantic">52dp</dimen>
+
+    <string-array name="delay_summary">
+        <item>Short (10 sec)</item>
+        <item>Medium (30 sec)</item>
+        <item>Long (1 min)</item>
+    </string-array>
+    <string-array name="duration_modifiers">
+        <item>Day(s)</item>
+        <item>Week(s)</item>
+        <item>Month(s)</item>
+        <item>Year(s)</item>
+    </string-array>
+    <string-array name="age_gropus">
+        <item>0 - 15</item>
+        <item>16 - 20</item>
+        <item>21 - 25</item>
+        <item>26 - 40</item>
+        <item>41 - 50</item>
+        <item>50 - 100</item>
+    </string-array>
+    <string-array name="age_groups">
+        <item>less than 1 year</item>
+        <item>1 - 2 years</item>
+        <item>3 - 5 years</item>
+    </string-array>
+    <string-array name="age_groups_values">
+        <item>0 - 0</item>
+        <item>1 - 2</item>
+        <item>3 - 5</item>
+    </string-array>
+    <string-array name="delay">
+        <item>10000</item>
+        <item>30000</item>
+        <item>60000</item>
+    </string-array>
+	<string-array name="language">
+        <item>en - English</item>
+        <item>ur - Urdu</item>
+    </string-array>
+
+</resources>

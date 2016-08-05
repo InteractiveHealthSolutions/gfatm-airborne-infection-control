@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="unique_id_fixture">What is the unique ID as written on the fixture?</string>
+    <string name="problem_with_fixture">What is the problem?</string>
+    <string name="mobile_number">Please enter your mobile number in case of more information needed.</string>
+    <string name="troubleshooting_number">Trouble shooting number</string>
+
+</resources>

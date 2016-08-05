@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="username">یوزر نیم</string>
+    <string name="password">پاس ورڈ</string>
+    <string name="username_hint">Enter your username</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="login">لاگ ان</string>
+    <string name="work_offline">آف لائن</string>
+	<string name="show_pass">Show Password</string>
+	<string name="version_no">Version - 1.2.1</string>
+    
+</resources>

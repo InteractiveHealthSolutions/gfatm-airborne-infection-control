@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="@dimen/tiny" >
+
+    <ScrollView
+        android:id="@+main_id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TableRow
+                android:id="@+main_id/mainMenuTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <TextView
+                    android:id="@+main_id/mainMenu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12sp"
+                    android:gravity="center"
+                    android:text="@string/uvgi_lights"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+main_id/row1TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+main_id/installation_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_a_icon"
+                    android:text="@string/installation"
+                    android:textSize="20sp" />
+                
+            </TableRow>
+            
+            <TableRow
+                android:id="@+main_id/row1TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+main_id/maintenance_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_icon"
+                    android:text="@string/maintenance"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+main_id/row2TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+main_id/troubleshootingLog_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_a_icon"
+                    android:text="@string/troubleshooting_log"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+main_id/row2TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                     android:id="@+main_id/troubleshootingResolution_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/screening_icon"
+                    android:text="@string/troubleshooting_resolution"
+                    android:textSize="20sp" />
+            </TableRow>
+            
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/version_no"
+        android:textColor="@color/mainTheme" />
+            
+        </LinearLayout>
+    </ScrollView>
+
+</TableLayout>

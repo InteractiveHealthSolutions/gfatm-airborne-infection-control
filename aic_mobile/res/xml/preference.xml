@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:key="server"
+        android:summary="Preferences used to connect to the Server"
+        android:title="Server Preferences" >
+        <EditTextPreference
+            android:defaultValue="@string/server_address"
+            android:key="server"
+            android:persistent="true"
+            android:summary="Fully-qualified address of Server"
+            android:title="Server" />
+        <EditTextPreference
+            android:key="support_contact"
+            android:persistent="true"
+            android:title="Support Contact" android:defaultValue="@string/support_contact"/>
+        <EditTextPreference
+            android:key="support_email"
+            android:persistent="true"
+            android:title="Support Email" android:defaultValue="@string/support_email"/>
+        <CheckBoxPreference 
+            android:title="@string/use_secure" 
+            android:key="use_ssl" 
+            android:defaultValue="false"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="application"
+        android:title="Application Configuration" >
+        <ListPreference
+            android:defaultValue="English"
+            android:dialogTitle="Select preferred language"
+            android:entries="@array/language"
+            android:entryValues="@array/language"
+            android:key="language"
+            android:title="Langauge" />
+        <EditTextPreference
+            android:defaultValue="@string/default_city"
+            android:key="city"
+            android:title="City" />
+        <ListPreference
+            android:defaultValue="@string/default_country"
+            android:dialogTitle="Select your country"
+            android:entries="@array/countries"
+            android:entryValues="@array/countries"
+            android:key="country"
+            android:title="Country" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

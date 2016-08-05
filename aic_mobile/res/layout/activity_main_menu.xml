@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="@dimen/tiny"
+    android:background="@color/LightGrey" >
+
+    <ScrollView
+        android:id="@+main_id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TableRow
+                android:id="@+main_id/mainMenuTableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/micro" >
+
+                <TextView
+                    android:id="@+main_id/mainMenu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12sp"
+                    android:gravity="center"
+                    android:text="@string/main_menu"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+main_id/FirstTableRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+main_id/uvgibutton"
+                    android:layout_width="215dp"
+                    android:layout_height="121dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/uvgi_lights" />
+
+            </TableRow>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</TableLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="reading_before_3ft_cleaning">Meter Reading at 3ft Before Cleaning?</string>
+    <string name="reading_before_6ft_cleaning">Meter Reading at 6ft Before Cleaning?</string>
+    <string name="reading_before_7ft_cleaning">Meter Reading at 7ft Before Cleaning?</string>
+
+    <string name="maintenance_checklist">Maintenance Checklist</string>
+
+    <string name="power_disconnected">Power Disconnected?</string>
+    <string name="louver_open">Louver Panel Opened?</string>
+    <string name="lamps_removed">Lamps Removed?</string>
+    <string name="lamps_microfiber">Lamps cleaned with microfiber alcohol wipe?</string>
+    <string name="interior_microfiber">Interior of fixture cleaned with microfiber alcohol wipe?</string>
+    <string name="lamp_replacement">Replacement of any part?</string>
+    <string name="parts_replaced">What parts where replaced?</string>
+    <string name="lamps_reinstalled">Lamps re-installed correctly?</string>
+    <string name="louver_closed">Louver Closed?</string>
+    <string name="power_connect">Power fixture on?</string>
+    <string name="light_working">Fixture working?</string>
+    <string name="reading_after_3ft_cleaning">Meter Reading at 6ft after cleaning?</string>
+    <string name="reading_after_6ft_cleaning">Meter Reading at 6ft after Cleaning?</string>
+    <string name="reading_after_7ft_cleaning">Meter Reading at 7ft after Cleaning?</string>
+    <string name="maintenance_person_name">What is the First and Last Name of the person who conducted the maintenance?</string>
+
+</resources>
