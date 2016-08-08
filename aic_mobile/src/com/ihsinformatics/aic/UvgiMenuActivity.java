@@ -32,6 +32,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	protected static ProgressDialog	loading;
 	
 	Button uvgiInstallationButton;
+	Button uvgiMaintenanceButton;
 
 
 	@Override
@@ -42,6 +43,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		serverService = new ServerService (getApplicationContext ());
 		
 		uvgiInstallationButton = (Button) findViewById(R.main_id.installation_form);
+		uvgiMaintenanceButton = (Button) findViewById(R.main_id.maintenance_form);
 		
 		// initializing views
 		loading = new ProgressDialog (this);
@@ -66,6 +68,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		}
 		
 		uvgiInstallationButton.setOnClickListener(this);
+		uvgiMaintenanceButton.setOnClickListener(this);
 		
 	}
 	
@@ -79,6 +82,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	{
 		Intent mainMenuIntent = new Intent (getApplicationContext (), MainMenuActivity.class);
 		startActivity (mainMenuIntent);
+		finish();
 	}
 
 	
@@ -118,7 +122,13 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 			finish();
 			
 		}
+		else if(v == uvgiMaintenanceButton){
+			
+			Intent uvgiMaintenanceActivity = new Intent (this, UvgiMaintenanceActivity.class);
+			startActivity (uvgiMaintenanceActivity);
+			finish();
+			
+		}
 	}
-	
 	
 }

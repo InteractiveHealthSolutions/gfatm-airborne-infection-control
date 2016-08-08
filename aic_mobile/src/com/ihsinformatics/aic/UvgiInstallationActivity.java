@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 import com.ihsinformatics.aic.custom.MyButton;
 import com.ihsinformatics.aic.custom.MyEditText;
@@ -27,17 +28,24 @@ import com.ihsinformatics.aic.custom.MySpinner;
 import com.ihsinformatics.aic.custom.MyTextView;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.util.RegexUtil;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,10 +59,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -86,10 +97,11 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyEditText			otherOpdArea;
 	
 	MyTextView			fixtureNumberTextView;
-	MySpinner			fixtureNumber;
+	NumberPicker		fixtureNumber;
 	
 	MyTextView			uniqueIdGeneratedTextView;
 	MyEditText			uniqueIdGenerated;
+	MyButton			scanBarcodeButton;
 	
 	MyTextView			threeFtUvMeterReadingTextView;
 	MyEditText			threeFtUvMeterReading;
@@ -186,9 +198,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	public void createViews (final Context context)
 	{
 		
-		FORM_NAME = FormType.FEEDBACK;
-		TAG = "FeedbackActivity";
-		PAGE_COUNT = 1;
+		FORM_NAME = FormType.UVGI_INSATLLATION;
+		TAG = "UVGILightsInstallationActivity";
+		PAGE_COUNT = 9;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
 		navigatorLayout = (LinearLayout) findViewById (R.template_id.navigatorLayout);
@@ -208,38 +220,72 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		formDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.form_date, R.string.form_date);
 		
 		facilityNameTextView = new MyTextView (context, R.style.text, R.string.facility_name);
-		facilityName = 	new MySpinner (context, getResources ().getStringArray (R.array.feedback_types), R.string.feedback_type, R.string.option_hint);
+		facilityName = new MySpinner (context, getResources ().getStringArray (R.array.feedback_types), R.string.facility_name, R.string.option_hint);
 
 		otherFacilityNameTextView = new MyTextView (context, R.style.text, R.string.other_facility);
+		otherFacilityName =  new MyEditText(context, R.string.other_facility, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		opdNameTextView = new MyTextView (context, R.style.text, R.string.opd_lights_installed);
+		opdName = new MySpinner (context, getResources ().getStringArray (R.array.feedback_types), R.string.opd_lights_installed, R.string.option_hint);
 		
 		otherOpdNameTextView = new MyTextView (context, R.style.text, R.string.other_opd);
+		otherOpdName = new MyEditText(context, R.string.other_opd, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		opdAreaTextView = new MyTextView (context, R.style.text, R.string.opd_area);
+		opdArea = new MySpinner (context, getResources ().getStringArray (R.array.feedback_types), R.string.opd_area, R.string.option_hint);
 		
 		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);
+		otherOpdArea = new MyEditText(context, R.string.other_opd_area, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		fixtureNumberTextView = new MyTextView (context, R.style.text, R.string.fixture_number);
+		fixtureNumber = new NumberPicker(context);
+		fixtureNumber.setMinValue(0);
+		fixtureNumber.setMaxValue(30);
+		fixtureNumber.setWrapSelectorWheel(false);
 		
 		uniqueIdGeneratedTextView = new MyTextView (context, R.style.text, R.string.unique_id);
+		uniqueIdGenerated = new MyEditText(context, R.string.unique_id, R.string.unique_id_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.idLength, false); 
+		scanBarcodeButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.scan_qr_code, R.string.scan_qr_code);
 		
 		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_3_reading);
+		threeFtUvMeterReading = new MyEditText(context,R.string.ft_3_reading, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
 		threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		noThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
+		yesThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
+		threeFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesThreeFtCorrectReading, noThreeFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 		
 		sixFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_6_reading);
+		sixFtUvMeterReading = new MyEditText(context,R.string.ft_6_reading, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
 		sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		noSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
+		yesSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
+		sixFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSixFtCorrectReading, noSixFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 		
 		sevenFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_7_reading);
+		sevenFtUvMeterReading = new MyEditText(context,R.string.ft_7_reading, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
 		sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		noSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
+		yesSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
+		sevenFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSevenFtCorrectReading, noSevenFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 		
 		installtionCompleteTextView = new MyTextView (context, R.style.text, R.string.installation_complete);
+		noInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.no);
+		yesInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.yes);
+		installtionComplete = new MyRadioGroup(context,new MyRadioButton[] { yesInstalltionComplete, noInstalltionComplete }, R.string.installation_complete,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 		
+		View[][] viewGroups = {{formDateTextView,formDateButton,facilityNameTextView, facilityName, otherFacilityNameTextView, otherFacilityName},
+							   {opdNameTextView, opdName, otherOpdNameTextView, otherOpdName},
+							   {opdAreaTextView, opdArea, otherOpdAreaTextView, otherOpdArea},
+							   {fixtureNumberTextView, fixtureNumber},
+							   {uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
+							   {threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading},
+							   {sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading},
+							   {sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading},
+							   {installtionCompleteTextView, installtionComplete}};
 		
-		View[][] viewGroups = {{formDateTextView,formDateButton,facilityNameTextView, facilityName}};
 		// Create layouts and store in ArrayList
 		groups = new ArrayList<ViewGroup> ();
 		for (int i = 0; i < PAGE_COUNT; i++)
@@ -248,7 +294,18 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			layout.setOrientation (LinearLayout.VERTICAL);
 			for (int j = 0; j < viewGroups[i].length; j++)
 			{
-				layout.addView (viewGroups[i][j]);
+				
+				View v = viewGroups[i][j];
+				
+				if(j%2 == 0){
+					
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+					params.setMargins(0, 30, 0, 0); 
+					v.setLayoutParams(params);
+					
+				}
+				
+				layout.addView(v);
 			}
 			ScrollView scrollView = new ScrollView (context);
 			scrollView.setLayoutParams (new LayoutParams (LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -262,8 +319,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		saveButton.setOnClickListener(this);
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
-		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar,
-										formDateButton};
+		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
+										formDateButton, scanBarcodeButton,
+										facilityName, opdName, opdArea};
 		
 		for (View v : setListener) {
 			if (v instanceof Spinner) {
@@ -283,7 +341,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {};
+		views = new View[] {otherFacilityName, otherOpdName, otherOpdArea, uniqueIdGenerated, 
+							yesInstalltionComplete, yesSevenFtCorrectReading, yesSixFtCorrectReading, yesThreeFtCorrectReading};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -301,7 +360,88 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				}
 			}
 		}
-		saveButton.setText(getResources().getString(R.string.send));
+		
+		threeFtUvMeterReading.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+					
+				  try {
+				 	String val = App.get(threeFtUvMeterReading);
+				 	Double valNumber = Double.parseDouble(val);
+				 	
+				 	if(valNumber < 0.4){
+				 		threeFtCorrectReadingTextView.setVisibility(View.GONE);
+				 		threeFtCorrectReading.setVisibility(View.GONE);
+				 	}
+				 	else{
+				 		threeFtCorrectReadingTextView.setVisibility(View.VISIBLE);
+				 		threeFtCorrectReading.setVisibility(View.VISIBLE);
+				 	}
+				  }catch (NumberFormatException e) {
+					  // p did not contain a valid double
+				  }
+			  }
+			  
+	       });
+		
+		sixFtUvMeterReading.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				 try{	
+				 	String val = App.get(sixFtUvMeterReading);
+				 	Double valNumber = Double.parseDouble(val);
+				 	
+				 	if(valNumber < 0.4){
+				 		sixFtCorrectReadingTextView.setVisibility(View.GONE);
+				 		sixFtCorrectReading.setVisibility(View.GONE);
+				 	}
+				 	else{
+				 		sixFtCorrectReadingTextView.setVisibility(View.VISIBLE);
+				 		sixFtCorrectReading.setVisibility(View.VISIBLE);
+				 	}
+				  }catch (NumberFormatException e) {
+					  // p did not contain a valid double
+				  }	
+			  }
+			  
+	       });
+		
+		sevenFtUvMeterReading.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+					
+				  try{
+				 	String val = App.get(sevenFtUvMeterReading);
+				 	Double valNumber = Double.parseDouble(val);
+				 	
+				 	if(valNumber < 0.4){
+				 		sevenFtCorrectReadingTextView.setVisibility(View.GONE);
+				 		sevenFtCorrectReading.setVisibility(View.GONE);
+				 	}
+				 	else{
+				 		sevenFtCorrectReadingTextView.setVisibility(View.VISIBLE);
+				 		sevenFtCorrectReading.setVisibility(View.VISIBLE);
+				 	}
+				  }catch (NumberFormatException e) {
+					  // p did not contain a valid double
+				  }	
+			  }
+			  
+	       });
+	    
+		
 	}
 
 	@Override
@@ -319,6 +459,12 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	public void updateDisplay ()
 	{
 		formDateButton.setText (DateFormat.format ("dd-MMM-yyyy", formDate));
+		
+		View[] goneView = new View[]{otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea,
+				threeFtCorrectReadingTextView, threeFtCorrectReading, sixFtCorrectReadingTextView, sixFtCorrectReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading};
+		for(View v : goneView){
+			v.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -426,6 +572,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		{
 			gotoLastPage ();
 		}
+		else if (view == nextButton){
+			gotoNextPage();
+		}
 		else if (view == clearButton)
 		{
 			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close));
@@ -467,6 +616,20 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			
 			d.show ();
 		}
+		else if (view == scanBarcodeButton) {
+			try {
+	        	Intent intent = new Intent(Barcode.BARCODE_INTENT);
+	        	if(isCallable(intent)){
+	        		intent.putExtra(Barcode.SCAN_MODE, Barcode.QR_MODE);
+					startActivityForResult(intent, Barcode.BARCODE_RESULT);
+	        	}
+	        	else{
+	        		showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
+	        	}
+			} catch (ActivityNotFoundException e) {
+				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
+			}
+		}
 	}
 	
 	/**
@@ -505,12 +668,79 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	@Override
 	public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
 	{
-		// Not implemented
+		MySpinner spinner = (MySpinner) parent;
+		if(spinner == facilityName){
+			if(App.get(spinner).equalsIgnoreCase("Other")){
+				otherFacilityNameTextView.setVisibility(View.VISIBLE);
+				otherFacilityName.setVisibility(View.VISIBLE);
+			}
+			else{
+				otherFacilityNameTextView.setVisibility(View.GONE);
+				otherFacilityName.setVisibility(View.GONE);
+			}
+		}
+		else if(spinner == opdName){
+			if(App.get(spinner).equalsIgnoreCase("Other")){
+				otherOpdNameTextView.setVisibility(View.VISIBLE);
+				otherOpdName.setVisibility(View.VISIBLE);
+			}
+			else{
+				otherOpdNameTextView.setVisibility(View.GONE);
+				otherOpdName.setVisibility(View.GONE);
+			}
+		}
+		else if(spinner == opdArea){
+			if(App.get(spinner).equalsIgnoreCase("Other")){
+				otherOpdAreaTextView.setVisibility(View.VISIBLE);
+				otherOpdArea.setVisibility(View.VISIBLE);
+			}
+			else{
+				otherOpdAreaTextView.setVisibility(View.GONE);
+				otherOpdArea.setVisibility(View.GONE);
+			}
+		}
+		
 	}
 
 	@Override
 	public boolean onLongClick (View v)
 	{
 		return false;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// Retrieve barcode scan results
+		if (requestCode == Barcode.BARCODE_RESULT) {
+			if (resultCode == RESULT_OK) {
+				String str = data.getStringExtra(Barcode.SCAN_RESULT);
+				// Check for valid Id
+				if (RegexUtil.isValidId(str)
+						&& !RegexUtil.isNumeric(str, false)) {
+					uniqueIdGenerated.setText(str);
+				} else {
+					App.getDialog(
+							this,
+							AlertType.ERROR,
+							uniqueIdGenerated.getTag().toString()
+									+ ": "
+									+ getResources().getString(
+											R.string.invalid_data)).show();
+				}
+			} else if (resultCode == RESULT_CANCELED) {
+				// Handle cancel
+				App.getDialog(this, AlertType.ERROR,
+						getResources().getString(R.string.operation_cancelled))
+						.show();
+			}
+			// Set the locale again, since the Barcode app restores system's
+			// locale because of orientation
+			Locale.setDefault(App.getCurrentLocale());
+			Configuration config = new Configuration();
+			config.locale = App.getCurrentLocale();
+			getApplicationContext().getResources().updateConfiguration(config,
+					null);
+		}
 	}
 }

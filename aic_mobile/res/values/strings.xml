@@ -31,6 +31,9 @@
     
     <string name="uvgi_lights">UVGI Lights</string>
     
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="unique_id_hint">Enter 9-14 Unique Id</string>
+    
     <string name="report_menu">Report Menu</string>
     <string name="child_info">Child Information and Vitals</string>
     <string name="forms_a">"Infant less than 2 months"</string>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="unique_id_maintenance">Unique Id</string>
+    
     <string name="reading_before_3ft_cleaning">Meter Reading at 3ft Before Cleaning?</string>
     <string name="reading_before_6ft_cleaning">Meter Reading at 6ft Before Cleaning?</string>
     <string name="reading_before_7ft_cleaning">Meter Reading at 7ft Before Cleaning?</string>

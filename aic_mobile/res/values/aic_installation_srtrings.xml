@@ -3,6 +3,7 @@
 
     <string name="facility_name">What facility are the lights installed?</string>
     <string name="other_facility">Please specify which "Other" facility the fixture has been installed?</string>
+    <string name="other_hint">Specify \'Other\'</string>
     <string name="opd_lights_installed">Which OPD are the lights installed?</string>
     <string name="other_opd">Please specify "Other" OPD in which fixture has been installed?</string>
     <string name="opd_area">In which area of the OPD is the fixtures installed?</string>
@@ -10,9 +11,14 @@
     <string name="fixture_number">Fixture Number</string>
     <string name="unique_id">Unique ID Generated</string>
     <string name="ft_3_reading">What is the UV Meter Reading after installation at 3 ft?</string>
+    <string name="ft_3_reading_hint">Enter 3 ft UV Reading (µW/cm²)</string>
     <string name="reading_confirmation">Are you sure this is correct?</string>
     <string name="ft_6_reading">What is the UV Meter Reading after installation at 6 ft?</string>
+    <string name="ft_6_reading_hint">Enter 6 ft UV Reading (µW/cm²)</string>
     <string name="ft_7_reading">What is the UV Meter Reading after installation at 7 ft?</string>
+    <string name="ft_7_reading_hint">Enter 7 ft UV Reading (µW/cm²)</string>
     <string name="installation_complete">Installation Complete?</string>
+    
+    
 
 </resources>

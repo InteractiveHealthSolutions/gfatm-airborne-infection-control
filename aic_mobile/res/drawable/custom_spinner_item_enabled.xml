@@ -8,4 +8,4 @@
     android:minHeight="58dip"
     android:padding="3dip"
     android:textAppearance="?android:attr/textAppearanceLarge"
-    android:textColor="@color/BlueShade" />
+    android:textColor="@color/mainTheme" />

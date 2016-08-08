@@ -87,7 +87,7 @@ public class ServerService {
 		try
 		{
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.SEARCH_PATIENTS);
+			//json.put ("form_name", FormType.SEARCH_PATIENTS);
 			json.put ("patient_id", patientId);
 			json.put ("first_name", firstName);
 			json.put ("father_name", fatherName);
@@ -142,7 +142,7 @@ public class ServerService {
 		try
 		{
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_PATIENT_DETAIL);
+			//json.put ("form_name", FormType.GET_PATIENT_DETAIL);
 			json.put ("patient_id", patientId);
 			response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			if (response == null)
@@ -260,7 +260,7 @@ public class ServerService {
 		{
 			JSONObject json = new JSONObject ();
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_USER);
+			//json.put ("form_name", FormType.GET_USER);
 			json.put ("username", name);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			
@@ -486,12 +486,12 @@ public class ServerService {
 		try
 		{
 			String id = null;
-			if (!App.isOfflineMode () && !encounterType.equals(FormType.INFORMATION_VITALS))
+			/*if (!App.isOfflineMode () && !encounterType.equals(FormType.INFORMATION_VITALS))
 			{	
 				id = getPatientId (patientId);
 				if (id != null)
 					return context.getResources ().getString (R.string.duplication);
-			}
+			}*/
 			// Save Patient
 			JSONObject json = new JSONObject ();
 			json.put ("app_ver", App.getVersion ());
@@ -600,7 +600,7 @@ public class ServerService {
 		{
 			JSONObject json = new JSONObject ();
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_PATIENT);
+			//json.put ("form_name", FormType.GET_PATIENT);
 			json.put ("patient_id", patientId);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
@@ -633,7 +633,7 @@ public class ServerService {
 			JSONObject json = new JSONObject ();
 			
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_VITALS);
+			//json.put ("form_name", FormType.GET_VITALS);
 			json.put ("id", id);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			if (response == null)
@@ -794,7 +794,7 @@ public class ServerService {
 			JSONObject json = new JSONObject ();
 			
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_TREATMENTS);
+			//json.put ("form_name", FormType.GET_TREATMENTS);
 			json.put ("id", id);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			if (response == null)
@@ -914,7 +914,7 @@ public String[][] getLatestReferrals(String id){
 			JSONObject json = new JSONObject ();
 			
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_LATEST_REFERRAL);
+			//json.put ("form_name", FormType.GET_LATEST_REFERRAL);
 			json.put ("id", id);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			if (response == null)
@@ -1021,7 +1021,7 @@ public String[][] getClassifications(String id){
 			JSONObject json = new JSONObject ();
 			
 			json.put ("app_ver", App.getVersion ());
-			json.put ("form_name", FormType.GET_CLASSIFICATION);
+			//json.put ("form_name", FormType.GET_CLASSIFICATION);
 			json.put ("id", id);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);

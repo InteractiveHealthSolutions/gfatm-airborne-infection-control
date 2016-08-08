@@ -113,8 +113,9 @@ public class RegexUtil
 	public static final String	urlPattern				= "^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk|pk|co|)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$";
 	public static final String	smsPattern				= "[A-Z0-9]{2,2}[0-9]{9,9} [0-3][0-9](JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)20[1-3][0-9] [YN]";
 
-	public static final int		idLength				= 12;
+	public static final int		idLength				= 17;
 	public static final int     labTestIdLength			= 11;
+	public static final int     textLength				= 35;
 
 	/**
 	 * Checks if given input is a valid number
