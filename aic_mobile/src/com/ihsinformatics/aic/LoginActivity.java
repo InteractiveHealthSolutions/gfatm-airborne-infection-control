@@ -8,6 +8,8 @@ package com.ihsinformatics.aic;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.ihsinformatics.aic.shared.AlertType;
@@ -16,6 +18,7 @@ import com.ihsinformatics.aic.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +51,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	String                          tempUsername;
 	String							tempPassword;
 	
+	Calendar						startDateTime;
+	
 	int loginAttempt;
 
 	@Override
@@ -76,6 +81,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	public void initView (View[] views)
 	{
+		
+		startDateTime = Calendar.getInstance ();
 		
 		Boolean status = serverService.renewLoginStatus();  // Check if login status needs to be renew or not
 		
@@ -189,10 +196,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						if (App.getUsername ().equalsIgnoreCase (App.get (username)) && App.getPassword ().equals (App.get (password)))
 						{
 							App.setOfflineMode(true);
-							String screenerName = App.getScreenerName();
-							String role = App.getRole();
-							String location = App.getLocation();
-							return "SUCCESS:,:"+screenerName+":,:"+role+":,:"+location;
+							return "SUCCESS";
 						}
 						
 						else{// if offline login fails
@@ -221,11 +225,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 					
 					publishProgress (getResources ().getString (R.string.loading_message_signing_in)); 
 					
-					/*String exists = serverService.authenticate (App.get (username));     
+					final ContentValues values = new ContentValues ();
 					
-					return exists;*/
+					values.put ("username", App.getUsername());
+					values.put ("password", App.getPassword());
+					values.put ("starttime", App.getSqlDateTime(startDateTime));
 					
-					return "SUCCESS:,:Rabbia:,:Admin:,:IHS";
+					String exists = serverService.authenticate (App.get (username));     
+					return exists;
+					
+					//return "SUCCESS";
 				}
 
 				@Override
@@ -240,15 +249,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 					super.onPostExecute (result);
 					loading.dismiss ();
 					
-					String resultsPart[] = result.split(":,:");      //Example_Result: 'SUCESS:;:Rabbia:;:Admin:;:IHS'
-					
-					if (resultsPart[0].equals("SUCCESS"))
+					if (result.equals("SUCCESS"))
 					{
-						
-						App.setScreenerName(resultsPart[1]);
-						App.setRole(resultsPart[2]);
-						App.setLocation(resultsPart[3]);
-						
+				
 						Date date = new Date();
 						Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 						String newTimeStamp = formatter.format(date);
@@ -260,9 +263,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 						editor.putString (Preferences.USERNAME, App.getUsername ());
 						editor.putString (Preferences.PASSWORD, App.getPassword ());
 						editor.putString(Preferences.LAST_LOGIN, App.getLastLogin());
-						editor.putString (Preferences.SCREENER_NAME, App.getScreenerName());
-						editor.putString(Preferences.LOCATION, App.getLocation());
-						editor.putString(Preferences.ROLE, App.getRole());
 						editor.apply ();
 						
 						//Start Main Menu Activity

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.ihsinformatics.aic.App;
 import com.ihsinformatics.aic.shared.FormType;
 import com.ihsinformatics.aic.shared.Metadata;
+import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.R;
 
 import android.content.ContentValues;
@@ -260,8 +261,10 @@ public class ServerService {
 		{
 			JSONObject json = new JSONObject ();
 			json.put ("app_ver", App.getVersion ());
-			//json.put ("form_name", FormType.GET_USER);
+			json.put ("type", RequestType.LOGIN);
 			json.put ("username", name);
+			json.put ("starttime", name);
+			json.put ("password", name);
 			String response = get ("?content=" + JsonUtil.getEncodedJson (json));
 			
 			if(response == null){
@@ -279,38 +282,7 @@ public class ServerService {
 				String screenerName = userObj.getString ("sname");
 				String location = userObj.getString ("location");
 				String role = userObj.getString("role");
-				int locationCount = userObj.getInt("location_count");
-				int userCount = userObj.getInt("user_count");
 				String returnString = "SUCCESS:,:"+screenerName+":,:"+role+":,:"+location;
-				
-				if(locationCount > 0){
-					
-					for(int i = 0; i<locationCount; i++){
-						
-						ContentValues values = new ContentValues ();
-						values.put ("id", userObj.getString ("locationId_"+i));
-						values.put ("type", Metadata.LOCATION);
-						values.put ("name", userObj.getString ("location_"+i));
-						dbUtil.insert (Metadata.METADATA_TABLE, values);
-				
-					}
-					
-				}
-				
-				if(userCount > 0){
-					
-					for(int i = 0; i<userCount; i++){
-						
-						ContentValues values = new ContentValues ();
-						values.put ("id", userObj.getString ("user_"+i));
-						values.put ("type", Metadata.USER);
-						values.put ("name", userObj.getString ("role_"+i)+"_"+userObj.getString ("location_"+i));
-						dbUtil.insert (Metadata.METADATA_TABLE, values);
-				
-					}
-					
-				}
-				
 				
 				return returnString;
 			}
@@ -1580,20 +1552,6 @@ public String[][] getClassifications(String id){
 	public int countSavedForms (String username)
 	{
 		return Integer.parseInt (dbUtil.getObject ("select count(*) from offline_forms where username='" + username + "'"));
-	}
-	
-	public boolean isScannerInstalled (PackageManager pm){
-		String uri = "com.google.zxing";
-		/*boolean app_installed;
-        try {
-            pm.getPackageInfo("com.google.zxing.client.android.SCAN", PackageManager.GET_ACTIVITIES);
-            app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            app_installed = false;
-        }*/
-        return true;
-		
 	}
 	
 	public String[][] getLocations (){

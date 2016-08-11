@@ -52,12 +52,11 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		// initializing views
 		loading = new ProgressDialog (this);
 	
-		 ActionBar actionBar = getActionBar();
-		 actionBar.setTitle(App.getScreenerName() + " (" + App.getLocation() + ")");
-		
 		if(App.isOfflineMode()){  // Disable some forms in offline mode.
 			
-			actionBar.setTitle(actionBar.getTitle() + "-- Offline Mode --");
+			ActionBar actionBar = getActionBar();
+			
+			actionBar.setTitle("-- Offline Mode --");
 	
 		}
 		
