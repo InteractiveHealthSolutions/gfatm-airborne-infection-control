@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.ihsinformatics.aic.shared.AlertType;
+import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.ServerService;
 import com.ihsinformatics.aic.R;
 
@@ -231,7 +232,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					values.put ("password", App.getPassword());
 					values.put ("starttime", App.getSqlDateTime(startDateTime));
 					
-					String exists = serverService.authenticate (App.get (username));     
+					String exists = serverService.authenticate (RequestType.LOGIN, values);     
 					return exists;
 					
 					//return "SUCCESS";

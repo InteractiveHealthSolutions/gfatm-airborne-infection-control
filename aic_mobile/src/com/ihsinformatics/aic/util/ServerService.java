@@ -45,7 +45,7 @@ public class ServerService {
 	{
 		this.context = context;
 		String prefix = "http" + (App.isUseSsl () ? "s" : "") + "://";
-		tbr3Uri = prefix + App.getServer () + "/tbreach4web_sa";
+		tbr3Uri = prefix + App.getServer () + "/gf-aic-web";
 		//tbr3Uri = prefix + App.getServer () + "/eIMCIweb";
 		httpClient = new HttpRequest (this.context);
 		httpsClient = new HttpsClient (this.context);
@@ -1511,6 +1511,43 @@ public String[][] getClassifications(String id){
 		}
 		return response;
 	}
+	
+	
+	public String authenticate (String encounterType, ContentValues values)
+	{
+		String response = "";
+		try
+		{
+			JSONObject json = new JSONObject ();
+			json.put ("app_ver", App.getVersion ());
+			json.put ("type", encounterType);
+			json.put ("username", values.getAsString ("username"));
+			json.put ("starttime", values.getAsString ("starttime"));
+			response = post ("?content=" + JsonUtil.getEncodedJson (json));
+			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
+			if (jsonResponse.has ("result"))
+			{
+				String result = jsonResponse.getString ("result");
+				return result;
+			}
+			else
+			{
+				return response;
+			}
+		}
+		catch (JSONException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.insert_error);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.insert_error);
+		}
+		return response;
+	}
+	
 	
 	/**
 	 * Save a form to local DB filled in offline
