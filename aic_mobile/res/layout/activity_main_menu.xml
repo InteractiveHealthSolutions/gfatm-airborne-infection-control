@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="@dimen/tiny"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
     android:background="@color/LightGrey" >
 
     <ScrollView
@@ -13,8 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
             <TableRow
                 android:id="@+main_id/mainMenuTableRow"
@@ -36,25 +35,45 @@
 
             <TableRow
                 android:id="@+main_id/FirstTableRow"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
                 <Button
                     android:id="@+main_id/uvgibutton"
-                    android:layout_width="215dp"
-                    android:layout_height="121dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/uvgi_lights" />
+                    android:text="@string/uvgi_lights"
+                    android:textSize="@dimen/xlarge"
+                    android:textStyle="bold" />
 
             </TableRow>
-
-
 
         </LinearLayout>
     </ScrollView>
 
 
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:layout_alignParentBottom="true"
+	    >
+	
+	    <TextView
+	        android:id="@+login_id/TextView01"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+login_id/loginButton"
+	        android:layout_marginTop="27dp"
+	        android:gravity="center"
+	        android:text="@string/version_no"
+	        android:textColor="@color/mainTheme" />
 
-</TableLayout>
+    </LinearLayout>
+
+</RelativeLayout>

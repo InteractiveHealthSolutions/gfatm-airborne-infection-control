@@ -72,14 +72,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		views = new View[] {username, password, login};
 		initView (views);
-		
-		//Hides the soft keyboard 
-		View view = this.getCurrentFocus();
-	    if (view != null) {
-	        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-	        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-	    }
-
 	}
 
 	public void initView (View[] views)
@@ -100,6 +92,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		username.setText (App.getUsername ());
 		
 		loginAttempt = 0;	
+		
+		View view = this.getCurrentFocus();
+	    if (view != null) {
+	        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+	        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	    }
 	}
 
 	@Override
@@ -250,6 +248,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 						App.setScreenerName(resultsPart[1]);
 						App.setRole(resultsPart[2]);
 						App.setLocation(resultsPart[3]);
+						
+						Date date = new Date();
+						Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+						String newTimeStamp = formatter.format(date);
+						
+						App.setLastLogin(newTimeStamp);
+
+						SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences (LoginActivity.this);
+						SharedPreferences.Editor editor = preferences.edit ();
+						editor.putString (Preferences.USERNAME, App.getUsername ());
+						editor.putString (Preferences.PASSWORD, App.getPassword ());
+						editor.putString(Preferences.LAST_LOGIN, App.getLastLogin());
+						editor.putString (Preferences.SCREENER_NAME, App.getScreenerName());
+						editor.putString(Preferences.LOCATION, App.getLocation());
+						editor.putString(Preferences.ROLE, App.getRole());
+						editor.apply ();
 						
 						//Start Main Menu Activity
 						Intent intent = new Intent (LoginActivity.this, MainMenuActivity.class);

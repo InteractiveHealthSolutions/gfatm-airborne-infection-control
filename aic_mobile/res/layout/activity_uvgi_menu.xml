@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="@dimen/tiny" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/tiny"
+    android:background="@color/LightGrey" >
 
     <ScrollView
         android:id="@+main_id/scrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <TableRow
@@ -43,8 +44,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/screening_a_icon"
+                    android:drawableLeft="@drawable/installation_icon"
                     android:text="@string/installation"
+                    android:layout_marginBottom="10sp"
                     android:textSize="20sp" />
                 
             </TableRow>
@@ -60,8 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/screening_icon"
+                    android:drawableLeft="@drawable/maintenance_icon"
                     android:text="@string/maintenance"
+                    android:layout_marginBottom="10sp"
                     android:textSize="20sp" />
             </TableRow>
             
@@ -76,8 +79,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/screening_a_icon"
+                    android:drawableLeft="@drawable/log_icon"
                     android:text="@string/troubleshooting_log"
+                    android:layout_marginBottom="10sp"
                     android:textSize="20sp" />
             </TableRow>
             
@@ -92,21 +96,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/screening_icon"
+                    android:drawableLeft="@drawable/resolution_icon"
                     android:text="@string/troubleshooting_resolution"
-                    android:textSize="20sp" />
+                    android:layout_marginBottom="10sp"
+                    android:textSize="18sp" />
             </TableRow>
-            
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="@string/version_no"
-        android:textColor="@color/mainTheme" />
             
         </LinearLayout>
     </ScrollView>
+    
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:layout_alignParentBottom="true"
+	    >
+	
+	    <TextView
+	        android:id="@+login_id/TextView01"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+login_id/loginButton"
+	        android:layout_marginTop="27dp"
+	        android:gravity="center"
+	        android:text="@string/version_no"
+	        android:textColor="@color/mainTheme" />
 
-</TableLayout>
+    </LinearLayout>
+
+</RelativeLayout>

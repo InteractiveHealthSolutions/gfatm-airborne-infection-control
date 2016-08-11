@@ -58,8 +58,8 @@ public class MainActivity extends Activity
 		}
 		
 	
-		//Starting login Activity...
-		Intent intent = new Intent (this, LoginActivity.class);    
+		// Start Login Activity...
+		Intent intent = new Intent (this, LoginActivity.class); 
 		startActivity (intent);
 		finish ();
 	

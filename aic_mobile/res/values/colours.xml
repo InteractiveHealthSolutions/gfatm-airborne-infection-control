@@ -13,7 +13,7 @@
 	
 	<color name="error_color">#BC4949</color>
 	<color name="success_color">#70d561</color>
-	<color name="question_color">#327384</color>
+	<color name="question_color">#ffcc66</color>
 	<color name="info_color">#ff1919</color>
 	
     <color name="Transparent">#00000000</color>

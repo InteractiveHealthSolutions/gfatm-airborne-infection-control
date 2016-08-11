@@ -33,6 +33,8 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	
 	Button uvgiInstallationButton;
 	Button uvgiMaintenanceButton;
+	Button uvgiTroubleshootLogButton;
+	Button uvgiTroubleshootResolutionButton;
 
 
 	@Override
@@ -44,6 +46,8 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		
 		uvgiInstallationButton = (Button) findViewById(R.main_id.installation_form);
 		uvgiMaintenanceButton = (Button) findViewById(R.main_id.maintenance_form);
+		uvgiTroubleshootLogButton = (Button) findViewById(R.main_id.troubleshootingLog_form);
+		uvgiTroubleshootResolutionButton = (Button) findViewById(R.main_id.troubleshootingResolution_form);
 		
 		// initializing views
 		loading = new ProgressDialog (this);
@@ -69,6 +73,8 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		
 		uvgiInstallationButton.setOnClickListener(this);
 		uvgiMaintenanceButton.setOnClickListener(this);
+		uvgiTroubleshootLogButton.setOnClickListener(this);
+		uvgiTroubleshootResolutionButton.setOnClickListener(this);
 		
 	}
 	
@@ -128,6 +134,17 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 			startActivity (uvgiMaintenanceActivity);
 			finish();
 			
+		}
+		else  if(v == uvgiTroubleshootLogButton){
+			Intent uvgiTroubleshootLogIntent = new Intent (this, UvgiTroubleshootLogActivity.class);
+			startActivity (uvgiTroubleshootLogIntent);
+			finish();
+		}
+		else if(v == uvgiTroubleshootResolutionButton){
+
+			Intent UvgiTroubleshootResolutionIntent = new Intent (this, UvgiTroubleshootResolutionActivity.class);
+			startActivity (UvgiTroubleshootResolutionIntent);
+			finish();
 		}
 	}
 	

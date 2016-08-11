@@ -14,30 +14,12 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Locale;
-
-import com.ihsinformatics.aic.custom.MyButton;
-import com.ihsinformatics.aic.custom.MyEditText;
-import com.ihsinformatics.aic.custom.MyRadioButton;
-import com.ihsinformatics.aic.custom.MyRadioGroup;
-import com.ihsinformatics.aic.custom.MySpinner;
-import com.ihsinformatics.aic.custom.MyTextView;
-import com.ihsinformatics.aic.shared.AlertType;
-import com.ihsinformatics.aic.shared.FormType;
-import com.ihsinformatics.aic.util.RegexUtil;
-
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,78 +43,48 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.ihsinformatics.aic.custom.MyButton;
+import com.ihsinformatics.aic.custom.MyEditText;
+import com.ihsinformatics.aic.custom.MyTextView;
+import com.ihsinformatics.aic.shared.AlertType;
+import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.util.RegexUtil;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class UvgiInstallationActivity extends AbstractFragmentActivity
+public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 {
 	// Views displayed in pages, sorted w.r.t. appearance on pager
 	MyTextView			formDateTextView;
 	MyButton			formDateButton;
-	
-	MyTextView			facilityNameTextView;
-	MySpinner			facilityName;
-	
-	MyTextView			otherFacilityNameTextView;
-	MyEditText			otherFacilityName;			
-	
-	MyTextView			opdNameTextView;
-	MySpinner			opdName;
-	
-	MyTextView			otherOpdNameTextView;
-	MyEditText			otherOpdName;
-	
-	MyTextView			opdAreaTextView;
-	MySpinner			opdArea;
-	
-	MyTextView			otherOpdAreaTextView;
-	MyEditText			otherOpdArea;
-	
-	MyTextView			fixtureNumberTextView;
-	NumberPicker		fixtureNumber;
-	
+
 	MyTextView			uniqueIdGeneratedTextView;
 	MyEditText			uniqueIdGenerated;
 	MyButton			scanBarcodeButton;
 	
-	MyTextView			threeFtUvMeterReadingTextView;
-	MyEditText			threeFtUvMeterReading;
-	
-	MyTextView			threeFtCorrectReadingTextView;
-	MyRadioGroup		threeFtCorrectReading;
-	MyRadioButton		yesThreeFtCorrectReading;
-	MyRadioButton		noThreeFtCorrectReading;
-	
-	MyTextView			sixFtUvMeterReadingTextView;
-	MyEditText			sixFtUvMeterReading;
-	
-	MyTextView			sixFtCorrectReadingTextView;
-	MyRadioGroup		sixFtCorrectReading;
-	MyRadioButton		yesSixFtCorrectReading;
-	MyRadioButton		noSixFtCorrectReading;
-	
-	MyTextView			sevenFtUvMeterReadingTextView;
-	MyEditText			sevenFtUvMeterReading;
-	
-	MyTextView			sevenFtCorrectReadingTextView;
-	MyRadioGroup		sevenFtCorrectReading;
-	MyRadioButton		yesSevenFtCorrectReading;
-	MyRadioButton		noSevenFtCorrectReading;
-	
-	MyTextView			installtionCompleteTextView;
-	MyRadioGroup		installtionComplete;
-	MyRadioButton		yesInstalltionComplete;
-	MyRadioButton		noInstalltionComplete;
+	MyTextView 			problemTextView;
+	MyEditText 			problem;
+
+	MyTextView 			mobileNumberTextView;
+	MyEditText 			mobileNumber;
+
+	MyTextView 			troubleshootingNumberTextView;
+	MyEditText 			troubleshootingNumber;
+
 
 	/**
 	 * Subclass representing Fragment for feedback form
@@ -199,9 +152,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	public void createViews (final Context context)
 	{
 		
-		FORM_NAME = FormType.UVGI_INSATLLATION;
-		TAG = "UVGILightsInstallationActivity";
-		PAGE_COUNT = 9;
+		FORM_NAME = FormType.UVGI_TROUBLESHOOT_LOG;
+		TAG = "UVGITroubleshootLogActivity";
+		PAGE_COUNT = 3;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
 		navigatorLayout = (LinearLayout) findViewById (R.template_id.navigatorLayout);
@@ -220,72 +173,29 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		formDateTextView = new MyTextView (context, R.style.text, R.string.form_date);
 		formDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.form_date, R.string.form_date);
 		
-		facilityNameTextView = new MyTextView (context, R.style.text, R.string.facility_name);
-		facilityName = new MySpinner (context, getResources ().getStringArray (R.array.facilities_name), R.string.facility_name, R.string.option_hint);
-
-		otherFacilityNameTextView = new MyTextView (context, R.style.text, R.string.other_facility);
-		otherFacilityName =  new MyEditText(context, R.string.other_facility, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
-		
-		opdNameTextView = new MyTextView (context, R.style.text, R.string.opd_lights_installed);
-		opdName = new MySpinner (context, getResources ().getStringArray (R.array.opd_names), R.string.opd_lights_installed, R.string.option_hint);
-		
-		otherOpdNameTextView = new MyTextView (context, R.style.text, R.string.other_opd);
-		otherOpdName = new MyEditText(context, R.string.other_opd, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
-		
-		opdAreaTextView = new MyTextView (context, R.style.text, R.string.opd_area);
-		opdArea = new MySpinner (context, getResources ().getStringArray (R.array.opd_areas), R.string.opd_area, R.string.option_hint);
-		
-		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);
-		otherOpdArea = new MyEditText(context, R.string.other_opd_area, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
-		
-		fixtureNumberTextView = new MyTextView (context, R.style.text, R.string.fixture_number);
-		fixtureNumber = new NumberPicker(context);
-		fixtureNumber.setMinValue(0);
-		fixtureNumber.setMaxValue(30);
-		fixtureNumber.setWrapSelectorWheel(false);
-		
 		uniqueIdGeneratedTextView = new MyTextView (context, R.style.text, R.string.unique_id);
 		uniqueIdGenerated = new MyEditText(context, R.string.unique_id, R.string.unique_id_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.idLength, false); 
 		scanBarcodeButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.scan_qr_code, R.string.scan_qr_code);
 		
-		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_3_reading);
-		threeFtUvMeterReading = new MyEditText(context,R.string.ft_3_reading, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		problemTextView = new MyTextView (context, R.style.text, R.string.problem_with_fixture);
+		problem = new MyEditText(context,R.string.problem_with_fixture, R.string.problem_with_fixture_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 100, false);
+		problem.setSingleLine(false);
+		problem.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+		problem.setMinLines (8);
+		problem.setMaxHeight (10);
+		problem.setGravity(Gravity.TOP);
 		
-		threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
-		noThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
-		yesThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
-		threeFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesThreeFtCorrectReading, noThreeFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
+		mobileNumberTextView = new MyTextView (context, R.style.text, R.string.mobile_number);
+		mobileNumber = new MyEditText(context,R.string.mobile_number, R.string.mobile_number_hint, InputType.TYPE_CLASS_NUMBER, R.style.edit, 11, false);
+
+		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
+		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 11, false);
 		
-		sixFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_6_reading);
-		sixFtUvMeterReading = new MyEditText(context,R.string.ft_6_reading, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
-		
-		sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
-		noSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
-		yesSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
-		sixFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSixFtCorrectReading, noSixFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
-		sevenFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_7_reading);
-		sevenFtUvMeterReading = new MyEditText(context,R.string.ft_7_reading, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
-		
-		sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
-		noSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
-		yesSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
-		sevenFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSevenFtCorrectReading, noSevenFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
-		installtionCompleteTextView = new MyTextView (context, R.style.text, R.string.installation_complete);
-		noInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.no);
-		yesInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.yes);
-		installtionComplete = new MyRadioGroup(context,new MyRadioButton[] { yesInstalltionComplete, noInstalltionComplete }, R.string.installation_complete,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
-		View[][] viewGroups = {{formDateTextView,formDateButton,facilityNameTextView, facilityName, otherFacilityNameTextView, otherFacilityName},
-							   {opdNameTextView, opdName, otherOpdNameTextView, otherOpdName},
-							   {opdAreaTextView, opdArea, otherOpdAreaTextView, otherOpdArea},
-							   {fixtureNumberTextView, fixtureNumber},
-							   {uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
-							   {threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading},
-							   {sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading},
-							   {sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading},
-							   {installtionCompleteTextView, installtionComplete}};
+
+		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
+							   {problemTextView, problem},
+							   { mobileNumberTextView, mobileNumber, troubleshootingNumberTextView, troubleshootingNumber}
+							   };
 		
 		// Create layouts and store in ArrayList
 		groups = new ArrayList<ViewGroup> ();
@@ -321,8 +231,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
 		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
-										formDateButton, scanBarcodeButton,
-										facilityName, opdName, opdArea};
+										formDateButton, scanBarcodeButton};
 		
 		for (View v : setListener) {
 			if (v instanceof Spinner) {
@@ -342,8 +251,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {facilityName, otherFacilityName, opdName, otherOpdName, opdArea, otherOpdArea, uniqueIdGenerated, yesInstalltionComplete, 
-							sevenFtUvMeterReading, noSevenFtCorrectReading, sixFtUvMeterReading, noSixFtCorrectReading, threeFtUvMeterReading, noThreeFtCorrectReading};
+		views = new View[] {uniqueIdGenerated};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -362,113 +270,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			}
 		}
 		
-		threeFtUvMeterReading.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-					
-				  try {
-				 	String val = App.get(threeFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
-				 	
-				 	if(valNumber < 0.4){
-				 		threeFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		threeFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		threeFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		threeFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  threeFtCorrectReadingTextView.setVisibility(View.GONE);
-					  threeFtCorrectReading.setVisibility(View.GONE);
-				 	  noThreeFtCorrectReading.setChecked(true);
-				  }
-				  
-				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
-					  saveButton.setEnabled(true);
-				  }
-				 else
-					 saveButton.setEnabled(false);
-			  }
-			  
-	       });
-		
-		sixFtUvMeterReading.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				 try{	
-				 	String val = App.get(sixFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
-				 	
-				 	if(valNumber < 0.4){
-				 		sixFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		sixFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		sixFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		sixFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  sixFtCorrectReadingTextView.setVisibility(View.GONE);
-					  sixFtCorrectReading.setVisibility(View.GONE);
-				 	  noSixFtCorrectReading.setChecked(true);
-				  }	
-				 
-				 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
-					  saveButton.setEnabled(true);
-				  }
-				 else
-					 saveButton.setEnabled(false);
-			  }
-			  
-	       });
-		
-		sevenFtUvMeterReading.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-					
-				  try{
-				 	String val = App.get(sevenFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
-				 	
-				 	if(valNumber < 0.4){
-				 		sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		sevenFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		sevenFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		sevenFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-				 	  sevenFtCorrectReading.setVisibility(View.GONE);
-				 	  noSevenFtCorrectReading.setChecked(true);
-				  }	
-				  
-				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
-					  saveButton.setEnabled(true);
-				  }
-				  else 
-					  saveButton.setEnabled(false);
-			  }
-			  
-	       });
-		
 		uniqueIdGenerated.addTextChangedListener(new TextWatcher() {
 
 	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -477,8 +278,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+				  if(!(App.get(problem).equals("")) && !(App.get(mobileNumber).equals("")) &&
+						  !(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
 					  saveButton.setEnabled(true);
 				  }
 				  else
@@ -487,7 +288,60 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			  }
 	       });
 		
+		problem.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(problem).equals("")) && !(App.get(mobileNumber).equals("")) &&
+						  !(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+					  saveButton.setEnabled(true);
+				  }
+				  else
+					  saveButton.setEnabled(false);
+				
+			  }
+	       });
 		
+		mobileNumber.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(problem).equals("")) && !(App.get(mobileNumber).equals("")) &&
+						  !(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+					  saveButton.setEnabled(true);
+				  }
+				  else
+					  saveButton.setEnabled(false);
+				
+			  }
+	       });
+		
+		troubleshootingNumber.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(problem).equals("")) && !(App.get(mobileNumber).equals("")) &&
+						  !(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+					  saveButton.setEnabled(true);
+				  }
+				  else
+					  saveButton.setEnabled(false);
+				
+			  }
+	       });
+
 	}
 
 	@Override
@@ -498,21 +352,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		Date date = new Date();
 		formDate.setTime(date);
 		
-		View[] goneView = new View[]{otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea,
-				threeFtCorrectReadingTextView, threeFtCorrectReading, sixFtCorrectReadingTextView, sixFtCorrectReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading};
-		for(View v : goneView){
-			v.setVisibility(View.GONE);
-		}
-		
-		fixtureNumber.setValue(0);
-
-		for(View view : views){
-			if(view instanceof TextView)
-				((TextView) view).setHintTextColor (getResources ().getColor (R.color.DarkGray));
-		}
-		
-		saveButton.setEnabled(false);
-		
 		updateDisplay ();
 	}
 
@@ -521,12 +360,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	{
 		formDateButton.setText (DateFormat.format ("dd-MMM-yyyy", formDate));
 		
-		if (formDate.getTime().after(new Date())) {
-			formDateButton.setTextColor(getResources ().getColor (R.color.Red));
-		}
-		else{
-			formDateButton.setTextColor(getResources ().getColor (R.color.mainTheme));
-		}
+
 	}
 
 	@Override
@@ -535,8 +369,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		boolean valid = true;
 		StringBuffer message = new StringBuffer ();
 		// Validate mandatory controls
-		View[] mandatory = {otherFacilityName, otherOpdName, otherOpdArea, uniqueIdGenerated,
-							threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading};
+		View[] mandatory = {uniqueIdGenerated,problem,mobileNumber,troubleshootingNumber};
 		for (View view : mandatory)
 		{
 			if(view.getVisibility() == View.VISIBLE){
@@ -550,7 +383,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				else
 				{
 					// Turn hint color back to Black
-					((TextView) view).setHintTextColor (getResources ().getColor (R.color.DarkGray));
+					((TextView) view).setHintTextColor (getResources ().getColor (R.color.Black));
 				}
 			}
 		}
@@ -582,20 +415,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			}
 			
 		} catch (NumberFormatException e) { }
-		
-		
-		if(valid){
-			int val = fixtureNumber.getValue();
-			if(val == 0){
-				valid = false;
-				message.append(fixtureNumber.getTag().toString()
-						+ ": "
-						+ getResources().getString(
-								R.string.invalid_data) + "\n");
-			}
-		}
-					
-		
+				
 		if (!valid)
 		{
 			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
@@ -644,12 +464,12 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiInstallationActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.ERROR, result).show ();
 					}
 					loading.dismiss ();
 				}
@@ -769,37 +589,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	@Override
 	public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
 	{
-		MySpinner spinner = (MySpinner) parent;
-		if(spinner == facilityName){
-			if(App.get(spinner).equalsIgnoreCase("Other")){
-				otherFacilityNameTextView.setVisibility(View.VISIBLE);
-				otherFacilityName.setVisibility(View.VISIBLE);
-			}
-			else{
-				otherFacilityNameTextView.setVisibility(View.GONE);
-				otherFacilityName.setVisibility(View.GONE);
-			}
-		}
-		else if(spinner == opdName){
-			if(App.get(spinner).equalsIgnoreCase("Other")){
-				otherOpdNameTextView.setVisibility(View.VISIBLE);
-				otherOpdName.setVisibility(View.VISIBLE);
-			}
-			else{
-				otherOpdNameTextView.setVisibility(View.GONE);
-				otherOpdName.setVisibility(View.GONE);
-			}
-		}
-		else if(spinner == opdArea){
-			if(App.get(spinner).equalsIgnoreCase("Other")){
-				otherOpdAreaTextView.setVisibility(View.VISIBLE);
-				otherOpdArea.setVisibility(View.VISIBLE);
-			}
-			else{
-				otherOpdAreaTextView.setVisibility(View.GONE);
-				otherOpdArea.setVisibility(View.GONE);
-			}
-		}
+
 		
 	}
 

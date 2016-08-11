@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    
-    
     <string name="close_form">Close this form?</string>
     <string name="confirm_close">Are you sure you want to close this form? All unsaved changes will be lost.</string>
     <string name="clear_form">Clear this form?</string>
@@ -20,7 +18,7 @@
     <string name="send_close">Are you sure you want to send this message?</string>
     <string name="missing_union_council">Missing Union Council. Please contact admin to resolve the issue.</string>
     <string name="patients_not_found">No Patients were found matching given parameters</string>
-    
+    <string name="success_form_submission">form saved successfully.</string>
     
 
 </resources>

@@ -14,6 +14,8 @@ package com.ihsinformatics.aic.shared;
 public class FormType
 {
 	
-	public static final String	UVGI_INSATLLATION		=  "UVGI Lights Installation";
-	public static final String	UVGI_MAINTENANCE		=  "UVGI Lights Maintenance";
+	public static final String	UVGI_INSATLLATION			   =  "UVGI Lights Installation";
+	public static final String	UVGI_MAINTENANCE			   =  "UVGI Lights Maintenance";
+	public static final String	UVGI_TROUBLESHOOT_LOG   	   =  "UVGI Troubleshoot Log";
+	public static final String	UVGI_TROUBLESHOOT_RESOLUTION   =  "UVGI Troubleshoot Resolution";
 }

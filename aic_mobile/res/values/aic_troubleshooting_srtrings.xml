@@ -3,7 +3,16 @@
 
     <string name="unique_id_fixture">What is the unique ID as written on the fixture?</string>
     <string name="problem_with_fixture">What is the problem?</string>
+    <string name="problem_with_fixture_hint">Explain problem....</string>
     <string name="mobile_number">Please enter your mobile number in case of more information needed.</string>
-    <string name="troubleshooting_number">Trouble shooting number</string>
+    <string name="mobile_number_hint">XXXXXXXXXXX</string>
+    <string name="troubleshooting_number">Troubleshooting number</string>
+    <string name="troubleshooting_number_hint"></string>
+
+    <string name="problem_resolved">Is the problem resolved?</string>
+    <string name="reason_problem_not_resolved">Why wasn\'t the issue resolved?</string>
+    <string name="reason_problem_not_resolved_hint">Reason issue not resolved</string>
+    <string name="problem">What was the problem?</string>
+    <string name="problem_resolved_by">Name of troubleshooter?</string>
 
 </resources>

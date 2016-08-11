@@ -80,7 +80,7 @@ public class MyEditText extends EditText
 	{
 		super.setEnabled(flag);
 		if(flag){
-			setTextColor(getResources().getColor(R.color.BlueShade));
+			setTextColor(getResources().getColor(R.color.mainTheme));
 		}	
 		else{
 			setTextColor(getResources().getColor(R.color.DarkGray));

@@ -14,15 +14,17 @@
     <string name="lamps_removed">Lamps Removed?</string>
     <string name="lamps_microfiber">Lamps cleaned with microfiber alcohol wipe?</string>
     <string name="interior_microfiber">Interior of fixture cleaned with microfiber alcohol wipe?</string>
-    <string name="lamp_replacement">Replacement of any part?</string>
-    <string name="parts_replaced">What parts where replaced?</string>
+    <string name="parts_replacement">Replacement of any part?</string>
+    <string name="parts_replaced">What parts were replaced?</string>
+    <string name="parts_replaced_hint">Specify (comma separated)</string>
     <string name="lamps_reinstalled">Lamps re-installed correctly?</string>
     <string name="louver_closed">Louver Closed?</string>
     <string name="power_connect">Power fixture on?</string>
     <string name="light_working">Fixture working?</string>
-    <string name="reading_after_3ft_cleaning">Meter Reading at 6ft after cleaning?</string>
+    <string name="reading_after_3ft_cleaning">Meter Reading at 3ft after cleaning?</string>
     <string name="reading_after_6ft_cleaning">Meter Reading at 6ft after Cleaning?</string>
     <string name="reading_after_7ft_cleaning">Meter Reading at 7ft after Cleaning?</string>
     <string name="maintenance_person_name">What is the First and Last Name of the person who conducted the maintenance?</string>
+    <string name="maintenance_person_name_hint">Specify Full Name</string>
 
 </resources>
