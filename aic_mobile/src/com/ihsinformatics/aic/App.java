@@ -356,31 +356,31 @@ public class App
 		{
 			case ERROR :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_cross));
-				imageView.setBackgroundColor(context.getResources().getColor(R.color.error_color));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.pink_background));
 				dialogButton.setBackgroundResource(R.drawable.pink_button);
 				title.setTextColor(context.getResources().getColor(R.color.error_color));
 				break;
 			case SUCCESS :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_success));
-				imageView.setBackgroundColor(context.getResources().getColor(R.color.success_color));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.green_background));
 				dialogButton.setBackgroundResource(R.drawable.green_button);
 				title.setTextColor(context.getResources().getColor(R.color.success_color));
 				break;
 			case INFO :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_info));
-				imageView.setBackgroundColor(context.getResources().getColor(R.color.question_color));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.orange_background));
 				dialogButton.setBackgroundResource(R.drawable.blue_button);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case QUESTION:
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_question));
-				imageView.setBackgroundColor(context.getResources().getColor(R.color.question_color));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.orange_background));
 				dialogButton.setBackgroundResource(R.drawable.blue_button);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case URGENT:
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_info));
-				imageView.setBackgroundColor(context.getResources().getColor(R.color.info_color));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.red_background));
 				dialogButton.setBackgroundResource(R.drawable.red_button);
 				title.setTextColor(context.getResources().getColor(R.color.info_color));
 				break;

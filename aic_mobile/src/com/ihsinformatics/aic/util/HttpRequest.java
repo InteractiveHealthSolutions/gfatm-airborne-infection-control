@@ -18,7 +18,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -91,7 +95,7 @@ public class HttpRequest
 	 * @param content
 	 * @return
 	 */
-	public String clientPost (String postUri, String content)
+	public String clientPost (String postUri, String json, String content)
 	{
 		HttpsClient client = new HttpsClient (context);
 		HttpUriRequest request = null;
@@ -101,16 +105,18 @@ public class HttpRequest
 		String auth = "";
 		try
 		{
-			/*
-			 * Uncomment if you do not want to send data in Parameters HttpPost
+			
+			/* Uncomment if you do not want to send data in Parameters HttpPost
 			 * httpPost = new HttpPost (postUri); httpPost.setHeader ("Accept",
 			 * "application/json"); httpPost.setHeader ("Content-Type",
 			 * "application/json"); StringEntity stringEntity = new StringEntity
 			 * (content); httpPost.setEntity (stringEntity); request = httpPost;
-			 */
-			auth = Base64.encodeToString ((App.getUsername () + ":" + App.getPassword ()).getBytes ("UTF-8"), Base64.NO_WRAP);
-			request = new HttpGet (postUri);
-			request.addHeader ("Authorization", auth);
+			*/
+			
+			//auth = Base64.encodeToString ((App.getUsername () + ":" + App.getPassword ()).getBytes ("UTF-8"), Base64.NO_WRAP);
+			String finalRequestString = URLEncoder.encode(json,"UTF-8");
+			request = new HttpGet (postUri+json);
+			//request.addHeader ("Authorization", auth);
 			response = client.execute (request);
 			entity = response.getEntity ();
 			InputStream is = entity.getContent ();
@@ -137,4 +143,31 @@ public class HttpRequest
 		}
 		return builder.toString ();
 	}
+	
+	/*public String clientPost (String postUri, String json, String context)
+	{
+		HttpURLConnection httpConnection = null;
+		OutputStream outputStream = null;
+		int responseCode = 0;
+		String message = null;
+		URL url;
+		try {
+			url = new URL(postUri);
+			httpConnection = (HttpURLConnection) url.openConnection();
+			httpConnection.setRequestProperty("Content-Type", "application/json");
+			httpConnection.setRequestProperty("Content-Language", "en-US");
+			httpConnection.setDoOutput(true);
+			outputStream = httpConnection.getOutputStream();
+			outputStream.write(json.getBytes());
+			outputStream.flush();
+			outputStream.close();
+			responseCode = httpConnection.getResponseCode();
+			message =  httpConnection.getResponseMessage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			httpConnection.disconnect();
+		}
+	  return message;
+	}*/
 }

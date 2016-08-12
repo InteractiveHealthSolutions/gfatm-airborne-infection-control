@@ -3,18 +3,18 @@
     android:layout_height="fill_parent"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
-    android:background="#F0FFFF" >
+    android:background="#F0FFFF"
+     >
 
 	<ImageView
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:paddingTop="10dp"
-    	android:paddingBottom="10dp"
     	android:id="@+id/a"
    	 	android:gravity="center"
-    	android:background="#BC4949"
+    	android:background="@drawable/pink_background"
     	android:src="@drawable/dialog_cross"
-    	android:scaleType="fitCenter" />
+    	android:scaleType="fitCenter"
+     />
 
 	<LinearLayout 
 	    android:layout_below="@+id/a"
@@ -63,6 +63,8 @@
 			    android:background="@drawable/pink_button"
 			    android:text="Left Button"
 			    android:textColor="#ffffffff"
+			    android:layout_marginLeft="2dp"
+			    android:layout_marginBottom="2dp"
 			    android:layout_marginRight="2dp"
 			    android:visibility="gone"
 			    />
@@ -72,6 +74,8 @@
 			    android:layout_width="0dp"
 			    android:layout_height="wrap_content"
 			    android:layout_weight="1"
+			    android:layout_marginBottom="2dp"
+			    android:layout_marginRight="2dp"
 			    android:background="@drawable/pink_button"
 			    android:text="@string/ok"
 			    android:textColor="#ffffffff" />
@@ -84,7 +88,8 @@
 			    android:background="@drawable/pink_button"
 			    android:text="Right Button"
 			    android:textColor="#ffffffff"
-			    android:layout_marginLeft="2dp"
+			    android:layout_marginRight="2dp"
+			    android:layout_marginBottom="2dp"
 			    android:visibility="gone"
 			   />
 			

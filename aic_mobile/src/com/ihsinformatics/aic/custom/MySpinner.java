@@ -45,11 +45,12 @@ public class MySpinner extends Spinner
 	 */
 	public MySpinner (Context context, String[] itemList, int tag, int hint)
 	{
-		super (context);
+		super (context, Spinner.MODE_DIALOG);
 		this.itemList = itemList;
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (context, R.drawable.custom_spinner_item_enabled, this.itemList);
+		arrayAdapter.setDropDownViewResource(android.R.layout.simple_selectable_list_item);
 		setAdapter (arrayAdapter);
-		setLayoutParams (new LayoutParams (LayoutParams.MATCH_PARENT, getResources ().getDimensionPixelSize (R.dimen.gigantic)));
+		setLayoutParams (new LayoutParams (LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		if (tag != -1)
 		{
 			setTag (getResources ().getString (tag));

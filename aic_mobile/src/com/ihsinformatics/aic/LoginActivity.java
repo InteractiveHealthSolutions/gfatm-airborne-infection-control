@@ -184,7 +184,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						{
 							loading.setIndeterminate (true);
 							loading.setCancelable (false);
-							loading.show ();
+							//loading.show ();
 						}
 					});
 					
@@ -230,7 +230,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					
 					values.put ("username", App.getUsername());
 					values.put ("password", App.getPassword());
-					values.put ("starttime", App.getSqlDateTime(startDateTime));
+					values.put ("starttime", App.getSqlDate(startDateTime));
 					
 					String exists = serverService.authenticate (RequestType.LOGIN, values);     
 					return exists;

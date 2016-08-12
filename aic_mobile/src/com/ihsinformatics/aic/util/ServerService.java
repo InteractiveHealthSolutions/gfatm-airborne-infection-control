@@ -45,7 +45,7 @@ public class ServerService {
 	{
 		this.context = context;
 		String prefix = "http" + (App.isUseSsl () ? "s" : "") + "://";
-		tbr3Uri = prefix + App.getServer () + "/gf-aic-web";
+		tbr3Uri = prefix + App.getServer () + "/gf-aic-web/gfaicweb.jsp";
 		//tbr3Uri = prefix + App.getServer () + "/eIMCIweb";
 		httpClient = new HttpRequest (this.context);
 		httpsClient = new HttpsClient (this.context);
@@ -198,8 +198,9 @@ public class ServerService {
 			}
 			if (App.isUseSsl ())
 				response = httpsClient.clientPost (tbr3Uri + json, null);
-			else
-				response = httpClient.clientPost (tbr3Uri + json, null);
+			else{
+				response = httpClient.clientPost (tbr3Uri , json, null);
+			}
 		}
 		catch (JSONException e)
 		{
@@ -1522,8 +1523,10 @@ public String[][] getClassifications(String id){
 			json.put ("app_ver", App.getVersion ());
 			json.put ("type", encounterType);
 			json.put ("username", values.getAsString ("username"));
+			json.put ("password", values.getAsString ("password"));
 			json.put ("starttime", values.getAsString ("starttime"));
-			response = post ("?content=" + JsonUtil.getEncodedJson (json));
+			String val = "?content=" + json.toString();
+			response = post (val);
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
 			if (jsonResponse.has ("result"))
 			{
@@ -1540,11 +1543,11 @@ public String[][] getClassifications(String id){
 			Log.e (TAG, e.getMessage ());
 			response = context.getResources ().getString (R.string.insert_error);
 		}
-		catch (UnsupportedEncodingException e)
+		/*catch (UnsupportedEncodingException e)
 		{
 			Log.e (TAG, e.getMessage ());
 			response = context.getResources ().getString (R.string.insert_error);
-		}
+		}*/
 		return response;
 	}
 	
