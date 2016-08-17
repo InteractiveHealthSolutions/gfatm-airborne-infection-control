@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -196,11 +197,14 @@ public class ServerService {
 				responseJson.put ("result", "FAIL: Application Offline");
 				return responseJson.toString ();
 			}
-			if (App.isUseSsl ())
+			/*if (App.isUseSsl ())
 				response = httpsClient.clientPost (tbr3Uri + json, null);
 			else{
-				response = httpClient.clientPost (tbr3Uri , json, null);
-			}
+				response = httpClient.clientPost (tbr3Uri + json, null);
+			}*/
+			
+			response = httpClient.makeRequest(tbr3Uri, json);
+			
 		}
 		catch (JSONException e)
 		{
@@ -1525,7 +1529,7 @@ public String[][] getClassifications(String id){
 			json.put ("username", values.getAsString ("username"));
 			json.put ("password", values.getAsString ("password"));
 			json.put ("starttime", values.getAsString ("starttime"));
-			String val = "?content=" + json.toString();
+			String val = /*"?content=" +*/ json.toString();
 			response = post (val);
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
 			if (jsonResponse.has ("result"))
@@ -1538,7 +1542,7 @@ public String[][] getClassifications(String id){
 				return response;
 			}
 		}
-		catch (JSONException e)
+		catch (JSONException e) 
 		{
 			Log.e (TAG, e.getMessage ());
 			response = context.getResources ().getString (R.string.insert_error);
