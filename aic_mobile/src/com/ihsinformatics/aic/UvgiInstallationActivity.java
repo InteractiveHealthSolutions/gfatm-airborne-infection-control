@@ -132,6 +132,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyRadioGroup		installtionComplete;
 	MyRadioButton		yesInstalltionComplete;
 	MyRadioButton		noInstalltionComplete;
+	
+	Calendar			startDateTime;
 
 	/**
 	 * Subclass representing Fragment for feedback form
@@ -493,6 +495,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	@Override
 	public void initView (View[] views)
 	{
+		
+		startDateTime = Calendar.getInstance ();
+		
 		super.initView (views);
 		formDate = Calendar.getInstance ();
 		Date date = new Date();
@@ -627,6 +632,34 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 							loading.show ();
 						}
 					});
+					
+					final ArrayList<String[]> observations = new ArrayList<String[]>();
+					final ContentValues values = new ContentValues ();
+					
+					values.put ("username", App.getUsername());
+					values.put ("password", App.getPassword());
+					values.put ("starttime", App.getSqlDateTime(startDateTime));
+					values.put ("uvgi_install_location", "IHS");
+					values.put ("entereddate", App.getSqlDate(formDate));
+					values.put ("uvgi_installed", yesInstalltionComplete.isChecked() ? "Yes" : "No");
+					
+					
+					observations.add(new String[] { "facility_name",  App.get(facilityName)});
+					if(otherFacilityName.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "facility_name",  App.get(otherFacilityName)});
+					observations.add(new String[] { "opd_name",  App.get(opdName)});
+					if(otherOpdName.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "opd_name",  App.get(otherOpdName)});
+					observations.add(new String[] { "opd_area",  App.get(opdArea)});
+					if(otherOpdArea.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "opd_area",  App.get(opdArea)});
+					observations.add(new String[] { "fixture_number",  String.valueOf(fixtureNumber.getValue())});
+					observations.add(new String[] { "id",  App.get(uniqueIdGenerated)});
+					observations.add(new String[] { "3ft_reading",  String.valueOf(threeFtUvMeterReading)});
+					if(otherOpdArea.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "3ft_reading_correct",  App.get(opdArea)});
+					observations.add(new String[] { "6ft_reading",  String.valueOf(sixFtUvMeterReading)});
+					observations.add(new String[] { "7ft_reading",   String.valueOf(sevenFtUvMeterReading)});
 					
 					//String result = serverService.saveFeedback (FORM_NAME, values);
 					String result = "SUCCESS";

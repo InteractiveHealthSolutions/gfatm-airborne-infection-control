@@ -230,12 +230,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 					
 					values.put ("username", App.getUsername());
 					values.put ("password", App.getPassword());
-					values.put ("starttime", App.getSqlDate(startDateTime));
+					values.put ("starttime", App.getSqlDateTime(startDateTime));
+				
+					/*String exists = serverService.authenticate (RequestType.LOGIN, values);     
+					return exists;*/
 					
-					String exists = serverService.authenticate (RequestType.LOGIN, values);     
-					return exists;
-					
-					//return "SUCCESS";
+					return "SUCCESS";
 				}
 
 				@Override

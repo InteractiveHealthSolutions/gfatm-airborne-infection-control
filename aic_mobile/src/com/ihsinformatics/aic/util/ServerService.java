@@ -197,14 +197,9 @@ public class ServerService {
 				responseJson.put ("result", "FAIL: Application Offline");
 				return responseJson.toString ();
 			}
-			/*if (App.isUseSsl ())
-				response = httpsClient.clientPost (tbr3Uri + json, null);
-			else{
-				response = httpClient.clientPost (tbr3Uri + json, null);
-			}*/
 			
-			response = httpClient.makeRequest(tbr3Uri, json);
-			
+			response = HttpRequest.makeRequest(tbr3Uri, json);
+		
 		}
 		catch (JSONException e)
 		{
@@ -1524,12 +1519,12 @@ public String[][] getClassifications(String id){
 		try
 		{
 			JSONObject json = new JSONObject ();
-			json.put ("app_ver", App.getVersion ());
+			json.put ("appver", App.getVersion ());
 			json.put ("type", encounterType);
 			json.put ("username", values.getAsString ("username"));
 			json.put ("password", values.getAsString ("password"));
 			json.put ("starttime", values.getAsString ("starttime"));
-			String val = /*"?content=" +*/ json.toString();
+			String val = json.toString();
 			response = post (val);
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
 			if (jsonResponse.has ("result"))
@@ -1547,11 +1542,6 @@ public String[][] getClassifications(String id){
 			Log.e (TAG, e.getMessage ());
 			response = context.getResources ().getString (R.string.insert_error);
 		}
-		/*catch (UnsupportedEncodingException e)
-		{
-			Log.e (TAG, e.getMessage ());
-			response = context.getResources ().getString (R.string.insert_error);
-		}*/
 		return response;
 	}
 	

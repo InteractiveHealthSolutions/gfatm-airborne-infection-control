@@ -155,34 +155,12 @@ public class HttpRequest
 		return builder.toString ();
 	}
 	
-	public static String makeRequestss(String uri, String json) {
-	    try {
-	    	String finalRequestString = URLEncoder.encode(json,"UTF-8");
-	        HttpPost httpPost = new HttpPost(uri+json);
-	        //httpPost.setEntity(new StringEntity(json));
-	        httpPost.setHeader("Accept", "application/json");
-	        httpPost.setHeader("Content-type", "application/json");
-	        HttpResponse response = new DefaultHttpClient().execute(httpPost);
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-	        StringBuilder builder = new StringBuilder ();
-			String line = null;
-			while ((line = reader.readLine ()) != null)
-				builder.append (line);
-			return builder.toString();
-	    } catch (UnsupportedEncodingException e) {
-	        e.printStackTrace();
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
-	}
-	
 	public static String makeRequest(String uri, String json){
 		HttpURLConnection httpConnection = null;
 		OutputStream outputStream = null;
+		InputStream inputStream = null;
 		int responseCode = 0;
+		StringBuilder sb = null;
 		URL url;
 		try {
 			url = new URL(uri);
@@ -194,14 +172,29 @@ public class HttpRequest
 			outputStream.write(json.getBytes());
 			outputStream.flush();
 			outputStream.close();
+			
+			httpConnection.connect();
+			
 			responseCode = httpConnection.getResponseCode();
-			return httpConnection.getResponseMessage();
+	         
+	         if (responseCode == HttpURLConnection.HTTP_OK) 
+	        	 inputStream = httpConnection.getInputStream();
+	         else
+	        	 inputStream = httpConnection.getErrorStream();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader((inputStream)));
+			sb = new StringBuilder();
+			String output;
+			while ((output = br.readLine()) != null) {
+				sb.append(output);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			httpConnection.disconnect();
 		}
-		return null;
+		return sb.toString();
 	}
 	
 	public static String makeRequests(String uri, String json) {
