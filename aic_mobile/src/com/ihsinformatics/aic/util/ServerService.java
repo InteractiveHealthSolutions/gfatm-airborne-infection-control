@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -1604,6 +1605,71 @@ public String[][] getClassifications(String id){
 		
 		String[][] users = dbUtil.getTableData ("select id,name from identifiers where type='"+Metadata.USER+"' and name like '"+role+"_"+location+"';");
 		return users;
+	}
+	
+	public String saveUVGIInstallation (String encounterType, ContentValues values, String[][] observations)
+	{
+          	
+		String response = "";
+		
+		String starttime = values.getAsString("starttime");
+		String formDate = values.getAsString ("entereddate");
+		String location = values.getAsString ("uvgi_install_location");
+		String installed = "";
+		if(encounterType.equals(RequestType.UVGI_INSTALLATION))
+			installed = values.getAsString ("uvgi_installed");
+		
+		Calendar endDateTime = Calendar.getInstance ();
+		
+		try
+		{
+			
+			// Save Form
+			JSONObject json = new JSONObject ();
+			json.put ("app_ver", App.getVersion ());
+			json.put ("type", encounterType);
+			json.put ("username", App.getUsername ());
+			json.put ("password", App.getPassword());
+			json.put ("starttime", starttime);
+			if(encounterType.equals(RequestType.UVGI_INSTALLATION))
+				json.put ("uvgi_installed", installed);
+			json.put ("uvgi_install_location", location);
+			json.put ("endtime", App.getSqlDateTime(endDateTime));
+			json.put ("entereddate", formDate);
+			
+			JSONArray obs = new JSONArray ();
+			for (int i = 0; i < observations.length; i++)
+			{
+				if ("".equals (observations[i][0]) || "".equals (observations[i][1]))
+					continue;
+				JSONObject obsJson = new JSONObject ();
+				obsJson.put ("name", observations[i][0]);
+				obsJson.put ("value", observations[i][1]);
+				
+				obs.put (obsJson);
+			}
+			json.put ("obs", obs.toString ());
+			
+			String val = json.toString();
+			response = post (val);
+			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
+			if (jsonResponse == null)
+			{
+				return response;
+			}
+			if (jsonResponse.has ("result"))
+			{
+				String result = jsonResponse.getString ("result");
+				return result;
+			}
+			return response;
+		}
+		catch (JSONException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.invalid_data);
+		}
+		return response;
 	}
 
 }

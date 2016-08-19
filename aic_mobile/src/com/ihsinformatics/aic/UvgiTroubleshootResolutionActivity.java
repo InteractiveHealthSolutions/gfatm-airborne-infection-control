@@ -94,6 +94,8 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 	MyTextView 			resolvedByTextView;
 	MyEditText 			resolvedBy;
+	
+	Calendar			startDateTime;
 
 	/**
 	 * Subclass representing Fragment for feedback form
@@ -414,6 +416,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	@Override
 	public void initView (View[] views)
 	{
+		startDateTime = Calendar.getInstance ();
 		super.initView (views);
 		formDate = Calendar.getInstance ();
 		Date date = new Date();
@@ -521,6 +524,24 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 							loading.show ();
 						}
 					});
+					
+					final ArrayList<String[]> observations = new ArrayList<String[]>();
+					final ContentValues values = new ContentValues ();
+					
+					values.put ("username", App.getUsername());
+					values.put ("password", App.getPassword());
+					values.put ("starttime", App.getSqlDateTime(startDateTime));
+					values.put ("uvgi_install_location", "IHS");
+					values.put ("entereddate", App.getSqlDate(formDate));
+					
+					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
+					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
+					observations.add(new String[] { "PROBLEM_RESOLVED",  yesProblemResolved.isChecked() ? "Y" : "N"});
+					if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "REASON_PROBLEM_UNRESOLVED",  App.get(reasonProblemNotResolved)});
+					observations.add(new String[] { "TROUBLESHOOTER_NAME",  App.get(resolvedBy)});
+					if(problemTextView.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "PROBLEM",  App.get(problem)});
 					
 					//String result = serverService.saveFeedback (FORM_NAME, values);
 					String result = "SUCCESS";

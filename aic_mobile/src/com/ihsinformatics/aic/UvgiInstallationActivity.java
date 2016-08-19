@@ -28,6 +28,7 @@ import com.ihsinformatics.aic.custom.MySpinner;
 import com.ihsinformatics.aic.custom.MyTextView;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
 import android.app.Dialog;
@@ -135,13 +136,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	
 	Calendar			startDateTime;
 
-	/**
-	 * Subclass representing Fragment for feedback form
-	 * 
-	 * @author owais.hussain@irdresearch.org
-	 * 
-	 */
-	class FeedbackFragment extends Fragment
+	
+	class UVIInstallationFragment extends Fragment
 	{
 		int	currentPage;
 
@@ -182,7 +178,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		@Override
 		public Fragment getItem (int arg0)
 		{
-			FeedbackFragment fragment = new FeedbackFragment ();
+			UVIInstallationFragment fragment = new UVIInstallationFragment ();
 			Bundle data = new Bundle ();
 			data.putInt ("current_page", arg0 + 1);
 			fragment.setArguments (data);
@@ -636,33 +632,34 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					final ArrayList<String[]> observations = new ArrayList<String[]>();
 					final ContentValues values = new ContentValues ();
 					
-					values.put ("username", App.getUsername());
-					values.put ("password", App.getPassword());
 					values.put ("starttime", App.getSqlDateTime(startDateTime));
 					values.put ("uvgi_install_location", "IHS");
 					values.put ("entereddate", App.getSqlDate(formDate));
-					values.put ("uvgi_installed", yesInstalltionComplete.isChecked() ? "Yes" : "No");
+					values.put ("uvgi_installed", yesInstalltionComplete.isChecked() ? "Y" : "N");
 					
-					
-					observations.add(new String[] { "facility_name",  App.get(facilityName)});
+					observations.add(new String[] { "UVGI_INSTALL_LOCATION",  App.get(facilityName)});
 					if(otherFacilityName.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "facility_name",  App.get(otherFacilityName)});
-					observations.add(new String[] { "opd_name",  App.get(opdName)});
+						observations.add(new String[] { "UVGI_INSTALL_OTHER_LOCATION",  App.get(otherFacilityName)});
+					observations.add(new String[] { "OPD",  App.get(opdName)});
 					if(otherOpdName.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "opd_name",  App.get(otherOpdName)});
-					observations.add(new String[] { "opd_area",  App.get(opdArea)});
+						observations.add(new String[] { "OPD",  App.get(otherOpdName)});
+					observations.add(new String[] { "OPD_AREA",  App.get(opdArea)});
 					if(otherOpdArea.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "opd_area",  App.get(opdArea)});
-					observations.add(new String[] { "fixture_number",  String.valueOf(fixtureNumber.getValue())});
-					observations.add(new String[] { "id",  App.get(uniqueIdGenerated)});
-					observations.add(new String[] { "3ft_reading",  String.valueOf(threeFtUvMeterReading)});
-					if(otherOpdArea.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "3ft_reading_correct",  App.get(opdArea)});
-					observations.add(new String[] { "6ft_reading",  String.valueOf(sixFtUvMeterReading)});
-					observations.add(new String[] { "7ft_reading",   String.valueOf(sevenFtUvMeterReading)});
+						observations.add(new String[] { "OPD_AREA",  App.get(opdArea)});
+					observations.add(new String[] { "FIXTURE_NUMBER",  String.valueOf(fixtureNumber.getValue())});
+					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
+					observations.add(new String[] { "UV_READ_3FT",  App.get(threeFtUvMeterReading)});
+//					if(threeFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "3ft_reading_correct",  yesThreeFtCorrectReading.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_READ_6FT",  App.get(sixFtUvMeterReading)});
+//					if(sixFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "6ft_reading_correct",  yesSixFtCorrectReading.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_READ_7FT",   App.get(sevenFtUvMeterReading)});
+//					if(sevenFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "7ft_reading_correct",  yesSevenFtCorrectReading.isChecked() ? "Y" : "N"});
 					
-					//String result = serverService.saveFeedback (FORM_NAME, values);
-					String result = "SUCCESS";
+					String result = serverService.saveUVGIInstallation (RequestType.UVGI_INSTALLATION, values, observations.toArray(new String[][] {}));
+					//String result = "SUCCESS";
 					return result;
 				}
 

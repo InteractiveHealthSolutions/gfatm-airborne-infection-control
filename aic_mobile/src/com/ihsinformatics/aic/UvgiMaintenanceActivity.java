@@ -139,7 +139,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 
 	MyTextView 			lightWorkingTextView;
 	MyRadioGroup 		lightWorking;
-	MyRadioButton 		yesLightorking;
+	MyRadioButton 		yesLightWorking;
 	MyRadioButton 		noLightWorking;
 
 	MyTextView			threeFtUvMeterReadingTextView;
@@ -168,15 +168,11 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 
 	MyTextView 			maintenancePersonNameTextView;
 	MyEditText 			maintenancePersonName;
+	
+	Calendar			startDateTime;
 
 
-	/**
-	 * Subclass representing Fragment for feedback form
-	 * 
-	 * @author owais.hussain@irdresearch.org
-	 * 
-	 */
-	class FeedbackFragment extends Fragment
+	class UVIMaintenanceFragment extends Fragment
 	{
 		int	currentPage;
 
@@ -217,7 +213,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		@Override
 		public Fragment getItem (int arg0)
 		{
-			FeedbackFragment fragment = new FeedbackFragment ();
+			UVIMaintenanceFragment fragment = new UVIMaintenanceFragment ();
 			Bundle data = new Bundle ();
 			data.putInt ("current_page", arg0 + 1);
 			fragment.setArguments (data);
@@ -324,9 +320,9 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		powerConnect = new MyRadioGroup(context,new MyRadioButton[] {noPowerConnect, yesPowerConnect}, R.string.power_connect,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 
 		lightWorkingTextView = new MyTextView (context, R.style.text, R.string.light_working);
-		yesLightorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.yes);
+		yesLightWorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.yes);
 		noLightWorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.no);
-		lightWorking = new MyRadioGroup(context,new MyRadioButton[] {noLightWorking, yesLightorking}, R.string.light_working,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
+		lightWorking = new MyRadioGroup(context,new MyRadioButton[] {noLightWorking, yesLightWorking}, R.string.light_working,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 
 		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_3ft_cleaning);
 		threeFtUvMeterReading = new MyEditText(context,R.string.reading_after_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
@@ -402,7 +398,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
 										formDateButton, scanBarcodeButton, noPowerDisconnected, yesPowerDisconnected, noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
 										noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber, noPartReplaced, yesPartReplaced,
-										noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+										noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 		
 		for (View v : setListener) {
 			if (v instanceof Spinner) {
@@ -474,7 +470,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 				  
 				  if(noPartReplaced.isChecked())
 					   saveButton.setEnabled(true);
@@ -518,7 +514,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 				  
 				 if(noPartReplaced.isChecked())
 					   saveButton.setEnabled(true);
@@ -563,7 +559,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 				  
 				  if(noPartReplaced.isChecked())
 					   saveButton.setEnabled(true);
@@ -591,7 +587,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					 
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -618,7 +614,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					  
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -646,7 +642,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					  
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -674,7 +670,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					  
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -701,7 +697,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					  
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -728,7 +724,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 					  
 					  if(noPartReplaced.isChecked())
 						   saveButton.setEnabled(true);
@@ -748,6 +744,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 	@Override
 	public void initView (View[] views)
 	{
+		startDateTime = Calendar.getInstance ();
 		super.initView (views);
 		formDate = Calendar.getInstance ();
 		Date date = new Date();
@@ -755,7 +752,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		
 		View[] v = new View[]{noPowerDisconnected, yesPowerDisconnected, noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
 							noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber, noPartReplaced, yesPartReplaced,
-							noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+							noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 		
 		for(View view : v)
 			((RadioButton) view).setChecked(false);
@@ -801,7 +798,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			
 			v = new View[]{noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
 					noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -828,7 +825,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			
 			v = new View[]{noLampsRemoved, yesLampsRemoved,
 					noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -853,7 +850,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				view.setVisibility(View.GONE);
 			
 			v = new View[]{noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -877,7 +874,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				view.setVisibility(View.GONE);
 			
 			v = new View[]{noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -903,7 +900,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+			v = new View[]{noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -926,7 +923,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+			v = new View[]{noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -946,7 +943,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noPowerConnect, yesPowerConnect, noLightWorking, yesLightorking};
+			v = new View[]{noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
@@ -966,13 +963,13 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLightWorking, yesLightorking};
+			v = new View[]{noLightWorking, yesLightWorking};
 
 			for(View view : v)
 				((RadioButton) view).setChecked(false);
 		}
 		
-		if(yesLightorking.isChecked()){
+		if(yesLightWorking.isChecked()){
 			View[] v = new View[]{threeFtUvMeterReadingTextView, threeFtUvMeterReading,
 		               			sixFtUvMeterReadingTextView, sixFtUvMeterReading, 
 		               			sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
@@ -1003,7 +1000,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 				  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 				  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-				  lightWorking.getVisibility() == View.VISIBLE && yesLightorking.isChecked()){
+				  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
 			
 			 if(noPartReplaced.isChecked())
 				   saveButton.setEnabled(true);
@@ -1103,6 +1100,42 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 							loading.show ();
 						}
 					});
+					
+					final ArrayList<String[]> observations = new ArrayList<String[]>();
+					final ContentValues values = new ContentValues ();
+					
+					values.put ("starttime", App.getSqlDateTime(startDateTime));
+					values.put ("uvgi_install_location", "IHS");
+					values.put ("entereddate", App.getSqlDate(formDate));
+					
+					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
+					observations.add(new String[] { "UV_READ_3FT_BEFORE_CLEAN",  App.get(threeFtUvMeterBeforeReading)});
+					observations.add(new String[] { "UV_READ_6FT_BEFORE_CLEAN",  App.get(sixFtUvMeterBeforeReading)});
+					observations.add(new String[] { "UV_READ_7FT_BEFORE_CLEAN",  App.get(sevenFtUvMeterBeforeReading)});
+					observations.add(new String[] { "POWER_DISCONNECTED",  yesPowerDisconnected.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LOUVER_OPENED",  yesLouverOpened.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_REMOVED",  yesLampsRemoved.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_CLEANED_WITH_MICROFIBER_ALCOHOL",  yesLampsMicrofiber.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "INTERIOR_CLEANED_WITH_MICROFIBER_ALCOHOL",  yesInteriorMicrofiber.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_PART_REPLACED",  yesPartReplaced.isChecked() ? "Y" : "N"});
+					if(replacedPartNameTextView.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "PARTS_REPLACED_NAME",  App.get(replacedPartName)});
+					observations.add(new String[] { "LAMPS_REINSTALLED",  yesLampInstalledCorrectly.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LOUVER_CLOSED",  yesLouverClosed.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "POWER_CONNECTED",  yesPowerConnect.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_LIGHT_WORKING",  yesLightWorking.isChecked() ? "Y" : "N"});
+
+					observations.add(new String[] { "UV_READ_3FT_AFTER_CLEAN",  String.valueOf(threeFtUvMeterReading)});
+//					if(threeFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "3ft_reading_correct",  yesThreeFtCorrectReading.isChecked() ? "Yes" : "No"});
+					observations.add(new String[] { "UV_READ_6FT_AFTER_CLEAN",  String.valueOf(sixFtUvMeterReading)});
+//					if(sixFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "6ft_reading_correct",  yesSixFtCorrectReading.isChecked() ? "Yes" : "No"});
+					observations.add(new String[] { "UV_READ_7FT_AFTER_CLEAN",   String.valueOf(sevenFtUvMeterReading)});
+//					if(sevenFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
+//						observations.add(new String[] { "7ft_reading_correct",  yesSevenFtCorrectReading.isChecked() ? "Yes" : "No"});
+
+					observations.add(new String[] { "MAINTENANCE_BY",   String.valueOf(maintenancePersonName)});
 					
 					//String result = serverService.saveFeedback (FORM_NAME, values);
 					String result = "SUCCESS";
@@ -1210,7 +1243,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				view == noLampsRemoved || view == yesLampsRemoved || view == noLampsMicrofiber || view == yesLampsMicrofiber ||
 				view == noInteriorMicrofiber || view == yesInteriorMicrofiber ||  
 				view == noLampInstalledCorrectly || view == yesLampInstalledCorrectly || view == noLouverClosed || view == yesLouverClosed ||
-				view == noPowerConnect || view == yesPowerConnect || view == noLightWorking || view == yesLightorking){
+				view == noPowerConnect || view == yesPowerConnect || view == noLightWorking || view == yesLightWorking){
 			
 			updateDisplay();
 		}

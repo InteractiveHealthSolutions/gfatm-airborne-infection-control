@@ -174,7 +174,6 @@ public class HttpRequest
 			outputStream.close();
 			
 			httpConnection.connect();
-			
 			responseCode = httpConnection.getResponseCode();
 	         
 	         if (responseCode == HttpURLConnection.HTTP_OK) 
