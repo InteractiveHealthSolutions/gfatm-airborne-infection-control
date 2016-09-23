@@ -9,7 +9,7 @@
     <string name="opd_area">In which area of the OPD is the fixtures installed?</string>
     <string name="other_opd_area">Please specify "Other" Area in which fixture has been installed?</string>
     <string name="fixture_number">Fixture Number</string>
-    <string name="unique_id">Unique ID Generated</string>
+    <string name="unique_id">Unique ID</string>
     <string name="ft_3_reading">What is the UV Meter Reading after installation at 3 ft?</string>
     <string name="ft_3_reading_hint">Enter 3 ft UV Reading (µW/cm²)</string>
     <string name="reading_confirmation">Are you sure this is correct?</string>
@@ -36,5 +36,10 @@
         <item>Dispensary (DIS)</item>
         <item>Other</item>
     </string-array>
-
+    
+    <string name="uvgi_reading_warning_3_6_ft"> WARNING: Are you sure the entered reading is correct. Ideally the reading should be less than or equal to 0.4. </string>
+    <string name="uvgi_reading_warning_10_ft"> WARNING: Are you sure the entered reading is correct. Ideally the reading should be greater than or equal to 10. </string>
+	<string name="reason">Reason</string>
+	<string name="reason_hint">Enter Reason for incomplete installation</string>
+     
 </resources>

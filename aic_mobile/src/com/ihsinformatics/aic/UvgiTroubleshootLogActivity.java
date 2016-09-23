@@ -190,7 +190,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		mobileNumber = new MyEditText(context,R.string.mobile_number, R.string.mobile_number_hint, InputType.TYPE_CLASS_NUMBER, R.style.edit, 11, false);
 
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
-		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 11, false);
+		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
 		
 
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
@@ -355,6 +355,12 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		formDate.setTime(date);
 		
 		updateDisplay ();
+		
+	    troubleshootingNumber.setEnabled(false);
+	    Long tsLong = System.currentTimeMillis()/1000;
+	    String ts = tsLong.toString();
+	    troubleshootingNumber.setText(App.getUsername() + "_" + ts);
+		
 	}
 
 	@Override

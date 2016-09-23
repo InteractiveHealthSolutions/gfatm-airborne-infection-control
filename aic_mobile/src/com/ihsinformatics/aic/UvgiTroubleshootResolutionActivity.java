@@ -95,6 +95,9 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	MyTextView 			resolvedByTextView;
 	MyEditText 			resolvedBy;
 	
+	MyTextView 			contactNumberTextView;
+	MyEditText 			contactNumber;
+	
 	Calendar			startDateTime;
 
 	/**
@@ -215,10 +218,13 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		resolvedByTextView = new MyTextView (context, R.style.text, R.string.problem_resolved_by);
 		resolvedBy = new MyEditText(context,R.string.problem_resolved_by, R.string.maintenance_person_name_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
 
+		contactNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshoot_contact_number);
+		contactNumber = new MyEditText(context,R.string.troubleshoot_contact_number, R.string.maintenance_contact_number_hint, InputType.TYPE_CLASS_PHONE, R.style.edit, 50, false);
 
+		
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
 							   {troubleshootingNumberTextView, troubleshootingNumber,  problemResolvedTextView, problemResolved, reasonProblemNotResolvedTextView, reasonProblemNotResolved, problemTextView,problem},
-								{resolvedByTextView,resolvedBy}
+								{resolvedByTextView,resolvedBy, contactNumberTextView, contactNumber}
 							   };
 		
 		// Create layouts and store in ArrayList
@@ -276,7 +282,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {uniqueIdGenerated, troubleshootingNumber, problem, reasonProblemNotResolved, resolvedBy};
+		views = new View[] {uniqueIdGenerated, troubleshootingNumber, problem, reasonProblemNotResolved, resolvedBy, contactNumber};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -304,7 +310,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals("")) ){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 						  saveButton.setEnabled(true);
@@ -327,7 +333,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 						  saveButton.setEnabled(true);
@@ -350,7 +356,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 						  saveButton.setEnabled(true);
@@ -373,7 +379,30 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
+					  
+					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
+						  saveButton.setEnabled(true);
+					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
+						  saveButton.setEnabled(true);
+					  else
+						  saveButton.setEnabled(false);
+				  }
+				  else
+					  saveButton.setEnabled(false);
+				
+			  }
+	       });
+		
+		contactNumber.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 						  saveButton.setEnabled(true);
@@ -396,7 +425,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 						  saveButton.setEnabled(true);
@@ -492,6 +521,17 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			}
 			
 		} catch (NumberFormatException e) { }
+		
+		// Phone Number
+		if (App.get(contactNumber).length() != contactNumber.getMaxLength()) {
+			valid = false;
+			message.append(contactNumber.getTag().toString()
+					+ ": "
+					+ getResources().getString(
+							R.string.invalid_data) + "\n");
+			contactNumber.setTextColor(getResources().getColor(
+					R.color.Red));
+		}
 					
 		if (!valid)
 		{
@@ -540,6 +580,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 					if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE)
 						observations.add(new String[] { "REASON_PROBLEM_UNRESOLVED",  App.get(reasonProblemNotResolved)});
 					observations.add(new String[] { "TROUBLESHOOTER_NAME",  App.get(resolvedBy)});
+					observations.add(new String[] { "TROUBLESHOOTER_CONTACT",  App.get(contactNumber)});
 					if(problemTextView.getVisibility() == View.VISIBLE)
 						observations.add(new String[] { "PROBLEM",  App.get(problem)});
 					
@@ -666,7 +707,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 				problem.setVisibility(View.VISIBLE);				
 			}
 			
-			if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals(""))){
+			if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 				  
 				  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
 					  saveButton.setEnabled(true);

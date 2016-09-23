@@ -27,6 +27,7 @@
     <string name="installation">Installation</string>
     <string name="maintenance">Maintenance</string>
     <string name="troubleshooting_log">Troubleshooting Log</string>
+    <string name="troubleshooting_status">Troubleshooting Status</string>
     <string name="troubleshooting_resolution">Troubleshooting Resolution</string>
     
     <string name="uvgi_lights">UVGI Lights</string>

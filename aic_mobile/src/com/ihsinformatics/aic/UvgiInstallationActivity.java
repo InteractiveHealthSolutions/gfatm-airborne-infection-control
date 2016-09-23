@@ -54,6 +54,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -98,9 +99,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyTextView			otherOpdAreaTextView;
 	MyEditText			otherOpdArea;
 	
-	MyTextView			fixtureNumberTextView;
-	NumberPicker		fixtureNumber;
-	
 	MyTextView			uniqueIdGeneratedTextView;
 	MyEditText			uniqueIdGenerated;
 	MyButton			scanBarcodeButton;
@@ -108,31 +106,34 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyTextView			threeFtUvMeterReadingTextView;
 	MyEditText			threeFtUvMeterReading;
 	
-	MyTextView			threeFtCorrectReadingTextView;
+	/*MyTextView			threeFtCorrectReadingTextView;
 	MyRadioGroup		threeFtCorrectReading;
 	MyRadioButton		yesThreeFtCorrectReading;
-	MyRadioButton		noThreeFtCorrectReading;
+	MyRadioButton		noThreeFtCorrectReading;*/
 	
 	MyTextView			sixFtUvMeterReadingTextView;
 	MyEditText			sixFtUvMeterReading;
 	
-	MyTextView			sixFtCorrectReadingTextView;
+	/*MyTextView			sixFtCorrectReadingTextView;
 	MyRadioGroup		sixFtCorrectReading;
 	MyRadioButton		yesSixFtCorrectReading;
-	MyRadioButton		noSixFtCorrectReading;
+	MyRadioButton		noSixFtCorrectReading;*/
 	
 	MyTextView			sevenFtUvMeterReadingTextView;
 	MyEditText			sevenFtUvMeterReading;
 	
-	MyTextView			sevenFtCorrectReadingTextView;
+	/*MyTextView			sevenFtCorrectReadingTextView;
 	MyRadioGroup		sevenFtCorrectReading;
 	MyRadioButton		yesSevenFtCorrectReading;
-	MyRadioButton		noSevenFtCorrectReading;
+	MyRadioButton		noSevenFtCorrectReading;*/
 	
 	MyTextView			installtionCompleteTextView;
 	MyRadioGroup		installtionComplete;
 	MyRadioButton		yesInstalltionComplete;
 	MyRadioButton		noInstalltionComplete;
+	
+	MyTextView			reasonInstallationCompleteTextView;
+	MyEditText			reasonInstallationComplete;
 	
 	Calendar			startDateTime;
 
@@ -199,7 +200,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		
 		FORM_NAME = FormType.UVGI_INSATLLATION;
 		TAG = "UVGILightsInstallationActivity";
-		PAGE_COUNT = 9;
+		PAGE_COUNT = 6;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
 		navigatorLayout = (LinearLayout) findViewById (R.template_id.navigatorLayout);
@@ -236,12 +237,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);
 		otherOpdArea = new MyEditText(context, R.string.other_opd_area, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
-		fixtureNumberTextView = new MyTextView (context, R.style.text, R.string.fixture_number);
-		fixtureNumber = new NumberPicker(context);
-		fixtureNumber.setMinValue(0);
-		fixtureNumber.setMaxValue(30);
-		fixtureNumber.setWrapSelectorWheel(false);
-		
 		uniqueIdGeneratedTextView = new MyTextView (context, R.style.text, R.string.unique_id);
 		uniqueIdGenerated = new MyEditText(context, R.string.unique_id, R.string.unique_id_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.idLength, false); 
 		scanBarcodeButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.scan_qr_code, R.string.scan_qr_code);
@@ -249,41 +244,46 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_3_reading);
 		threeFtUvMeterReading = new MyEditText(context,R.string.ft_3_reading, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
-		threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		threeFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesThreeFtCorrectReading, noThreeFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
+		*/
 		sixFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_6_reading);
 		sixFtUvMeterReading = new MyEditText(context,R.string.ft_6_reading, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
-		sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		sixFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSixFtCorrectReading, noSixFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
+		*/
 		sevenFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.ft_7_reading);
 		sevenFtUvMeterReading = new MyEditText(context,R.string.ft_7_reading, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 		
-		sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		sevenFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSevenFtCorrectReading, noSevenFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-		
+		*/
 		installtionCompleteTextView = new MyTextView (context, R.style.text, R.string.installation_complete);
 		noInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.no);
 		yesInstalltionComplete = new MyRadioButton(context, R.string.installation_complete, R.style.radio,R.string.yes);
 		installtionComplete = new MyRadioGroup(context,new MyRadioButton[] { yesInstalltionComplete, noInstalltionComplete }, R.string.installation_complete,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 		
-		View[][] viewGroups = {{formDateTextView,formDateButton,facilityNameTextView, facilityName, otherFacilityNameTextView, otherFacilityName},
+		reasonInstallationCompleteTextView = new MyTextView (context, R.style.text, R.string.reason);		
+		reasonInstallationComplete = new MyEditText(context,R.string.reason, R.string.reason_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 100, false);
+		reasonInstallationComplete.setSingleLine(false);
+		reasonInstallationComplete.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+		reasonInstallationComplete.setMinLines (8);
+		reasonInstallationComplete.setMaxHeight (10);
+		reasonInstallationComplete.setGravity(Gravity.TOP);
+		
+		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
+							   {facilityNameTextView, facilityName, otherFacilityNameTextView, otherFacilityName},
 							   {opdNameTextView, opdName, otherOpdNameTextView, otherOpdName},
 							   {opdAreaTextView, opdArea, otherOpdAreaTextView, otherOpdArea},
-							   {fixtureNumberTextView, fixtureNumber},
-							   {uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
-							   {threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading},
-							   {sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading},
-							   {sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading},
-							   {installtionCompleteTextView, installtionComplete}};
+							   {threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading},
+							   {installtionCompleteTextView, installtionComplete, reasonInstallationCompleteTextView, reasonInstallationComplete}};
 		
 		// Create layouts and store in ArrayList
 		groups = new ArrayList<ViewGroup> ();
@@ -319,8 +319,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
 		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
-										formDateButton, scanBarcodeButton,
-										facilityName, opdName, opdArea};
+										formDateButton, scanBarcodeButton, facilityName, opdName, opdArea, yesInstalltionComplete, noInstalltionComplete};
 		
 		for (View v : setListener) {
 			if (v instanceof Spinner) {
@@ -341,7 +340,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		pager.setOnPageChangeListener (this);
 		
 		views = new View[] {facilityName, otherFacilityName, opdName, otherOpdName, opdArea, otherOpdArea, uniqueIdGenerated, yesInstalltionComplete, 
-							sevenFtUvMeterReading, noSevenFtCorrectReading, sixFtUvMeterReading, noSixFtCorrectReading, threeFtUvMeterReading, noThreeFtCorrectReading};
+							sevenFtUvMeterReading, sixFtUvMeterReading, threeFtUvMeterReading, reasonInstallationComplete};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -368,26 +367,19 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 					
-				  try {
-				 	String val = App.get(threeFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
-				 	
-				 	if(valNumber < 0.4){
-				 		threeFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		threeFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		threeFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		threeFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  threeFtCorrectReadingTextView.setVisibility(View.GONE);
-					  threeFtCorrectReading.setVisibility(View.GONE);
-				 	  noThreeFtCorrectReading.setChecked(true);
-				  }
+				 String val = App.get(threeFtUvMeterReading);
+				 Double valNumber;
+				 if(!val.equals("")){
+				    valNumber = Double.parseDouble(val);
+					 	
+				 	if(valNumber > 0.4)
+						App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+						 
+				 } 
 				  
 				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && 
+						  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
 					  saveButton.setEnabled(true);
 				  }
 				 else
@@ -403,30 +395,24 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 
 			  @Override
 			  public void afterTextChanged(Editable s) {
-				 try{	
-				 	String val = App.get(sixFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
+				
+				 String val = App.get(sixFtUvMeterReading);
+				 Double valNumber;
+				 if(!val.equals("")){
+				 		valNumber = Double.parseDouble(val);
 				 	
-				 	if(valNumber < 0.4){
-				 		sixFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		sixFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		sixFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		sixFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  sixFtCorrectReadingTextView.setVisibility(View.GONE);
-					  sixFtCorrectReading.setVisibility(View.GONE);
-				 	  noSixFtCorrectReading.setChecked(true);
-				  }	
-				 
+					 	if(valNumber > 0.4)
+							App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+					 	 	
+				 }
+			 	
 				 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+							  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+							  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
 					  saveButton.setEnabled(true);
 				  }
-				 else
-					 saveButton.setEnabled(false);
+				  else
+					  saveButton.setEnabled(false);
 			  }
 			  
 	       });
@@ -439,30 +425,23 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 					
-				  try{
-				 	String val = App.get(sevenFtUvMeterReading);
-				 	Double valNumber = Double.parseDouble(val);
+			 	String val = App.get(sevenFtUvMeterReading);
+			 	Double valNumber;
+			 	if(!val.equals("")){
+			 		valNumber = Double.parseDouble(val);
+			 	
+				 	if(valNumber < 10)
+						App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
 				 	
-				 	if(valNumber < 0.4){
-				 		sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-				 		sevenFtCorrectReading.setVisibility(View.GONE);
-				 	}
-				 	else{
-				 		sevenFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-				 		sevenFtCorrectReading.setVisibility(View.VISIBLE);
-				 	}
-				  }catch (NumberFormatException e) {
-					  sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-				 	  sevenFtCorrectReading.setVisibility(View.GONE);
-				 	  noSevenFtCorrectReading.setChecked(true);
-				  }	
+			 	}
 				  
-				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
-					  saveButton.setEnabled(true);
-				  }
-				  else 
-					  saveButton.setEnabled(false);
+				if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+						  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
+					saveButton.setEnabled(true);
+				}
+				else 
+					saveButton.setEnabled(false);
 			  }
 			  
 	       });
@@ -476,7 +455,27 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			  public void afterTextChanged(Editable s) {
 				
 				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+						  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
+					  saveButton.setEnabled(true);
+				  }
+				  else
+					  saveButton.setEnabled(false);
+				
+			  }
+	       });
+		
+		reasonInstallationComplete.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+						  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
 					  saveButton.setEnabled(true);
 				  }
 				  else
@@ -499,13 +498,11 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		Date date = new Date();
 		formDate.setTime(date);
 		
-		View[] goneView = new View[]{otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea,
-				threeFtCorrectReadingTextView, threeFtCorrectReading, sixFtCorrectReadingTextView, sixFtCorrectReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading};
+		View[] goneView = new View[]{otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea, reasonInstallationCompleteTextView, reasonInstallationComplete};
+		
 		for(View v : goneView){
 			v.setVisibility(View.GONE);
 		}
-		
-		fixtureNumber.setValue(0);
 
 		for(View view : views){
 			if(view instanceof TextView)
@@ -583,20 +580,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			}
 			
 		} catch (NumberFormatException e) { }
-		
-		
-		if(valid){
-			int val = fixtureNumber.getValue();
-			if(val == 0){
-				valid = false;
-				message.append(fixtureNumber.getTag().toString()
-						+ ": "
-						+ getResources().getString(
-								R.string.invalid_data) + "\n");
-			}
-		}
-					
-		
+			
 		if (!valid)
 		{
 			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
@@ -646,7 +630,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "OPD_AREA",  App.get(opdArea)});
 					if(otherOpdArea.getVisibility() == View.VISIBLE)
 						observations.add(new String[] { "OPD_AREA",  App.get(opdArea)});
-					observations.add(new String[] { "FIXTURE_NUMBER",  String.valueOf(fixtureNumber.getValue())});
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
 					observations.add(new String[] { "UV_READ_3FT",  App.get(threeFtUvMeterReading)});
 //					if(threeFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
@@ -657,6 +640,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "UV_READ_7FT",   App.get(sevenFtUvMeterReading)});
 //					if(sevenFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
 //						observations.add(new String[] { "7ft_reading_correct",  yesSevenFtCorrectReading.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "uvgi_installed",   yesInstalltionComplete.isChecked() ? "Y" : "N"});
+					if(reasonInstallationComplete.getVisibility() == View.VISIBLE)
+						observations.add(new String[] { "reason_uvgi_not_installed", App.get(reasonInstallationComplete)});
 					
 					String result = serverService.saveUVGIInstallation (RequestType.UVGI_INSTALLATION, values, observations.toArray(new String[][] {}));
 					//String result = "SUCCESS";
@@ -719,7 +705,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	            	d.dismiss();
 	            	initView(views);
 	            	
-					
 	            }
 	        });
 			
@@ -759,6 +744,25 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	        	}
 			} catch (ActivityNotFoundException e) {
 				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
+			}
+		}
+		else if (view == noInstalltionComplete || view == yesInstalltionComplete){
+			
+			 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+					  (yesInstalltionComplete.isChecked() || (noInstalltionComplete.isChecked() && !App.get(reasonInstallationComplete).equals("")))){
+				  saveButton.setEnabled(true);
+			  }
+			  else
+				  saveButton.setEnabled(false);
+			
+			if(noInstalltionComplete.isChecked()){
+				reasonInstallationComplete.setVisibility(View.VISIBLE);
+				reasonInstallationCompleteTextView.setVisibility(View.VISIBLE);
+			}
+			else{
+				reasonInstallationComplete.setVisibility(View.GONE);
+				reasonInstallationCompleteTextView.setVisibility(View.GONE);
 			}
 		}
 	}

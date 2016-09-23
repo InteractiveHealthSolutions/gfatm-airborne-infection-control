@@ -14,5 +14,7 @@
     <string name="reason_problem_not_resolved_hint">Reason issue not resolved</string>
     <string name="problem">What was the problem?</string>
     <string name="problem_resolved_by">Name of troubleshooter?</string>
+    
+   <string name="troubleshoot_contact_number">Mobile phone number of the person who troubleshooted?</string>
 
 </resources>

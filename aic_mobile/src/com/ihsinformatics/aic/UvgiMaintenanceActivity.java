@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.ihsinformatics.aic.custom.MyButton;
+import com.ihsinformatics.aic.custom.MyCheckBox;
 import com.ihsinformatics.aic.custom.MyEditText;
 import com.ihsinformatics.aic.custom.MyRadioButton;
 import com.ihsinformatics.aic.custom.MyRadioGroup;
@@ -89,85 +90,98 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 	
 	MyTextView          maintenanceChecklistHeading;
 
-	MyTextView 			powerDisconnectedTextView;
-	MyRadioGroup 		powerDisconnected;
+	MyCheckBox			powerDisconnectedCheckBox;
+	/*MyTextView 			powerDisconnectedTextView;*/
+	/*MyRadioGroup 		powerDisconnected;
 	MyRadioButton		yesPowerDisconnected;
-	MyRadioButton 		noPowerDisconnected;
+	MyRadioButton 		noPowerDisconnected;*/
 
-	MyTextView 			louverOpenedTextView;
-	MyRadioGroup 		louverOpened;
+	MyCheckBox			louverOpenedCheckBox;
+	/*MyTextView 			louverOpenedTextView;*/
+	/*MyRadioGroup 		louverOpened;
 	MyRadioButton 		yesLouverOpened;
-	MyRadioButton 		noLouverOpened;
+	MyRadioButton 		noLouverOpened;*/
 
-	MyTextView 			lampsRemovedTextView;
-	MyRadioGroup 		lampsRemoved;
+	MyCheckBox			lampsRemovedCheckBox;
+	/*MyTextView 			lampsRemovedTextView;*/
+	/*MyRadioGroup 		lampsRemoved;
 	MyRadioButton 		yesLampsRemoved;
-	MyRadioButton 		noLampsRemoved;
+	MyRadioButton 		noLampsRemoved;*/
 
-	MyTextView 			lampsMicrofiberTextView;
-	MyRadioGroup 		lampsMicrofiber;
+	MyCheckBox			lampsMicrofiberCheckBox;
+	/*MyTextView 			lampsMicrofiberTextView;*/
+	/*MyRadioGroup 		lampsMicrofiber;
 	MyRadioButton 		yesLampsMicrofiber;
-	MyRadioButton 		noLampsMicrofiber;
+	MyRadioButton 		noLampsMicrofiber;*/
 
-	MyTextView 			interiorMicrofiberTextView;
-	MyRadioGroup 		interiorMicrofiber;
+	MyCheckBox			interiorMicrofiberCheckBox;
+	/*MyTextView 			interiorMicrofiberTextView;*/
+	/*MyRadioGroup 		interiorMicrofiber;
 	MyRadioButton 		yesInteriorMicrofiber;
-	MyRadioButton 		noInteriorMicrofiber;
+	MyRadioButton 		noInteriorMicrofiber;*/
 
-	MyTextView 			partsReplacedTextView;
-	MyRadioGroup 		partReplaced;
+	MyCheckBox			partsReplacedCheckBox;
+	/*MyTextView 			partsReplacedTextView;*/
+	/*MyRadioGroup 		partReplaced;
 	MyRadioButton 		yesPartReplaced;
-	MyRadioButton 		noPartReplaced;
+	MyRadioButton 		noPartReplaced;*/
 
 	MyTextView 			replacedPartNameTextView;
 	MyEditText 			replacedPartName;
 
-	MyTextView 			lampInstalledCorrectlyTextView;
-	MyRadioGroup 		lampInstalledCorrectly;
+	MyCheckBox			lampInstalledCorrectlyCheckBox;
+	/*MyTextView 			lampInstalledCorrectlyTextView;*/
+	/*MyRadioGroup 		lampInstalledCorrectly;
 	MyRadioButton 		yesLampInstalledCorrectly;
-	MyRadioButton 		noLampInstalledCorrectly;
+	MyRadioButton 		noLampInstalledCorrectly;*/
 
-	MyTextView 			louverClosedTextView;
-	MyRadioGroup 		louverClosed;
+	MyCheckBox			louverClosedCheckBox;
+	/*MyTextView 			louverClosedTextView;*/
+	/*MyRadioGroup 		louverClosed;
 	MyRadioButton 		yesLouverClosed;
-	MyRadioButton 		noLouverClosed;
+	MyRadioButton 		noLouverClosed;*/
 
-	MyTextView 			powerConnectTextView;
-	MyRadioGroup 		powerConnect;
+	MyCheckBox			powerConnectCheckBox;
+	/*MyTextView 			powerConnectTextView;*/
+	/*MyRadioGroup 		powerConnect;
 	MyRadioButton 		yesPowerConnect;
-	MyRadioButton 		noPowerConnect;
+	MyRadioButton 		noPowerConnect;*/
 
-	MyTextView 			lightWorkingTextView;
-	MyRadioGroup 		lightWorking;
+	MyCheckBox			lightWorkingCheckBox;
+	/*MyTextView 			lightWorkingTextView;*/
+	/*MyRadioGroup 		lightWorking;
 	MyRadioButton 		yesLightWorking;
-	MyRadioButton 		noLightWorking;
+	MyRadioButton 		noLightWorking;*/
 
 	MyTextView			threeFtUvMeterReadingTextView;
 	MyEditText			threeFtUvMeterReading;
 
-	MyTextView			threeFtCorrectReadingTextView;
+	/*MyTextView			threeFtCorrectReadingTextView;
 	MyRadioGroup		threeFtCorrectReading;
 	MyRadioButton		yesThreeFtCorrectReading;
-	MyRadioButton		noThreeFtCorrectReading;
+	MyRadioButton		noThreeFtCorrectReading;*/
 
 	MyTextView			sixFtUvMeterReadingTextView;
 	MyEditText			sixFtUvMeterReading;
 
-	MyTextView			sixFtCorrectReadingTextView;
+	/*MyTextView			sixFtCorrectReadingTextView;
 	MyRadioGroup		sixFtCorrectReading;
 	MyRadioButton		yesSixFtCorrectReading;
-	MyRadioButton		noSixFtCorrectReading;
+	MyRadioButton		noSixFtCorrectReading;*/
 
 	MyTextView			sevenFtUvMeterReadingTextView;
 	MyEditText			sevenFtUvMeterReading;
 
-	MyTextView			sevenFtCorrectReadingTextView;
+	/*MyTextView			sevenFtCorrectReadingTextView;
 	MyRadioGroup		sevenFtCorrectReading;
 	MyRadioButton		yesSevenFtCorrectReading;
-	MyRadioButton		noSevenFtCorrectReading;
+	MyRadioButton		noSevenFtCorrectReading;*/
 
 	MyTextView 			maintenancePersonNameTextView;
 	MyEditText 			maintenancePersonName;
+	
+	MyTextView 			maintenanceContactNumberTextView;
+	MyEditText 			maintenanceContactNumber;
 	
 	Calendar			startDateTime;
 
@@ -234,7 +248,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		
 		FORM_NAME = FormType.UVGI_MAINTENANCE;
 		TAG = "UVGILightMaintenanceActivity";
-		PAGE_COUNT = 9;
+		PAGE_COUNT = 7;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
 		navigatorLayout = (LinearLayout) findViewById (R.template_id.navigatorLayout);
@@ -271,96 +285,107 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		maintenanceChecklistHeading.setTypeface(null, Typeface.BOLD);
 		maintenanceChecklistHeading.setGravity(Gravity.CENTER);
 
-		powerDisconnectedTextView = new MyTextView (context, R.style.text, R.string.power_disconnected);
-		noPowerDisconnected = new MyRadioButton(context, R.string.power_disconnected, R.style.radio,R.string.no);
+		powerDisconnectedCheckBox = new MyCheckBox(context, R.string.power_disconnected, R.style.text, R.string.power_disconnected, false);
+/*		powerDisconnectedTextView = new MyTextView (context, R.style.text, R.string.power_disconnected);
+*/		/*noPowerDisconnected = new MyRadioButton(context, R.string.power_disconnected, R.style.radio,R.string.no);
 		yesPowerDisconnected = new MyRadioButton(context, R.string.power_disconnected, R.style.radio,R.string.yes);
 		powerDisconnected = new MyRadioGroup(context,new MyRadioButton[] { noPowerDisconnected, yesPowerDisconnected,}, R.string.power_disconnected,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		louverOpenedTextView = new MyTextView (context, R.style.text, R.string.louver_open);
-		noLouverOpened = new MyRadioButton(context, R.string.louver_open, R.style.radio,R.string.no);
+*/
+		louverOpenedCheckBox = new MyCheckBox(context, R.string.louver_open, R.style.text, R.string.louver_open, false);
+/*		louverOpenedTextView = new MyTextView (context, R.style.text, R.string.louver_open);
+*/		/*noLouverOpened = new MyRadioButton(context, R.string.louver_open, R.style.radio,R.string.no);
 		yesLouverOpened = new MyRadioButton(context, R.string.louver_open, R.style.radio,R.string.yes);
 		louverOpened = new MyRadioGroup(context,new MyRadioButton[] {noLouverOpened, yesLouverOpened}, R.string.louver_open,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		lampsRemovedTextView = new MyTextView (context, R.style.text, R.string.lamps_removed);
-		noLampsRemoved = new MyRadioButton(context, R.string.lamps_removed, R.style.radio,R.string.no);
+*/
+		lampsRemovedCheckBox = new MyCheckBox(context, R.string.lamps_removed, R.style.text, R.string.lamps_removed, false);
+/*		lampsRemovedTextView = new MyTextView (context, R.style.text, R.string.lamps_removed);
+*/		/*noLampsRemoved = new MyRadioButton(context, R.string.lamps_removed, R.style.radio,R.string.no);
 		yesLampsRemoved = new MyRadioButton(context, R.string.lamps_removed, R.style.radio,R.string.yes);
 		lampsRemoved = new MyRadioGroup(context,new MyRadioButton[] {noLampsRemoved, yesLampsRemoved}, R.string.lamps_removed,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		lampsMicrofiberTextView = new MyTextView (context, R.style.text, R.string.lamps_microfiber);
-		noLampsMicrofiber = new MyRadioButton(context, R.string.lamps_microfiber, R.style.radio,R.string.no);
+*/
+		lampsMicrofiberCheckBox = new MyCheckBox(context, R.string.lamps_microfiber, R.style.text, R.string.lamps_microfiber, false);
+/*		lampsMicrofiberTextView = new MyTextView (context, R.style.text, R.string.lamps_microfiber);
+*/		/*noLampsMicrofiber = new MyRadioButton(context, R.string.lamps_microfiber, R.style.radio,R.string.no);
 		yesLampsMicrofiber = new MyRadioButton(context, R.string.lamps_microfiber, R.style.radio,R.string.yes);
 		lampsMicrofiber = new MyRadioGroup(context,new MyRadioButton[] {noLampsMicrofiber, yesLampsMicrofiber}, R.string.lamps_microfiber,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		interiorMicrofiberTextView = new MyTextView (context, R.style.text, R.string.interior_microfiber);
-		yesInteriorMicrofiber  = new MyRadioButton(context, R.string.interior_microfiber, R.style.radio,R.string.yes);
+*/
+		interiorMicrofiberCheckBox = new MyCheckBox(context, R.string.interior_microfiber, R.style.text, R.string.interior_microfiber, false);
+/*		interiorMicrofiberTextView = new MyTextView (context, R.style.text, R.string.interior_microfiber);
+*/		/*yesInteriorMicrofiber  = new MyRadioButton(context, R.string.interior_microfiber, R.style.radio,R.string.yes);
 		noInteriorMicrofiber  = new MyRadioButton(context, R.string.interior_microfiber, R.style.radio,R.string.no);
 		interiorMicrofiber = new MyRadioGroup(context,new MyRadioButton[] {noInteriorMicrofiber, yesInteriorMicrofiber}, R.string.interior_microfiber,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		partsReplacedTextView = new MyTextView (context, R.style.text, R.string.parts_replacement);
-		yesPartReplaced = new MyRadioButton(context, R.string.parts_replacement, R.style.radio,R.string.yes);
+*/
+		partsReplacedCheckBox = new MyCheckBox(context, R.string.parts_replacement, R.style.text, R.string.parts_replacement, false);
+/*		partsReplacedTextView = new MyTextView (context, R.style.text, R.string.parts_replacement);
+*/		/*yesPartReplaced = new MyRadioButton(context, R.string.parts_replacement, R.style.radio,R.string.yes);
 		noPartReplaced = new MyRadioButton(context, R.string.parts_replacement, R.style.radio,R.string.no);
 		partReplaced = new MyRadioGroup(context,new MyRadioButton[] {noPartReplaced, yesPartReplaced}, R.string.parts_replacement,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
+*/
 		replacedPartNameTextView = new MyTextView (context, R.style.text, R.string.parts_replaced);
 		replacedPartName = new MyEditText(context, R.string.parts_replaced, R.string.parts_replaced_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 
-		lampInstalledCorrectlyTextView  = new MyTextView (context, R.style.text, R.string.lamps_reinstalled);
-		yesLampInstalledCorrectly = new MyRadioButton(context, R.string.lamps_reinstalled, R.style.radio,R.string.yes);
+		lampInstalledCorrectlyCheckBox = new MyCheckBox(context, R.string.lamps_reinstalled, R.style.text, R.string.lamps_reinstalled, false);
+/*		lampInstalledCorrectlyTextView  = new MyTextView (context, R.style.text, R.string.lamps_reinstalled);
+*/		/*yesLampInstalledCorrectly = new MyRadioButton(context, R.string.lamps_reinstalled, R.style.radio,R.string.yes);
 		noLampInstalledCorrectly = new MyRadioButton(context, R.string.lamps_reinstalled, R.style.radio,R.string.no);
 		lampInstalledCorrectly = new MyRadioGroup(context,new MyRadioButton[] {noLampInstalledCorrectly, yesLampInstalledCorrectly}, R.string.lamps_reinstalled,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		louverClosedTextView = new MyTextView (context, R.style.text, R.string.louver_closed);
-		noLouverClosed = new MyRadioButton(context, R.string.louver_closed, R.style.radio,R.string.no);
+*/
+		louverClosedCheckBox = new MyCheckBox(context, R.string.louver_closed, R.style.text, R.string.louver_closed, false);
+/*		louverClosedTextView = new MyTextView (context, R.style.text, R.string.louver_closed);
+*/		/*noLouverClosed = new MyRadioButton(context, R.string.louver_closed, R.style.radio,R.string.no);
 		yesLouverClosed = new MyRadioButton(context, R.string.louver_closed, R.style.radio,R.string.yes);
 		louverClosed = new MyRadioGroup(context,new MyRadioButton[] {noLouverClosed, yesLouverClosed}, R.string.louver_closed,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		powerConnectTextView = new MyTextView (context, R.style.text, R.string.power_connect);
-		yesPowerConnect = new MyRadioButton(context, R.string.power_connect, R.style.radio,R.string.yes);
+*/
+		powerConnectCheckBox = new MyCheckBox(context, R.string.power_connect, R.style.text, R.string.power_connect, false);
+/*		powerConnectTextView = new MyTextView (context, R.style.text, R.string.power_connect);
+*/		/*yesPowerConnect = new MyRadioButton(context, R.string.power_connect, R.style.radio,R.string.yes);
 		noPowerConnect = new MyRadioButton(context, R.string.power_connect, R.style.radio,R.string.no);
 		powerConnect = new MyRadioGroup(context,new MyRadioButton[] {noPowerConnect, yesPowerConnect}, R.string.power_connect,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		lightWorkingTextView = new MyTextView (context, R.style.text, R.string.light_working);
-		yesLightWorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.yes);
+*/
+		lightWorkingCheckBox = new MyCheckBox(context, R.string.light_working, R.style.text, R.string.light_working, false);
+/*		lightWorkingTextView = new MyTextView (context, R.style.text, R.string.light_working);
+*/		/*yesLightWorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.yes);
 		noLightWorking = new MyRadioButton(context, R.string.light_working, R.style.radio,R.string.no);
 		lightWorking = new MyRadioGroup(context,new MyRadioButton[] {noLightWorking, yesLightWorking}, R.string.light_working,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
+*/
 		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_3ft_cleaning);
 		threeFtUvMeterReading = new MyEditText(context,R.string.reading_after_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 
-		threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		threeFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesThreeFtCorrectReading, noThreeFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
+*/
 		sixFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_6ft_cleaning);
 		sixFtUvMeterReading = new MyEditText(context,R.string.reading_after_6ft_cleaning, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 
-		sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		sixFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSixFtCorrectReading, noSixFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
+*/
 		sevenFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_7ft_cleaning);
 		sevenFtUvMeterReading = new MyEditText(context,R.string.reading_after_7ft_cleaning, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
 
-		sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
+		/*sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
 		yesSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.yes);
 		sevenFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSevenFtCorrectReading, noSevenFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
+*/
 		maintenancePersonNameTextView = new MyTextView (context, R.style.text, R.string.maintenance_person_name);
 		maintenancePersonName =  new MyEditText(context, R.string.maintenance_person_name, R.string.maintenance_person_name_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
+
+		maintenanceContactNumberTextView = new MyTextView (context, R.style.text, R.string.maintenance_contact_number);
+		maintenanceContactNumber =  new MyEditText(context, R.string.maintenance_contact_number, R.string.maintenance_contact_number_hint, InputType.TYPE_CLASS_PHONE, R.style.edit, RegexUtil.labTestIdLength, false);
 
 
 		View[][] viewGroups = {{formDateTextView, formDateButton, uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
 				               {threeFtUvMeterBeforeReadingTextView, threeFtUvMeterBeforeReading, sixFtUvMeterBeforeReadingTextView, sixFtUvMeterBeforeReading,sevenFtUvMeterBeforeReadingTextView, sevenFtUvMeterBeforeReading},
-							   {maintenanceChecklistHeading, powerDisconnectedTextView, powerDisconnected,louverOpenedTextView, louverOpened, lampsRemovedTextView, lampsRemoved,lampsMicrofiberTextView, lampsMicrofiber},
-				               {interiorMicrofiberTextView, interiorMicrofiber, partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName, lampInstalledCorrectlyTextView, lampInstalledCorrectly},
-							   {louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking},
-				               {threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading},
-				               {sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading},
-				               {sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading},
-							   {maintenancePersonNameTextView, maintenancePersonName}};
+							   {maintenanceChecklistHeading, powerDisconnectedCheckBox, louverOpenedCheckBox, lampsRemovedCheckBox, lampsMicrofiberCheckBox},
+				               {interiorMicrofiberCheckBox, partsReplacedCheckBox, replacedPartNameTextView, replacedPartName, lampInstalledCorrectlyCheckBox},
+							   {louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox},
+				               {threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, },
+							   {maintenancePersonNameTextView, maintenancePersonName, maintenanceContactNumberTextView, maintenanceContactNumber }};
 		
 		// Create layouts and store in ArrayList
 		groups = new ArrayList<ViewGroup> ();
@@ -373,12 +398,18 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				
 				View v = viewGroups[i][j];
 				
-				if((j%2 == 0 && i != 2) || (j%2 != 0 && i == 2)){
+				if(j%2 == 0 && (i != 2 || i != 3 || i != 4)){
 					
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 					params.setMargins(0, 30, 0, 0); 
 					v.setLayoutParams(params);
 					
+				}
+				else if( j != 0 && (i == 2 || i == 3 || i == 4)){
+					
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+					params.setMargins(0, 30, 0, 0); 
+					v.setLayoutParams(params);
 				}
 				
 				layout.addView(v);
@@ -396,9 +427,9 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
 		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
-										formDateButton, scanBarcodeButton, noPowerDisconnected, yesPowerDisconnected, noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
-										noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber, noPartReplaced, yesPartReplaced,
-										noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+										formDateButton, scanBarcodeButton, powerDisconnectedCheckBox, louverOpenedCheckBox, lampsRemovedCheckBox,
+										lampsMicrofiberCheckBox, interiorMicrofiberCheckBox, partsReplacedCheckBox,
+										lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 		
 		for (View v : setListener) {
 			if (v instanceof Spinner) {
@@ -418,10 +449,9 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {maintenancePersonName, uniqueIdGenerated,
-							threeFtUvMeterBeforeReading, sixFtUvMeterBeforeReading, sevenFtUvMeterBeforeReading,
-							replacedPartName,
-							threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading};
+		views = new View[] {maintenancePersonName, maintenanceContactNumber, uniqueIdGenerated,
+							threeFtUvMeterBeforeReading, sixFtUvMeterBeforeReading, sevenFtUvMeterBeforeReading, 
+							replacedPartName, threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -448,31 +478,24 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		  @Override
 		  public void afterTextChanged(Editable s) {
 				
-			  try {
-			 	String val = App.get(threeFtUvMeterReading);
-			 	Double valNumber = Double.parseDouble(val);
+			  String val = App.get(threeFtUvMeterReading);
+			  Double valNumber;
+			  if(!val.equals("")){
+			 		valNumber = Double.parseDouble(val);
 			 	
-			 	if(valNumber < 0.4){
-			 		threeFtCorrectReadingTextView.setVisibility(View.GONE);
-			 		threeFtCorrectReading.setVisibility(View.GONE);
-			 	}
-			 	else{
-			 		threeFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-			 		threeFtCorrectReading.setVisibility(View.VISIBLE);
-			 	}
-			  }catch (NumberFormatException e) {
-				  threeFtCorrectReadingTextView.setVisibility(View.GONE);
-				  threeFtCorrectReading.setVisibility(View.GONE);
-			 	  noThreeFtCorrectReading.setChecked(true);
+				 	if(valNumber > 0.4)
+						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+				 	 	
 			  }
 			  
 			  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) && 
+					  !(App.get(maintenanceContactNumber).equals("")) &&
+					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 				  
-				  if(noPartReplaced.isChecked())
+				  if(!partsReplacedCheckBox.isChecked())
 					   saveButton.setEnabled(true);
 				  else if(App.get(replacedPartName).equals(""))
 					   saveButton.setEnabled(false);
@@ -492,31 +515,25 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 
 		  @Override
 		  public void afterTextChanged(Editable s) {
-			 try{	
-			 	String val = App.get(sixFtUvMeterReading);
-			 	Double valNumber = Double.parseDouble(val);
+			 
+			  String val = App.get(sixFtUvMeterReading);
+			  Double valNumber;
+			  if(!val.equals("")){
+			 		valNumber = Double.parseDouble(val);
 			 	
-			 	if(valNumber < 0.4){
-			 		sixFtCorrectReadingTextView.setVisibility(View.GONE);
-			 		sixFtCorrectReading.setVisibility(View.GONE);
-			 	}
-			 	else{
-			 		sixFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-			 		sixFtCorrectReading.setVisibility(View.VISIBLE);
-			 	}
-			  }catch (NumberFormatException e) {
-				  sixFtCorrectReadingTextView.setVisibility(View.GONE);
-				  sixFtCorrectReading.setVisibility(View.GONE);
-			 	  noSixFtCorrectReading.setChecked(true);
-			  }	
+				 	if(valNumber > 0.4)
+						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+				 	 	
+			  }
 			 
 			 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+					  !(App.get(maintenanceContactNumber).equals("")) &&
+					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 				  
-				 if(noPartReplaced.isChecked())
+				 if(!partsReplacedCheckBox.isChecked())
 					   saveButton.setEnabled(true);
 				  else if(App.get(replacedPartName).equals(""))
 					   saveButton.setEnabled(false);
@@ -537,31 +554,24 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		  @Override
 		  public void afterTextChanged(Editable s) {
 				
-			  try{
-			 	String val = App.get(sevenFtUvMeterReading);
-			 	Double valNumber = Double.parseDouble(val);
+			  String val = App.get(sevenFtUvMeterReading);
+			 	Double valNumber;
+			 	if(!val.equals("")){
+			 		valNumber = Double.parseDouble(val);
 			 	
-			 	if(valNumber < 0.4){
-			 		sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-			 		sevenFtCorrectReading.setVisibility(View.GONE);
+				 	if(valNumber < 10)
+						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+				 	
 			 	}
-			 	else{
-			 		sevenFtCorrectReadingTextView.setVisibility(View.VISIBLE);
-			 		sevenFtCorrectReading.setVisibility(View.VISIBLE);
-			 	}
-			  }catch (NumberFormatException e) {
-				  sevenFtCorrectReadingTextView.setVisibility(View.GONE);
-			 	  sevenFtCorrectReading.setVisibility(View.GONE);
-			 	  noSevenFtCorrectReading.setChecked(true);
-			  }	
 			  
 			  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+					  !(App.get(maintenanceContactNumber).equals("")) &&
+					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 				  
-				  if(noPartReplaced.isChecked())
+				  if(!partsReplacedCheckBox.isChecked())
 					   saveButton.setEnabled(true);
 				  else if(App.get(replacedPartName).equals(""))
 					   saveButton.setEnabled(false);
@@ -587,9 +597,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					 
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -614,9 +625,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					  
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -642,9 +654,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					  
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -670,9 +683,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					  
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -697,9 +711,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					  
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -724,9 +739,38 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-						  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 					  
-					  if(noPartReplaced.isChecked())
+					  if(!partsReplacedCheckBox.isChecked())
+						   saveButton.setEnabled(true);
+					  else if(App.get(replacedPartName).equals(""))
+						   saveButton.setEnabled(false);
+					  else
+						  saveButton.setEnabled(true);
+				  }
+				 else
+					 saveButton.setEnabled(false);
+				
+			  }
+	       });
+		
+		maintenanceContactNumber.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				
+				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+						  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+						  !(App.get(maintenanceContactNumber).equals("")) &&
+						  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+					  
+					  if(!partsReplacedCheckBox.isChecked())
 						   saveButton.setEnabled(true);
 					  else if(App.get(replacedPartName).equals(""))
 						   saveButton.setEnabled(false);
@@ -750,20 +794,18 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		Date date = new Date();
 		formDate.setTime(date);
 		
-		View[] v = new View[]{noPowerDisconnected, yesPowerDisconnected, noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
-							noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber, noPartReplaced, yesPartReplaced,
-							noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+		View[] v = new View[]{powerDisconnectedCheckBox, louverOpenedCheckBox, lampsRemovedCheckBox,
+							lampsMicrofiberCheckBox, interiorMicrofiberCheckBox, partsReplacedCheckBox, partsReplacedCheckBox,
+							lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 		
 		for(View view : v)
-			((RadioButton) view).setChecked(false);
+			((CheckBox) view).setChecked(false);
 		
 		for(View view : views){
 			if(view instanceof TextView)
 				((TextView) view).setHintTextColor (getResources ().getColor (R.color.DarkGray));
 		}
-		
-		noPartReplaced.setChecked(true);
-		
+				
 		updateDisplay ();
 	}
 
@@ -779,218 +821,205 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			formDateButton.setTextColor(getResources ().getColor (R.color.mainTheme));
 		}
 		
-		if(yesPowerDisconnected.isChecked()){
-			louverOpenedTextView.setVisibility(View.VISIBLE);
-			louverOpened.setVisibility(View.VISIBLE);
+		if(powerDisconnectedCheckBox.isChecked()){
+/*			louverOpenedTextView.setVisibility(View.VISIBLE);
+*/			louverOpenedCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
 			
-			View[] v = new View[]{louverOpenedTextView, louverOpened, lampsRemovedTextView, lampsRemoved,lampsMicrofiberTextView, lampsMicrofiber,
-		               interiorMicrofiberTextView, interiorMicrofiber, partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName,
-					   lampInstalledCorrectlyTextView, lampInstalledCorrectly, louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{louverOpenedCheckBox, lampsRemovedCheckBox, lampsMicrofiberCheckBox,
+		               interiorMicrofiberCheckBox, partsReplacedCheckBox, replacedPartNameTextView, replacedPartName,
+					   lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, 
+					   lightWorkingCheckBox, 
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, 
+		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, 
+		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName,
+					   maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLouverOpened, yesLouverOpened, noLampsRemoved, yesLampsRemoved,
-					noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{louverOpenedCheckBox, lampsRemovedCheckBox, lampsMicrofiberCheckBox, interiorMicrofiberCheckBox,
+					lampInstalledCorrectlyCheckBox, partsReplacedCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
-			
-			noPartReplaced.setChecked(true);
+				((CheckBox) view).setChecked(false);
 			
 		}
 		
-		if(yesLouverOpened.isChecked()){
-			lampsRemoved.setVisibility(View.VISIBLE);
-			lampsRemovedTextView.setVisibility(View.VISIBLE);
-		}
+		if(louverOpenedCheckBox.isChecked()){
+			lampsRemovedCheckBox.setVisibility(View.VISIBLE);
+/*			lampsRemovedTextView.setVisibility(View.VISIBLE);
+*/		}
 		else{
-			View[] v = new View[]{lampsRemovedTextView, lampsRemoved,lampsMicrofiberTextView, lampsMicrofiber,
-		               interiorMicrofiberTextView, interiorMicrofiber, partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName,
-					   lampInstalledCorrectlyTextView, lampInstalledCorrectly, louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{lampsRemovedCheckBox, lampsMicrofiberCheckBox,
+		               interiorMicrofiberCheckBox, partsReplacedCheckBox, replacedPartNameTextView, replacedPartName,
+					   lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName,
+					   maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLampsRemoved, yesLampsRemoved,
-					noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{lampsRemovedCheckBox, lampsMicrofiberCheckBox, interiorMicrofiberCheckBox,
+					lampInstalledCorrectlyCheckBox, partsReplacedCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 			
-			noPartReplaced.setChecked(true);
 		}
 		
-		if(yesLampsRemoved.isChecked()){
-			lampsMicrofiberTextView.setVisibility(View.VISIBLE);
-			lampsMicrofiber.setVisibility(View.VISIBLE);
+		if(lampsRemovedCheckBox.isChecked()){
+/*			lampsMicrofiberTextView.setVisibility(View.VISIBLE);
+*/			lampsMicrofiberCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
-			View[] v = new View[]{lampsMicrofiberTextView, lampsMicrofiber,
-		               interiorMicrofiberTextView, interiorMicrofiber, partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName,
-					   lampInstalledCorrectlyTextView, lampInstalledCorrectly, louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{lampsMicrofiberCheckBox,
+		               interiorMicrofiberCheckBox, partsReplacedCheckBox, replacedPartNameTextView, replacedPartName,
+					   lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName, maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLampsMicrofiber, yesLampsMicrofiber, noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{lampsMicrofiberCheckBox, partsReplacedCheckBox, interiorMicrofiberCheckBox, lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 			
-			noPartReplaced.setChecked(true);
 		}
 		
-		if(yesLampsMicrofiber.isChecked()){
-			interiorMicrofiberTextView.setVisibility(View.VISIBLE);
-			interiorMicrofiber.setVisibility(View.VISIBLE);
+		if(lampsMicrofiberCheckBox.isChecked()){
+/*			interiorMicrofiberTextView.setVisibility(View.VISIBLE);
+*/			interiorMicrofiberCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
-			View[] v = new View[]{interiorMicrofiberTextView, interiorMicrofiber, partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName,
-					   lampInstalledCorrectlyTextView, lampInstalledCorrectly, louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{interiorMicrofiberCheckBox, partsReplacedCheckBox, replacedPartNameTextView, replacedPartName,
+					   lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading,
+					   maintenancePersonNameTextView, maintenancePersonName, maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noInteriorMicrofiber, yesInteriorMicrofiber,
-					noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{interiorMicrofiberCheckBox, partsReplacedCheckBox, lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 			
-			noPartReplaced.setChecked(true);
 		}
 		
-		if(yesInteriorMicrofiber.isChecked()){
-			partsReplacedTextView.setVisibility(View.VISIBLE);
-			partReplaced.setVisibility(View.VISIBLE);
-			lampInstalledCorrectlyTextView.setVisibility(View.VISIBLE);
-			lampInstalledCorrectly.setVisibility(View.VISIBLE);
+		if(interiorMicrofiberCheckBox.isChecked()){
+/*			partsReplacedTextView.setVisibility(View.VISIBLE);
+*/			partsReplacedCheckBox.setVisibility(View.VISIBLE);
+/*			lampInstalledCorrectlyTextView.setVisibility(View.VISIBLE);
+*/			lampInstalledCorrectlyCheckBox.setVisibility(View.VISIBLE);
 			
 		}
 		else{
 			View[] v = new View[]{
-					   partsReplacedTextView, partReplaced, replacedPartNameTextView, replacedPartName, lampInstalledCorrectlyTextView, lampInstalledCorrectly, louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+					   partsReplacedCheckBox, replacedPartNameTextView, replacedPartName, lampInstalledCorrectlyCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName, maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLampInstalledCorrectly, yesLampInstalledCorrectly, noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{lampInstalledCorrectlyCheckBox, partsReplacedCheckBox, louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 			
-			noPartReplaced.setChecked(true);
 		}
 		
 		
-		if(yesLampInstalledCorrectly.isChecked()){
-			louverClosedTextView.setVisibility(View.VISIBLE);
-			louverClosed.setVisibility(View.VISIBLE);
+		if(lampInstalledCorrectlyCheckBox.isChecked()){
+/*			louverClosedTextView.setVisibility(View.VISIBLE);
+*/			louverClosedCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
-			View[] v = new View[]{louverClosedTextView, louverClosed, powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, sixFtUvMeterReadingTextView, sixFtUvMeterReading, sevenFtUvMeterReadingTextView, sevenFtUvMeterReading,
+					   maintenancePersonNameTextView, maintenancePersonName, maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLouverClosed, yesLouverClosed, noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{louverClosedCheckBox, powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 		}
 		
-		if(yesLouverClosed.isChecked()){
-			powerConnectTextView.setVisibility(View.VISIBLE);
-			powerConnect.setVisibility(View.VISIBLE);
+		if(louverClosedCheckBox.isChecked()){
+/*			powerConnectTextView.setVisibility(View.VISIBLE);
+*/			powerConnectCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
-			View[] v = new View[]{powerConnectTextView, powerConnect, lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{powerConnectCheckBox,lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading,  
+		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, 
+		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName,
+					   maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noPowerConnect, yesPowerConnect, noLightWorking, yesLightWorking};
+			v = new View[]{powerConnectCheckBox, lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 		}
 		
-		if(yesPowerConnect.isChecked()){
-			lightWorkingTextView.setVisibility(View.VISIBLE);
-			lightWorking.setVisibility(View.VISIBLE);
+		if(powerConnectCheckBox.isChecked()){
+/*			lightWorkingTextView.setVisibility(View.VISIBLE);
+*/			lightWorkingCheckBox.setVisibility(View.VISIBLE);
 		}
 		else{
-			View[] v = new View[]{lightWorkingTextView, lightWorking,
-		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{lightWorkingCheckBox,
+		               threeFtUvMeterReadingTextView, threeFtUvMeterReading, 
+		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, 
+		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading,
+					   maintenancePersonNameTextView, maintenancePersonName,
+					   maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
-			v = new View[]{noLightWorking, yesLightWorking};
+			v = new View[]{lightWorkingCheckBox};
 
 			for(View view : v)
-				((RadioButton) view).setChecked(false);
+				((CheckBox) view).setChecked(false);
 		}
 		
-		if(yesLightWorking.isChecked()){
+		if(lightWorkingCheckBox.isChecked()){
 			View[] v = new View[]{threeFtUvMeterReadingTextView, threeFtUvMeterReading,
 		               			sixFtUvMeterReadingTextView, sixFtUvMeterReading, 
 		               			sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
-		               			maintenancePersonNameTextView, maintenancePersonName};
+		               			maintenancePersonNameTextView, maintenancePersonName,
+		               			maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.VISIBLE);
 		}
 		else{
 			
-			View[] v = new View[]{threeFtUvMeterReadingTextView, threeFtUvMeterReading, threeFtCorrectReadingTextView, threeFtCorrectReading,
-		               sixFtUvMeterReadingTextView, sixFtUvMeterReading, sixFtCorrectReadingTextView, sixFtCorrectReading,
-		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, sevenFtCorrectReadingTextView, sevenFtCorrectReading,
-					   maintenancePersonNameTextView, maintenancePersonName};
+			View[] v = new View[]{threeFtUvMeterReadingTextView, threeFtUvMeterReading,
+		               sixFtUvMeterReadingTextView, sixFtUvMeterReading,
+		               sevenFtUvMeterReadingTextView, sevenFtUvMeterReading, 
+					   maintenancePersonNameTextView, maintenancePersonName,
+					   maintenanceContactNumberTextView, maintenanceContactNumber};
 			
 			for(View view : v)
 				view.setVisibility(View.GONE);
 			
+			maintenanceContactNumber.setText("");
 			maintenancePersonName.setText("");
 			sevenFtUvMeterReading.setText("");
-			noSixFtCorrectReading.setText("");
 			sixFtUvMeterReading.setText("");
 			threeFtUvMeterReading.setText("");
 			
@@ -1000,9 +1029,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
 				  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
 				  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-				  lightWorking.getVisibility() == View.VISIBLE && yesLightWorking.isChecked()){
+				  !(App.get(maintenanceContactNumber).equals("")) &&
+				  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
 			
-			 if(noPartReplaced.isChecked())
+			 if(!partsReplacedCheckBox.isChecked())
 				   saveButton.setEnabled(true);
 			  else if(App.get(replacedPartName).equals(""))
 				   saveButton.setEnabled(false);
@@ -1021,7 +1051,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		StringBuffer message = new StringBuffer ();
 		// Validate mandatory controls
 		View[] mandatory = {uniqueIdGenerated, threeFtUvMeterBeforeReading, sixFtUvMeterBeforeReading, sevenFtUvMeterReading,
-							replacedPartName, threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading, maintenancePersonName};
+							replacedPartName, threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading, maintenancePersonName, maintenanceContactNumber};
 		for (View view : mandatory)
 		{
 			if(view.getVisibility() == View.VISIBLE){
@@ -1054,6 +1084,17 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			uniqueIdGenerated.setTextColor(getResources().getColor(
 					R.color.Red));
 		}*/
+		
+		// Phone Number
+		if (App.get(maintenanceContactNumber).length() != maintenanceContactNumber.getMaxLength()) {
+			valid = false;
+			message.append(maintenanceContactNumber.getTag().toString()
+					+ ": "
+					+ getResources().getString(
+							R.string.invalid_data) + "\n");
+			maintenanceContactNumber.setTextColor(getResources().getColor(
+					R.color.Red));
+		}
 					
 		// Check Date
 		try {
@@ -1112,18 +1153,18 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "UV_READ_3FT_BEFORE_CLEAN",  App.get(threeFtUvMeterBeforeReading)});
 					observations.add(new String[] { "UV_READ_6FT_BEFORE_CLEAN",  App.get(sixFtUvMeterBeforeReading)});
 					observations.add(new String[] { "UV_READ_7FT_BEFORE_CLEAN",  App.get(sevenFtUvMeterBeforeReading)});
-					observations.add(new String[] { "POWER_DISCONNECTED",  yesPowerDisconnected.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "LOUVER_OPENED",  yesLouverOpened.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "LAMPS_REMOVED",  yesLampsRemoved.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "LAMPS_CLEANED_WITH_MICROFIBER_ALCOHOL",  yesLampsMicrofiber.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "INTERIOR_CLEANED_WITH_MICROFIBER_ALCOHOL",  yesInteriorMicrofiber.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "UV_PART_REPLACED",  yesPartReplaced.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "POWER_DISCONNECTED",  powerDisconnectedCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LOUVER_OPENED",  louverOpenedCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_REMOVED",  lampsRemovedCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_CLEANED_WITH_MICROFIBER_ALCOHOL",  lampsMicrofiberCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "INTERIOR_CLEANED_WITH_MICROFIBER_ALCOHOL",  interiorMicrofiberCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_PART_REPLACED",  partsReplacedCheckBox.isChecked() ? "Y" : "N"});
 					if(replacedPartNameTextView.getVisibility() == View.VISIBLE)
 						observations.add(new String[] { "PARTS_REPLACED_NAME",  App.get(replacedPartName)});
-					observations.add(new String[] { "LAMPS_REINSTALLED",  yesLampInstalledCorrectly.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "LOUVER_CLOSED",  yesLouverClosed.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "POWER_CONNECTED",  yesPowerConnect.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "UV_LIGHT_WORKING",  yesLightWorking.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_REINSTALLED",  lampInstalledCorrectlyCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LOUVER_CLOSED", louverClosedCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "POWER_CONNECTED",  powerConnectCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "UV_LIGHT_WORKING",  lightWorkingCheckBox.isChecked() ? "Y" : "N"});
 
 					observations.add(new String[] { "UV_READ_3FT_AFTER_CLEAN",  String.valueOf(threeFtUvMeterReading)});
 //					if(threeFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
@@ -1135,7 +1176,8 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 //					if(sevenFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
 //						observations.add(new String[] { "7ft_reading_correct",  yesSevenFtCorrectReading.isChecked() ? "Yes" : "No"});
 
-					observations.add(new String[] { "MAINTENANCE_BY",   String.valueOf(maintenancePersonName)});
+					observations.add(new String[] { "MAINTAINER_BY",   String.valueOf(maintenancePersonName)});
+					observations.add(new String[] { "MAINTAINER_CONTACT",   String.valueOf(maintenanceContactNumber)});
 					
 					//String result = serverService.saveFeedback (FORM_NAME, values);
 					String result = "SUCCESS";
@@ -1239,43 +1281,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
 			}
 		}
-		else if (view == noPowerDisconnected || view == yesPowerDisconnected || view == noLouverOpened || view == yesLouverOpened ||
-				view == noLampsRemoved || view == yesLampsRemoved || view == noLampsMicrofiber || view == yesLampsMicrofiber ||
-				view == noInteriorMicrofiber || view == yesInteriorMicrofiber ||  
-				view == noLampInstalledCorrectly || view == yesLampInstalledCorrectly || view == noLouverClosed || view == yesLouverClosed ||
-				view == noPowerConnect || view == yesPowerConnect || view == noLightWorking || view == yesLightWorking){
-			
-			updateDisplay();
-		}
-		else if (view == noPartReplaced || view == yesPartReplaced){
-			
-			if(yesPartReplaced.isChecked()){
-				replacedPartNameTextView.setVisibility(View.VISIBLE);
-				replacedPartName.setVisibility(View.VISIBLE);
-			}
-			else{
-				replacedPartNameTextView.setVisibility(View.GONE);
-				replacedPartName.setVisibility(View.GONE);
-			}
-			
-			if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
-					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals(""))){
-				
-				
-				 if(noPartReplaced.isChecked())
-					   saveButton.setEnabled(true);
-				  else if(App.get(replacedPartName).equals(""))
-					   saveButton.setEnabled(false);
-				  else
-					  saveButton.setEnabled(true);
-				
-			  }
-			else
-				 saveButton.setEnabled(false);
-			
-		}
+		
 	}
 	
 	/**
@@ -1308,7 +1314,44 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 	@Override
 	public void onCheckedChanged (CompoundButton button, boolean state)
 	{
-		// Not implemented
+		if (button == powerDisconnectedCheckBox || button == louverOpenedCheckBox ||
+				button == lampsRemovedCheckBox || button == lampsMicrofiberCheckBox ||
+				button == interiorMicrofiberCheckBox || button == lampInstalledCorrectlyCheckBox || 
+				button == louverClosedCheckBox || button == powerConnectCheckBox || 
+				button == lightWorkingCheckBox){
+			
+			updateDisplay();
+		}
+		else if (button == partsReplacedCheckBox){
+			
+			if(partsReplacedCheckBox.isChecked()){
+				replacedPartNameTextView.setVisibility(View.VISIBLE);
+				replacedPartName.setVisibility(View.VISIBLE);
+			}
+			else{
+				replacedPartNameTextView.setVisibility(View.GONE);
+				replacedPartName.setVisibility(View.GONE);
+			}
+			
+			if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals(""))
+					  && !(App.get(maintenanceContactNumber).equals(""))){
+				
+				
+				 if(!partsReplacedCheckBox.isChecked())
+					   saveButton.setEnabled(true);
+				  else if(App.get(replacedPartName).equals(""))
+					   saveButton.setEnabled(false);
+				  else
+					  saveButton.setEnabled(true);
+				
+			  }
+			else
+				 saveButton.setEnabled(false);
+			
+		}
 	}
 
 	@Override
