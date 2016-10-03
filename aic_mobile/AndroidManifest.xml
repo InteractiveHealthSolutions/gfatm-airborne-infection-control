@@ -65,6 +65,11 @@
             android:windowSoftInputMode="stateHidden" android:label="@string/app_name">
         </activity>
         <activity
+            android:name="com.ihsinformatics.aic.UvgiTroubleshootStatusActivity"
+            android:configChanges="keyboardHidden|orientation" 
+            android:windowSoftInputMode="stateHidden" android:label="@string/app_name">
+        </activity>
+        <activity
             android:name="com.ihsinformatics.aic.UvgiTroubleshootResolutionActivity"
             android:configChanges="keyboardHidden|orientation" 
             android:windowSoftInputMode="stateHidden" android:label="@string/app_name">

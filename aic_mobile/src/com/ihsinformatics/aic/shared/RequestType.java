@@ -23,6 +23,7 @@ public class RequestType {
 	public static final String UVGI_INSTALLATION = "uvgi_installation";
 	public static final String UVGI_MAINTENANCE = "uvgi_maintenance";
 	public static final String UVGI_TROUBLESHOOTING = "uvgi_troubleshooting";
+	public static final String UVGI_TROUBLESHOOT_STATUS = "uvgi_troubleshoot_status";
 	public static final String UVGI_RESOLUTION = "uvgi_resolution";
 	
 }

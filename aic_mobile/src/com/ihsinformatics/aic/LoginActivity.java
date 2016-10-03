@@ -52,7 +52,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	String                          tempUsername;
 	String							tempPassword;
 	
-	Calendar						startDateTime;
+	String							startDateTime;
+	Calendar						enteredDate;
 	
 	int loginAttempt;
 
@@ -83,7 +84,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void initView (View[] views)
 	{
 		
-		startDateTime = Calendar.getInstance ();
+		Long tsLong = System.currentTimeMillis()/1000;
+		startDateTime = tsLong.toString();
+		enteredDate = Calendar.getInstance();
 		
 		Boolean status = serverService.renewLoginStatus();  // Check if login status needs to be renew or not
 		
@@ -230,7 +233,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 					
 					values.put ("username", App.getUsername());
 					values.put ("password", App.getPassword());
-					values.put ("starttime", App.getSqlDateTime(startDateTime));
+					values.put ("starttime", startDateTime);
+					values.put ("location", "IHS");
+					values.put ("entereddate", App.getSqlDate(enteredDate));
 				
 					//String exists = serverService.authenticate (RequestType.LOGIN, values);     
 					//return exists;
@@ -250,7 +255,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 					super.onPostExecute (result);
 					loading.dismiss ();
 					
-					if (result.equals("SUCCESS"))
+					String[] resultArray = result.split(":;:");
+					
+					if (resultArray[0].equals("SUCCESS"))
 					{
 				
 						Date date = new Date();
@@ -271,13 +278,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 						startActivity (intent);
 						finish ();
 					}
-					else if(result.equals("FAIL"))
+					else if(resultArray[0].equals("ERROR"))
 					{
 						
 						App.setUsername (tempUsername);
 						App.setPassword (tempPassword);
 						
-						showAlert(getResources ().getString (R.string.authentication_error), AlertType.ERROR);
+						showAlert(resultArray[0] + "\n" + resultArray[1], AlertType.ERROR);
 					
 					}
 					else if(result.equals("CONNECTION_ERROR"))

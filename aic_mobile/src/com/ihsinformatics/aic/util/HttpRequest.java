@@ -76,26 +76,38 @@ public class HttpRequest
 	 */
 	public String clientGet (String requestUri)
 	{
-		HttpsClient client = new HttpsClient (context);
-		HttpUriRequest request = null;
+		URL url;
 		String response = "";
-		String auth = "";
-		try
-		{
-			request = new HttpGet (requestUri);
-			auth = Base64.encodeToString ((App.getUsername () + ":" + App.getPassword ()).getBytes ("UTF-8"), Base64.NO_WRAP);
-			request.addHeader ("Authorization", auth);
-			response = client.request (request);
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			Log.e (TAG, e.getMessage ());
-		}
-		catch (IllegalArgumentException e)
-		{
-			Log.e (TAG, e.getMessage ());
-		}
-		return response;
+	    HttpURLConnection urlConnection = null;
+	    try {
+	        url = new URL(requestUri);
+
+	        urlConnection = (HttpURLConnection) url
+	                .openConnection();
+	        
+	        urlConnection.setConnectTimeout(20);
+	        
+	        BufferedReader in = new BufferedReader(new InputStreamReader(
+	        		urlConnection.getInputStream()));
+			String inputLine;
+			StringBuffer responseBuffer = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				responseBuffer.append(inputLine);
+			}
+			in.close();
+			response = responseBuffer.toString();
+			
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "CONNECTION_ERROR";
+	    } finally {
+	        if (urlConnection != null) {
+	            urlConnection.disconnect();
+	        }    
+	    }
+	    return response;
 	}
 
 	/**
@@ -124,10 +136,12 @@ public class HttpRequest
 			 * (content); httpPost.setEntity (stringEntity); request = httpPost;
 			*/
 			
-			auth = Base64.encodeToString ((App.getUsername () + ":" + App.getPassword ()).getBytes ("UTF-8"), Base64.NO_WRAP);
-			//String finalRequestString = URLEncoder.encode(json,"UTF-8");
-			request = new HttpGet (postUri);
-			request.addHeader ("Authorization", auth);
+			HttpPost httpPost = new HttpPost (postUri);
+			httpPost.setHeader ("Accept","application/json"); 
+			httpPost.setHeader ("Content-Type", "application/json");
+			StringEntity stringEntity = new StringEntity(content);
+			httpPost.setEntity (stringEntity);
+			request = httpPost;
 			response = client.execute (request);
 			entity = response.getEntity ();
 			InputStream is = entity.getContent ();
@@ -157,35 +171,35 @@ public class HttpRequest
 	
 	public static String makeRequest(String uri, String json){
 		HttpURLConnection httpConnection = null;
-		OutputStream outputStream = null;
-		InputStream inputStream = null;
 		int responseCode = 0;
-		StringBuilder sb = null;
+		String response = "";
 		URL url;
 		try {
-			url = new URL(uri);
+			url = new URL(uri + "?params=" + json);
 			httpConnection = (HttpURLConnection) url.openConnection();
-			httpConnection.setRequestProperty("Content-Type","application/json");
-			httpConnection.setRequestProperty("Content-Language", "en-US");
+			httpConnection.setRequestMethod("GET");
+			httpConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
+			httpConnection.setRequestProperty("Accept-Language",
+					"en-US,en;q=0.5");
 			httpConnection.setDoOutput(true);
-			outputStream = httpConnection.getOutputStream();
-			outputStream.write(json.getBytes());
-			outputStream.flush();
-			outputStream.close();
-			
 			httpConnection.connect();
 			responseCode = httpConnection.getResponseCode();
 	         
-	         if (responseCode == HttpURLConnection.HTTP_OK) 
-	        	 inputStream = httpConnection.getInputStream();
-	         else
-	        	 inputStream = httpConnection.getErrorStream();
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader((inputStream)));
-			sb = new StringBuilder();
-			String output;
-			while ((output = br.readLine()) != null) {
-				sb.append(output);
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						httpConnection.getInputStream()));
+				String inputLine;
+				StringBuffer responseBuffer = new StringBuffer();
+
+				while ((inputLine = in.readLine()) != null) {
+					responseBuffer.append(inputLine);
+				}
+				in.close();
+				System.out.println(responseBuffer.toString());
+				JSONObject jsonObj = new JSONObject(responseBuffer.toString());
+				response = jsonObj.toString();
+			} else {
+				response = "ERROR";
 			}
 			
 		} catch (Exception e) {
@@ -193,7 +207,7 @@ public class HttpRequest
 		} finally {
 			httpConnection.disconnect();
 		}
-		return sb.toString();
+		return response.toString();
 	}
 	
 	public static String makeRequests(String uri, String json) {

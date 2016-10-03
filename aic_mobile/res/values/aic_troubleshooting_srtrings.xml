@@ -16,5 +16,17 @@
     <string name="problem_resolved_by">Name of troubleshooter?</string>
     
    <string name="troubleshoot_contact_number">Mobile phone number of the person who troubleshooted?</string>
+   
+   <string name="troubleshoot_status">Whats the status?</string>
+   
+   <string-array name="troubleshoot_statuses">
+        <item>Complaint Logged</item>
+        <item>Complaint Recieved</item>
+        <item>Complaint Processed</item>
+        <item>Team Dispacted</item>
+        <item>Issue Resolved</item>
+    </string-array>
+    
+   <string name="date">Date</string>
 
 </resources>

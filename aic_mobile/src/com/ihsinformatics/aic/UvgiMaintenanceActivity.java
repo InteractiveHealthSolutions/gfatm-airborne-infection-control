@@ -26,8 +26,10 @@ import com.ihsinformatics.aic.custom.MyEditText;
 import com.ihsinformatics.aic.custom.MyRadioButton;
 import com.ihsinformatics.aic.custom.MyRadioGroup;
 import com.ihsinformatics.aic.custom.MyTextView;
+import com.ihsinformatics.aic.custom.MyEditText.KeyImeChange;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
 import android.app.Dialog;
@@ -48,10 +50,13 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -272,13 +277,13 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		scanBarcodeButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.scan_qr_code, R.string.scan_qr_code);
 		
 		threeFtUvMeterBeforeReadingTextView = new MyTextView (context, R.style.text, R.string.reading_before_3ft_cleaning);
-		threeFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		threeFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 		
 		sixFtUvMeterBeforeReadingTextView = new MyTextView (context, R.style.text, R.string.reading_before_6ft_cleaning);
-		sixFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_6ft_cleaning, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		sixFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_6ft_cleaning, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 		
 		sevenFtUvMeterBeforeReadingTextView = new MyTextView (context, R.style.text, R.string.reading_before_7ft_cleaning);
-		sevenFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_7ft_cleaning, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		sevenFtUvMeterBeforeReading = new MyEditText(context,R.string.reading_before_7ft_cleaning, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 		
 		maintenanceChecklistHeading = new MyTextView (context, R.style.text, R.string.maintenance_checklist);
 		maintenanceChecklistHeading.setTextColor(getResources().getColor(R.color.mainTheme));
@@ -349,7 +354,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		lightWorking = new MyRadioGroup(context,new MyRadioButton[] {noLightWorking, yesLightWorking}, R.string.light_working,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 */
 		threeFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_3ft_cleaning);
-		threeFtUvMeterReading = new MyEditText(context,R.string.reading_after_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		threeFtUvMeterReading = new MyEditText(context,R.string.reading_after_3ft_cleaning, R.string.ft_3_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 
 		/*threeFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noThreeFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
@@ -357,7 +362,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		threeFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesThreeFtCorrectReading, noThreeFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 */
 		sixFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_6ft_cleaning);
-		sixFtUvMeterReading = new MyEditText(context,R.string.reading_after_6ft_cleaning, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		sixFtUvMeterReading = new MyEditText(context,R.string.reading_after_6ft_cleaning, R.string.ft_6_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 
 		/*sixFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSixFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
@@ -365,7 +370,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		sixFtCorrectReading = new MyRadioGroup(context,new MyRadioButton[] { yesSixFtCorrectReading, noSixFtCorrectReading }, R.string.reading_confirmation,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
 */
 		sevenFtUvMeterReadingTextView = new MyTextView (context, R.style.text, R.string.reading_after_7ft_cleaning);
-		sevenFtUvMeterReading = new MyEditText(context,R.string.reading_after_7ft_cleaning, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 5, false);
+		sevenFtUvMeterReading = new MyEditText(context,R.string.reading_after_7ft_cleaning, R.string.ft_7_reading_hint, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL, R.style.edit, 4, false);
 
 		/*sevenFtCorrectReadingTextView = new MyTextView (context, R.style.text, R.string.reading_confirmation);
 		noSevenFtCorrectReading = new MyRadioButton(context, R.string.reading_confirmation, R.style.radio,R.string.no);
@@ -470,120 +475,369 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			}
 		}
 		
-		threeFtUvMeterReading.addTextChangedListener(new TextWatcher() {
+		// on back pressed
+		threeFtUvMeterReading.setKeyImeChangeListener(new KeyImeChange() {
 
-          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-		  @Override
-		  public void afterTextChanged(Editable s) {
+		    @Override
+		    public void onKeyIme(int keyCode, KeyEvent event) {
+		    	if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+		    		
+			    		String val = App.get(threeFtUvMeterReading);
+						 Double valNumber;
+						 if(!val.equals("") && !val.equals(".")){
+						    valNumber = Double.parseDouble(val);
+							 	
+						    if(valNumber > 0.4){
+								App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+						 		threeFtUvMeterReading.requestFocus();
+						 	}	
+								 
+						 } 
+						  
+						 
+						  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+								  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) && 
+								  !(App.get(maintenanceContactNumber).equals("")) &&
+								  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+							  
+							  if(!partsReplacedCheckBox.isChecked())
+								   saveButton.setEnabled(true);
+							  else if(App.get(replacedPartName).equals(""))
+								   saveButton.setEnabled(false);
+							  else
+								  saveButton.setEnabled(true);
+						  }
+						 else
+							 saveButton.setEnabled(false);
+						  
+		            }
+		    }
+		});
 				
-			  String val = App.get(threeFtUvMeterReading);
-			  Double valNumber;
-			  if(!val.equals("")){
-			 		valNumber = Double.parseDouble(val);
-			 	
-				 	if(valNumber > 0.4)
-						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
-				 	 	
-			  }
-			  
-			  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
-					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) && 
-					  !(App.get(maintenanceContactNumber).equals("")) &&
-					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
-				  
-				  if(!partsReplacedCheckBox.isChecked())
-					   saveButton.setEnabled(true);
-				  else if(App.get(replacedPartName).equals(""))
-					   saveButton.setEnabled(false);
-				  else
-					  saveButton.setEnabled(true);
-			  }
-			 else
-				 saveButton.setEnabled(false);
-		  }
-		  
-       });
+		// on focus changed
+		threeFtUvMeterReading.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					
+					String val = App.get(threeFtUvMeterReading);
+					 Double valNumber;
+					 if(!val.equals("") && !val.equals(".")){
+					    valNumber = Double.parseDouble(val);
+						 	
+					 	if(valNumber > 0.4)
+							App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+							 
+					 } 
+					  
+					 
+					  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+							  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+							  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+							  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) && 
+							  !(App.get(maintenanceContactNumber).equals("")) &&
+							  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+						  
+						  if(!partsReplacedCheckBox.isChecked())
+							   saveButton.setEnabled(true);
+						  else if(App.get(replacedPartName).equals(""))
+							   saveButton.setEnabled(false);
+						  else
+							  saveButton.setEnabled(true);
+					  }
+					 else
+						 saveButton.setEnabled(false);
+					  
+		        }
+			}
+		});
 		
-		sixFtUvMeterReading.addTextChangedListener(new TextWatcher() {
-
-          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-		  @Override
-		  public void afterTextChanged(Editable s) {
-			 
-			  String val = App.get(sixFtUvMeterReading);
-			  Double valNumber;
-			  if(!val.equals("")){
-			 		valNumber = Double.parseDouble(val);
-			 	
-				 	if(valNumber > 0.4)
-						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
-				 	 	
-			  }
-			 
-			 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
-					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  !(App.get(maintenanceContactNumber).equals("")) &&
-					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
-				  
-				 if(!partsReplacedCheckBox.isChecked())
-					   saveButton.setEnabled(true);
-				  else if(App.get(replacedPartName).equals(""))
-					   saveButton.setEnabled(false);
-				  else
-					  saveButton.setEnabled(true);
-			  }
-			 else
-				 saveButton.setEnabled(false);
-		  }
-		  
-       });
-		
-		sevenFtUvMeterReading.addTextChangedListener(new TextWatcher() {
-
-          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-		  @Override
-		  public void afterTextChanged(Editable s) {
+		// on done pressed
+		threeFtUvMeterReading.setOnEditorActionListener( new EditText.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			    if (actionId == EditorInfo.IME_ACTION_DONE ) {
+			        if (!event.isShiftPressed()) {
+			        	
+			        	String val = App.get(threeFtUvMeterReading);
+						 Double valNumber;
+						 if(!val.equals("") && !val.equals(".")){
+						    valNumber = Double.parseDouble(val);
+							 	
+						 	if(valNumber > 0.4){
+								App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+						 		threeFtUvMeterReading.requestFocus();
+						 	}	 
+						 } 
+						  
+						 
+						  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+								  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) && 
+								  !(App.get(maintenanceContactNumber).equals("")) &&
+								  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+							  
+							  if(!partsReplacedCheckBox.isChecked())
+								   saveButton.setEnabled(true);
+							  else if(App.get(replacedPartName).equals(""))
+								   saveButton.setEnabled(false);
+							  else
+								  saveButton.setEnabled(true);
+						  }
+						 else
+							 saveButton.setEnabled(false);
+						 
+			           return true; // consume.
+			        }                
+			    }
+			    return false; // pass on to other listeners. 
+			}
+			});
 				
-			  String val = App.get(sevenFtUvMeterReading);
-			 	Double valNumber;
-			 	if(!val.equals("")){
-			 		valNumber = Double.parseDouble(val);
-			 	
-				 	if(valNumber < 10)
-						App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+			// on back pressed
+			sixFtUvMeterReading.setKeyImeChangeListener(new KeyImeChange() {
+
+			    @Override
+			    public void onKeyIme(int keyCode, KeyEvent event) {
+			    	if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+			    		
+				    		String val = App.get(sixFtUvMeterReading);
+							 Double valNumber;
+							 if(!val.equals("") && !val.equals(".")){
+							 		valNumber = Double.parseDouble(val);
+							 	
+							 		if(valNumber > 0.4){
+										App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+								 		sixFtUvMeterReading.requestFocus();
+								 	}	
+								 	 	
+							 }
+						 	
+							 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+									  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+									  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+									  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+									  !(App.get(maintenanceContactNumber).equals("")) &&
+									  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+								  
+								 if(!partsReplacedCheckBox.isChecked())
+									   saveButton.setEnabled(true);
+								  else if(App.get(replacedPartName).equals(""))
+									   saveButton.setEnabled(false);
+								  else
+									  saveButton.setEnabled(true);
+							  }
+							 else
+								 saveButton.setEnabled(false);
+							 
+			            }
+			    }
+			});
+			
+			// on focus changed
+			sixFtUvMeterReading.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if (!hasFocus) {
+						
+						String val = App.get(sixFtUvMeterReading);
+						 Double valNumber;
+						 if(!val.equals("") && !val.equals(".")){
+						 		valNumber = Double.parseDouble(val);
+						 	
+							 	if(valNumber > 0.4)
+									App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+							 	 	
+						 }
+					 	
+						 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+								  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+								  !(App.get(maintenanceContactNumber).equals("")) &&
+								  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+							  
+							 if(!partsReplacedCheckBox.isChecked())
+								   saveButton.setEnabled(true);
+							  else if(App.get(replacedPartName).equals(""))
+								   saveButton.setEnabled(false);
+							  else
+								  saveButton.setEnabled(true);
+						  }
+						 else
+							 saveButton.setEnabled(false);
+						  
+			        }
+				}
+			});
+			
+			// on done pressed
+			sixFtUvMeterReading.setOnEditorActionListener( new EditText.OnEditorActionListener() {
+				@Override
+				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				    if (actionId == EditorInfo.IME_ACTION_DONE) {
+				        if (!event.isShiftPressed()) {
+				        	
+				        	String val = App.get(sixFtUvMeterReading);
+							 Double valNumber;
+							 if(!val.equals("") && !val.equals(".")){
+							 		valNumber = Double.parseDouble(val);
+							 	
+							 		if(valNumber > 0.4){
+										App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+								 		sixFtUvMeterReading.requestFocus();
+								 	}
+								 	 	
+							 }
+						 	
+							 if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+									  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+									  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+									  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+									  !(App.get(maintenanceContactNumber).equals("")) &&
+									  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+								  
+								 if(!partsReplacedCheckBox.isChecked())
+									   saveButton.setEnabled(true);
+								  else if(App.get(replacedPartName).equals(""))
+									   saveButton.setEnabled(false);
+								  else
+									  saveButton.setEnabled(true);
+							  }
+							 else
+								 saveButton.setEnabled(false);
+							 
+				           return true; // consume.
+				        }                
+				    }
+				    return false; // pass on to other listeners. 
+				}
+				});
+				
+		// on back pressed
+		sevenFtUvMeterReading.setKeyImeChangeListener(new KeyImeChange() {
+
+		    @Override
+		    public void onKeyIme(int keyCode, KeyEvent event) {
+		    	if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+		    		
+			    		String val = App.get(sevenFtUvMeterReading);
+					 	Double valNumber;
+					 	if(!val.equals("") && !val.equals(".")){
+					 		valNumber = Double.parseDouble(val);
+					 	
+						 	if(valNumber < 10){
+								App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+						 		sevenFtUvMeterReading.requestFocus();
+						 	}
+						 	
+					 	}
+						  
+					 	if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+								  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+								  !(App.get(maintenanceContactNumber).equals("")) &&
+								  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+							  
+							  if(!partsReplacedCheckBox.isChecked())
+								   saveButton.setEnabled(true);
+							  else if(App.get(replacedPartName).equals(""))
+								   saveButton.setEnabled(false);
+							  else
+								  saveButton.setEnabled(true);
+						  }
+						 else
+							 saveButton.setEnabled(false);
+												
+		            }
+		    }
+		});
+				
+		// On change of focus
+		sevenFtUvMeterReading.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					
+					String val = App.get(sevenFtUvMeterReading);
+				 	Double valNumber;
+				 	if(!val.equals("") && !val.equals(".")){
+				 		valNumber = Double.parseDouble(val);
 				 	
-			 	}
-			  
-			  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
-					  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
-					  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
-					  !(App.get(maintenanceContactNumber).equals("")) &&
-					  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
-				  
-				  if(!partsReplacedCheckBox.isChecked())
-					   saveButton.setEnabled(true);
-				  else if(App.get(replacedPartName).equals(""))
-					   saveButton.setEnabled(false);
-				  else
-					  saveButton.setEnabled(true);
-			  }
-			 else
-				 saveButton.setEnabled(false);
-		  }
-		  
-       });
-		
+					 	if(valNumber < 10)
+							App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+					 	
+				 	}
+					  
+				 	if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+							  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+							  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+							  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+							  !(App.get(maintenanceContactNumber).equals("")) &&
+							  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+						  
+						  if(!partsReplacedCheckBox.isChecked())
+							   saveButton.setEnabled(true);
+						  else if(App.get(replacedPartName).equals(""))
+							   saveButton.setEnabled(false);
+						  else
+							  saveButton.setEnabled(true);
+					  }
+					 else
+						 saveButton.setEnabled(false);
+					  
+		        }
+			}
+		});
+				
+		// On done pressed 
+		sevenFtUvMeterReading.setOnEditorActionListener( new EditText.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			    if (actionId == EditorInfo.IME_ACTION_DONE ) {
+			      
+			        	
+			        	String val = App.get(sevenFtUvMeterReading);
+					 	Double valNumber;
+					 	if(!val.equals("") && !val.equals(".")){
+					 		valNumber = Double.parseDouble(val);
+					 	
+					 		if(valNumber < 10){
+								App.getDialog (UvgiMaintenanceActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+						 		sevenFtUvMeterReading.requestFocus();
+						 	}				 	
+					 	}
+						  
+					 	if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
+								  !(App.get(threeFtUvMeterBeforeReading).equals("")) && !(App.get(sixFtUvMeterBeforeReading).equals("")) &&
+								  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(maintenancePersonName).equals("")) &&
+								  !(App.get(maintenanceContactNumber).equals("")) &&
+								  lightWorkingCheckBox.getVisibility() == View.VISIBLE && lightWorkingCheckBox.isChecked()){
+							  
+							  if(!partsReplacedCheckBox.isChecked())
+								   saveButton.setEnabled(true);
+							  else if(App.get(replacedPartName).equals(""))
+								   saveButton.setEnabled(false);
+							  else
+								  saveButton.setEnabled(true);
+						  }
+						 else
+							 saveButton.setEnabled(false);
+						
+			           return true; // consume.
+			                       
+			    }
+			    return false; // pass on to other listeners. 
+			}
+			});
 		
 		uniqueIdGenerated.addTextChangedListener(new TextWatcher() {
 	
@@ -1074,26 +1328,71 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			message.append (getResources ().getString (R.string.empty_data) + "\n");
 		}
 		
+		Boolean f = true;
 		// Check ID
 		/*if (!RegexUtil.isValidId(App.get(uniqueIdGenerated))) {
 			valid = false;
-			message.append(uniqueIdGenerated.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			uniqueIdGenerated.setTextColor(getResources().getColor(
-					R.color.Red));
+			f = false;
+			message.append (view.getTag () + ". ");
+			uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.Red));
+		  }
+		 else{
+				uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.mainTheme));
 		}*/
+		
+		//Check Readings
+		View[] v = {threeFtUvMeterReading, sixFtUvMeterReading, sevenFtUvMeterReading, maintenanceContactNumber};
+		for (View view : v)
+		{
+			if(view.getVisibility() == View.VISIBLE){
+				if(App.get(view).equals(".")){
+					valid = false;
+					f = false;
+					message.append (view.getTag () + ". ");
+				    ((EditText) view).setTextColor (getResources ().getColor (R.color.Red));
+				}
+				else
+				{
+					((EditText) view).setTextColor (getResources ().getColor (R.color.mainTheme));
+				}
+			}
+		}
 		
 		// Phone Number
 		if (App.get(maintenanceContactNumber).length() != maintenanceContactNumber.getMaxLength()) {
+				valid = false;
+				f = false;
+				message.append (maintenanceContactNumber.getTag () + ". ");
+				maintenanceContactNumber.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			maintenanceContactNumber.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
+		// Maintainer Name...
+		if(!RegexUtil.isWord(App.get(maintenancePersonName))){
 			valid = false;
-			message.append(maintenanceContactNumber.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			maintenanceContactNumber.setTextColor(getResources().getColor(
-					R.color.Red));
+			f = false;
+			message.append (maintenancePersonName.getTag () + ". ");
+			maintenancePersonName.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			maintenancePersonName.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
+		if(replacedPartName.getVisibility() == View.VISIBLE){
+			// Maintainer Name...
+			if(!RegexUtil.isWord(App.get(replacedPartName))){
+				valid = false;
+				f = false;
+				message.append (replacedPartName.getTag () + ". ");
+				replacedPartName.setTextColor (getResources ().getColor (R.color.Red));
+			}
+			else
+				replacedPartName.setTextColor (getResources ().getColor (R.color.mainTheme));
+		}
+		
+		if (!f)
+		{
+			message.append (getResources ().getString (R.string.invalid_data) + "\n");
 		}
 					
 		// Check Date
@@ -1120,11 +1419,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 	public boolean submit ()
 	{
 		if (validate ())
-		{
-			final ContentValues values = new ContentValues ();
-			values.put ("formDate", App.getSqlDate (formDate));
-			values.put ("location", App.getLocation ());
-			
+		{			
 			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 			{
 				@Override
@@ -1145,19 +1440,18 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					final ArrayList<String[]> observations = new ArrayList<String[]>();
 					final ContentValues values = new ContentValues ();
 					
-					values.put ("starttime", App.getSqlDateTime(startDateTime));
-					values.put ("uvgi_install_location", "IHS");
+					values.put ("location", "IHS");
 					values.put ("entereddate", App.getSqlDate(formDate));
 					
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
-					observations.add(new String[] { "UV_READ_3FT_BEFORE_CLEAN",  App.get(threeFtUvMeterBeforeReading)});
-					observations.add(new String[] { "UV_READ_6FT_BEFORE_CLEAN",  App.get(sixFtUvMeterBeforeReading)});
-					observations.add(new String[] { "UV_READ_7FT_BEFORE_CLEAN",  App.get(sevenFtUvMeterBeforeReading)});
+					observations.add(new String[] { "UV_BEFORE_CLEAN_3FT",  App.get(threeFtUvMeterBeforeReading)});
+					observations.add(new String[] { "UV_BEFORE_CLEAN_6FT",  App.get(sixFtUvMeterBeforeReading)});
+					observations.add(new String[] { "UV_BEFORE_CLEAN_7FT",  App.get(sevenFtUvMeterBeforeReading)});
 					observations.add(new String[] { "POWER_DISCONNECTED",  powerDisconnectedCheckBox.isChecked() ? "Y" : "N"});
 					observations.add(new String[] { "LOUVER_OPENED",  louverOpenedCheckBox.isChecked() ? "Y" : "N"});
 					observations.add(new String[] { "LAMPS_REMOVED",  lampsRemovedCheckBox.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "LAMPS_CLEANED_WITH_MICROFIBER_ALCOHOL",  lampsMicrofiberCheckBox.isChecked() ? "Y" : "N"});
-					observations.add(new String[] { "INTERIOR_CLEANED_WITH_MICROFIBER_ALCOHOL",  interiorMicrofiberCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "LAMPS_CLEANED",  lampsMicrofiberCheckBox.isChecked() ? "Y" : "N"});
+					observations.add(new String[] { "INTERIOR_CLEANED",  interiorMicrofiberCheckBox.isChecked() ? "Y" : "N"});
 					observations.add(new String[] { "UV_PART_REPLACED",  partsReplacedCheckBox.isChecked() ? "Y" : "N"});
 					if(replacedPartNameTextView.getVisibility() == View.VISIBLE)
 						observations.add(new String[] { "PARTS_REPLACED_NAME",  App.get(replacedPartName)});
@@ -1166,21 +1460,22 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "POWER_CONNECTED",  powerConnectCheckBox.isChecked() ? "Y" : "N"});
 					observations.add(new String[] { "UV_LIGHT_WORKING",  lightWorkingCheckBox.isChecked() ? "Y" : "N"});
 
-					observations.add(new String[] { "UV_READ_3FT_AFTER_CLEAN",  String.valueOf(threeFtUvMeterReading)});
+					observations.add(new String[] { "UV_AFTER_CLEAN_3FT",  App.get(threeFtUvMeterReading)});
 //					if(threeFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
 //						observations.add(new String[] { "3ft_reading_correct",  yesThreeFtCorrectReading.isChecked() ? "Yes" : "No"});
-					observations.add(new String[] { "UV_READ_6FT_AFTER_CLEAN",  String.valueOf(sixFtUvMeterReading)});
+					observations.add(new String[] { "UV_AFTER_CLEAN_6FT",  App.get(sixFtUvMeterReading)});
 //					if(sixFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
 //						observations.add(new String[] { "6ft_reading_correct",  yesSixFtCorrectReading.isChecked() ? "Yes" : "No"});
-					observations.add(new String[] { "UV_READ_7FT_AFTER_CLEAN",   String.valueOf(sevenFtUvMeterReading)});
+					observations.add(new String[] { "UV_AFTER_CLEAN_7FT",   App.get(sevenFtUvMeterReading)});
 //					if(sevenFtCorrectReadingTextView.getVisibility() == View.VISIBLE)
 //						observations.add(new String[] { "7ft_reading_correct",  yesSevenFtCorrectReading.isChecked() ? "Yes" : "No"});
 
-					observations.add(new String[] { "MAINTAINER_BY",   String.valueOf(maintenancePersonName)});
-					observations.add(new String[] { "MAINTAINER_CONTACT",   String.valueOf(maintenanceContactNumber)});
+					observations.add(new String[] { "MAINTAINER_NAME",   App.get(maintenancePersonName)});
+					observations.add(new String[] { "MAINTAINER_CONTACT",   App.get(maintenanceContactNumber)});
+					observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
 					
-					//String result = serverService.saveFeedback (FORM_NAME, values);
-					String result = "SUCCESS";
+					String result = serverService.saveUVGIForm (RequestType.UVGI_MAINTENANCE, values, observations.toArray(new String[][] {}));
+					//String result = "SUCCESS";
 					return result;
 				}
 

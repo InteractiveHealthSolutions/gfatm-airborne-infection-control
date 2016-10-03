@@ -18,6 +18,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.ihsinformatics.aic.model.OpenMrsObject;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.R;
@@ -482,7 +486,7 @@ public class App
 	 */
 	public static String getSqlDateTime (Calendar date)
 	{
-		return DateFormat.format ("yyyy-MM-dd hh:mm:ss", date).toString ();
+		return DateFormat.format ("yyyy-MM-dd HH:mm:ss", date).toString ();
 	}
 
 	/**
@@ -504,7 +508,7 @@ public class App
 	 */
 	public static String getSqlDateTime (Date date)
 	{
-		return DateFormat.format ("yyy-MM-dd hh:mm:ss", date).toString ();
+		return DateFormat.format ("yyy-MM-dd HH:mm:ss", date).toString ();
 	}
 
 	/**
@@ -517,6 +521,21 @@ public class App
 	public static ArrayAdapter<String> getAdapter (Context context, String[] list)
 	{
 		return new ArrayAdapter<String> (context, android.R.layout.select_dialog_item, list);
+	}
+	
+	public static boolean isJSONValid(String test) {
+	    try {
+	        new JSONObject(test);
+	    } catch (JSONException ex) {
+	        // edited, to include @Arthur's comment
+	        // e.g. in case JSONArray is valid as well...
+	        try {
+	            new JSONArray(test);
+	        } catch (JSONException ex1) {
+	            return false;
+	        }
+	    }
+	    return true;
 	}
 
 }

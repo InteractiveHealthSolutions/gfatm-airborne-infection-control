@@ -47,7 +47,7 @@ public class ServerService {
 	{
 		this.context = context;
 		String prefix = "http" + (App.isUseSsl () ? "s" : "") + "://";
-		tbr3Uri = prefix + App.getServer () + "/gf-aic-web/gfaicweb.jsp";
+		tbr3Uri = prefix + App.getServer () + "/gf-aic-web/webservice";
 		//tbr3Uri = prefix + App.getServer () + "/eIMCIweb";
 		httpClient = new HttpRequest (this.context);
 		httpsClient = new HttpsClient (this.context);
@@ -199,7 +199,7 @@ public class ServerService {
 				return responseJson.toString ();
 			}
 			
-			response = HttpRequest.makeRequest(tbr3Uri, json);
+			response = httpClient.clientPost(tbr3Uri, json);
 		
 		}
 		catch (JSONException e)
@@ -226,9 +226,9 @@ public class ServerService {
 				return responseJson.toString ();
 			}
 			if (App.isUseSsl ())
-				response = httpsClient.clientGet (tbr3Uri + uri);
+				response = httpsClient.clientGet (tbr3Uri + "?params=" + uri);
 			else
-				response = httpClient.clientGet (tbr3Uri + uri);
+				response = httpClient.clientGet (tbr3Uri + "?params=" + uri);
 		}
 		catch (JSONException e)
 		{
@@ -1525,13 +1525,20 @@ public String[][] getClassifications(String id){
 			json.put ("username", values.getAsString ("username"));
 			json.put ("password", values.getAsString ("password"));
 			json.put ("starttime", values.getAsString ("starttime"));
+			json.put ("location", values.getAsString ("location"));
+			json.put ("entereddate", values.getAsString ("entereddate"));
 			String val = json.toString();
-			response = post (val);
+			response = get(val);
+			
+			if(!App.isJSONValid(response))
+				return response;
+			
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
-			if (jsonResponse.has ("result"))
+			if (jsonResponse.has ("response"))
 			{
-				String result = jsonResponse.getString ("result");
-				return result;
+				String result = jsonResponse.getString ("response");
+				String detail = jsonResponse.getString ("details");
+				return result + ":;:" + detail;
 			}
 			else
 			{
@@ -1607,19 +1614,13 @@ public String[][] getClassifications(String id){
 		return users;
 	}
 	
-	public String saveUVGIInstallation (String encounterType, ContentValues values, String[][] observations)
+	public String saveUVGIForm (String encounterType, ContentValues values, String[][] observations)
 	{
           	
 		String response = "";
 		
-		String starttime = values.getAsString("starttime");
 		String formDate = values.getAsString ("entereddate");
-		String location = values.getAsString ("uvgi_install_location");
-		String installed = "";
-		if(encounterType.equals(RequestType.UVGI_INSTALLATION))
-			installed = values.getAsString ("uvgi_installed");
-		
-		Calendar endDateTime = Calendar.getInstance ();
+		String location = values.getAsString ("location");
 		
 		try
 		{
@@ -1630,11 +1631,7 @@ public String[][] getClassifications(String id){
 			json.put ("type", encounterType);
 			json.put ("username", App.getUsername ());
 			json.put ("password", App.getPassword());
-			json.put ("starttime", starttime);
-			if(encounterType.equals(RequestType.UVGI_INSTALLATION))
-				json.put ("uvgi_installed", installed);
-			json.put ("uvgi_install_location", location);
-			json.put ("endtime", App.getSqlDateTime(endDateTime));
+			json.put ("location", location);
 			json.put ("entereddate", formDate);
 			
 			JSONArray obs = new JSONArray ();
@@ -1648,18 +1645,18 @@ public String[][] getClassifications(String id){
 				
 				obs.put (obsJson);
 			}
-			json.put ("obs", obs.toString ());
+			json.put ("results", obs);
 			
 			String val = json.toString();
-			response = post (val);
+			response = post(val);
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
 			if (jsonResponse == null)
 			{
 				return response;
 			}
-			if (jsonResponse.has ("result"))
+			if (jsonResponse.has ("response"))
 			{
-				String result = jsonResponse.getString ("result");
+				String result = jsonResponse.getString ("response");
 				return result;
 			}
 			return response;

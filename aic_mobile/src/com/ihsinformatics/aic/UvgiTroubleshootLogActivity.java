@@ -54,6 +54,7 @@ import com.ihsinformatics.aic.custom.MyEditText;
 import com.ihsinformatics.aic.custom.MyTextView;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
 import java.util.ArrayList;
@@ -192,7 +193,6 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
 		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
 		
-
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
 							   {problemTextView, problem},
 							   { mobileNumberTextView, mobileNumber, troubleshootingNumberTextView, troubleshootingNumber}
@@ -252,7 +252,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {uniqueIdGenerated};
+		views = new View[] {uniqueIdGenerated,  problem, mobileNumber};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -435,9 +435,6 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 	{
 		if (validate ())
 		{
-			final ContentValues values = new ContentValues ();
-			values.put ("formDate", App.getSqlDate (formDate));
-			values.put ("location", App.getLocation ());
 			
 			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 			{
@@ -459,19 +456,17 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 					final ArrayList<String[]> observations = new ArrayList<String[]>();
 					final ContentValues values = new ContentValues ();
 					
-					values.put ("username", App.getUsername());
-					values.put ("password", App.getPassword());
-					values.put ("starttime", App.getSqlDateTime(startDateTime));
-					values.put ("uvgi_install_location", "IHS");
+					values.put ("location", "IHS");
 					values.put ("entereddate", App.getSqlDate(formDate));
 					
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
 					observations.add(new String[] { "PROBLEM",  App.get(problem)});
 					observations.add(new String[] { "MOBILE_NUMBER",  App.get(mobileNumber)});
 					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
+					observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
 					
-					//String result = serverService.saveFeedback (FORM_NAME, values);
-					String result = "SUCCESS";
+					String result = serverService.saveUVGIForm(RequestType.UVGI_TROUBLESHOOTING, values, observations.toArray(new String[][] {}));
+					//String result = "SUCCESS";
 					return result;
 				}
 

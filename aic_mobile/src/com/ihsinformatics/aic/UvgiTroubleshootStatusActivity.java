@@ -14,7 +14,11 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,6 +32,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.StaticLayout;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Gravity;
@@ -40,6 +45,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -48,11 +54,13 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.ihsinformatics.aic.custom.MyButton;
 import com.ihsinformatics.aic.custom.MyEditText;
 import com.ihsinformatics.aic.custom.MyRadioButton;
 import com.ihsinformatics.aic.custom.MyRadioGroup;
+import com.ihsinformatics.aic.custom.MySpinner;
 import com.ihsinformatics.aic.custom.MyTextView;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
@@ -69,7 +77,7 @@ import java.util.Locale;
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
+public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 {
 	// Views displayed in pages, sorted w.r.t. appearance on pager
 	MyTextView			formDateTextView;
@@ -81,25 +89,17 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 	MyTextView 			troubleshootingNumberTextView;
 	MyEditText 			troubleshootingNumber;
-
-	MyTextView 			problemResolvedTextView;
-	MyRadioGroup 		problemResolved;
-	MyRadioButton 		yesProblemResolved;
-	MyRadioButton 		noProblemResolved;
-
-	MyTextView 			reasonProblemNotResolvedTextView;
-	MyEditText 			reasonProblemNotResolved;
-
-	MyTextView 			problemTextView;
-	MyEditText 			problem;
-
-	MyTextView 			resolvedByTextView;
-	MyEditText 			resolvedBy;
 	
-	MyTextView 			contactNumberTextView;
-	MyEditText 			contactNumber;
+	MyTextView			statusTextView;
+	MySpinner			status;
+	
+	MyTextView			statusDateTextView;
+	MyButton			statusDateButton;
 	
 	Calendar			startDateTime;
+	Calendar            statusDate;
+	
+	public static final int			STATUS_DIALOG_ID	= 3;
 
 	/**
 	 * Subclass representing Fragment for feedback form
@@ -167,8 +167,8 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	public void createViews (final Context context)
 	{
 		
-		FORM_NAME = FormType.UVGI_TROUBLESHOOT_RESOLUTION;
-		TAG = "UVGITroubleshootResolutionActivity";
+		FORM_NAME = FormType.UVGI_TROUBLESHOOT_STATUS;
+		TAG = "UVGITroubleshootStatusActivity";
 		PAGE_COUNT = 3;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
@@ -194,38 +194,16 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
 		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
-
-		problemResolvedTextView = new MyTextView (context, R.style.text, R.string.problem_resolved);
-		noProblemResolved = new MyRadioButton(context, R.string.problem_resolved, R.style.radio,R.string.no);
-		yesProblemResolved = new MyRadioButton(context, R.string.problem_resolved, R.style.radio,R.string.yes);
-		problemResolved = new MyRadioGroup(context,new MyRadioButton[] {noProblemResolved, yesProblemResolved}, R.string.problem_resolved,R.style.radio, App.isLanguageRTL(),MyRadioGroup.HORIZONTAL);
-
-		reasonProblemNotResolvedTextView = new MyTextView (context, R.style.text, R.string.reason_problem_not_resolved);
-		reasonProblemNotResolved = new MyEditText(context,R.string.reason_problem_not_resolved, R.string.reason_problem_not_resolved_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
-		reasonProblemNotResolved.setSingleLine(false);
-		reasonProblemNotResolved.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-		reasonProblemNotResolved.setMinLines (8);
-		reasonProblemNotResolved.setMaxHeight (10);
-		reasonProblemNotResolved.setGravity(Gravity.TOP);
 		
-		problemTextView = new MyTextView (context, R.style.text, R.string.problem);
-		problem = new MyEditText(context,R.string.problem, R.string.problem_with_fixture_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
-		problem.setSingleLine(false);
-		problem.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-		problem.setMinLines (8);
-		problem.setMaxHeight (10);
-		problem.setGravity(Gravity.TOP);
+		statusTextView = new MyTextView (context, R.style.text, R.string.troubleshoot_status);
+		status = new MySpinner (context, getResources ().getStringArray (R.array.troubleshoot_statuses), R.string.troubleshoot_status, R.string.option_hint);
 		
-		resolvedByTextView = new MyTextView (context, R.style.text, R.string.problem_resolved_by);
-		resolvedBy = new MyEditText(context,R.string.problem_resolved_by, R.string.maintenance_person_name_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
-
-		contactNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshoot_contact_number);
-		contactNumber = new MyEditText(context,R.string.troubleshoot_contact_number, R.string.maintenance_contact_number_hint, InputType.TYPE_CLASS_PHONE, R.style.edit, 11, false);
-
+		statusDateTextView = new MyTextView (context, R.style.text, R.string.date);
+		statusDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.date, R.string.date);
 		
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
-							   {troubleshootingNumberTextView, troubleshootingNumber,  problemResolvedTextView, problemResolved, reasonProblemNotResolvedTextView, reasonProblemNotResolved, problemTextView,problem},
-								{resolvedByTextView,resolvedBy, contactNumberTextView, contactNumber}
+							   {troubleshootingNumberTextView, troubleshootingNumber},
+								{statusTextView, status,  statusDateTextView, statusDateButton}
 							   };
 		
 		// Create layouts and store in ArrayList
@@ -255,14 +233,10 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			groups.add (scrollView);
 		}
 		// Set event listeners
-		firstButton.setOnClickListener (this);
-		lastButton.setOnClickListener (this);
-		clearButton.setOnClickListener (this);
-		saveButton.setOnClickListener(this);
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
 		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
-										formDateButton, scanBarcodeButton, noProblemResolved, yesProblemResolved
+										formDateButton, scanBarcodeButton, statusDateButton
 										};
 		
 		for (View v : setListener) {
@@ -283,7 +257,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {uniqueIdGenerated, troubleshootingNumber, problem, reasonProblemNotResolved, resolvedBy, contactNumber};
+		views = new View[] {uniqueIdGenerated, troubleshootingNumber};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -301,145 +275,6 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 				}
 			}
 		}
-		
-		
-		reasonProblemNotResolved.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals("")) ){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
-		
-		problem.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
-		
-		uniqueIdGenerated.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
-		
-		resolvedBy.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
-		
-		contactNumber.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
-		
-		troubleshootingNumber.addTextChangedListener(new TextWatcher() {
-
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-			  @Override
-			  public void afterTextChanged(Editable s) {
-				
-				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-					  
-					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-						  saveButton.setEnabled(true);
-					  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-						  saveButton.setEnabled(true);
-					  else
-						  saveButton.setEnabled(false);
-				  }
-				  else
-					  saveButton.setEnabled(false);
-				
-			  }
-	       });
 
 	}
 
@@ -451,17 +286,8 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		formDate = Calendar.getInstance ();
 		Date date = new Date();
 		formDate.setTime(date);
-		
-		reasonProblemNotResolvedTextView.setVisibility(View.GONE);
-		reasonProblemNotResolved.setVisibility(View.GONE);
-
-		problemTextView.setVisibility(View.GONE);
-		problem.setVisibility(View.GONE);
-		
-		yesProblemResolved.setChecked(false);
-		noProblemResolved.setChecked(false);
-		
-		saveButton.setEnabled(false);
+		statusDate = Calendar.getInstance();
+		statusDate.setTime(date);
 		
 		updateDisplay ();
 	}
@@ -470,7 +296,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	public void updateDisplay ()
 	{
 		formDateButton.setText (DateFormat.format ("dd-MMM-yyyy", formDate));
-		
+		statusDateButton.setText(DateFormat.format ("dd-MMM-yyyy", statusDate));
 
 	}
 
@@ -480,7 +306,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		boolean valid = true;
 		StringBuffer message = new StringBuffer ();
 		// Validate mandatory controls
-		View[] mandatory = {uniqueIdGenerated,  troubleshootingNumber, reasonProblemNotResolved, problem, resolvedBy};
+		View[] mandatory = {uniqueIdGenerated,  troubleshootingNumber};
 		for (View view : mandatory)
 		{
 			if(view.getVisibility() == View.VISIBLE){
@@ -525,17 +351,6 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			}
 			
 		} catch (NumberFormatException e) { }
-		
-		// Phone Number
-		if (App.get(contactNumber).length() != contactNumber.getMaxLength()) {
-			valid = false;
-			message.append(contactNumber.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			contactNumber.setTextColor(getResources().getColor(
-					R.color.Red));
-		}
 					
 		if (!valid)
 		{
@@ -548,6 +363,9 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	{
 		if (validate ())
 		{
+			final ContentValues values = new ContentValues ();
+			values.put ("formDate", App.getSqlDate (formDate));
+			values.put ("location", App.getLocation ());
 			
 			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 			{
@@ -574,16 +392,12 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 					
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
 					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
-					observations.add(new String[] { "PROBLEM_RESOLVED",  yesProblemResolved.isChecked() ? "Y" : "N"});
-					if(problemTextView.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "PROBLEM",  App.get(problem)});
-					if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "REASON_PROBLEM_UNRESOLVED",  App.get(reasonProblemNotResolved)});
-					observations.add(new String[] { "TROUBLESHOOTER_NAME",  App.get(resolvedBy)});
-					observations.add(new String[] { "TROUBLESHOOTER_CONTACT",  App.get(contactNumber)});
-					observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
-					
-					String result = serverService.saveUVGIForm(RequestType.UVGI_RESOLUTION, values, observations.toArray(new String[][] {}));
+					observations.add(new String[] { "STATUS",  App.get(status)});
+					observations.add(new String[] { "STATUS_DATE",  App.getSqlDate(statusDate)});
+					observations.add(new String[] { "starttime", App.getSqlDateTime(startDateTime)});
+
+				
+					String result = serverService.saveUVGIForm(RequestType.UVGI_TROUBLESHOOT_STATUS, values, observations.toArray(new String[][] {}));
 					//String result = "SUCCESS";
 					return result;
 				}
@@ -599,12 +413,12 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.ERROR, result).show ();
 					}
 					loading.dismiss ();
 				}
@@ -620,6 +434,9 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		if (view == formDateButton) {
 			showDialog(DATE_DIALOG_ID);
 		} 
+		else if(view == statusDateButton){
+			showDialog(STATUS_DIALOG_ID);
+		}
 		else if (view == firstButton)
 		{
 			gotoFirstPage ();
@@ -686,38 +503,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
 			}
 		}
-		else if(view == noProblemResolved || view == yesProblemResolved){
-			if(noProblemResolved.isChecked()){
-				
-				reasonProblemNotResolvedTextView.setVisibility(View.VISIBLE);
-				reasonProblemNotResolved.setVisibility(View.VISIBLE);
-
-				problemTextView.setVisibility(View.GONE);
-				problem.setText("");
-				problem.setVisibility(View.GONE);
-				
-			}
-			else{
-				reasonProblemNotResolvedTextView.setVisibility(View.GONE);
-				reasonProblemNotResolved.setVisibility(View.GONE);
-				reasonProblemNotResolved.setText("");
-
-				problemTextView.setVisibility(View.VISIBLE);
-				problem.setVisibility(View.VISIBLE);				
-			}
-			
-			if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
-				  
-				  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
-					  saveButton.setEnabled(true);
-				  else if (yesProblemResolved.isChecked() && !(App.get(problem).equals("")))
-					  saveButton.setEnabled(true);
-				  else
-					  saveButton.setEnabled(false);
-			  }
-			  else
-				  saveButton.setEnabled(false);
-		}
+		
 	}
 	
 	/**
@@ -794,5 +580,52 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			getApplicationContext().getResources().updateConfiguration(config,
 					null);
 		}
+	}
+	
+	@Override
+	protected Dialog onCreateDialog (int id)
+	{
+		switch (id)
+		{
+		// Show date dialog
+			case DATE_DIALOG_ID :
+				OnDateSetListener dateSetListener = new OnDateSetListener ()
+				{
+					@Override
+					public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth)
+					{
+						formDate.set (year, monthOfYear, dayOfMonth);
+						updateDisplay ();
+					}
+					
+				};
+				return new DatePickerDialog (this, dateSetListener, formDate.get (Calendar.YEAR), formDate.get (Calendar.MONTH), formDate.get (Calendar.DAY_OF_MONTH));
+				// Show time dialog
+			case TIME_DIALOG_ID :
+				OnTimeSetListener timeSetListener = new OnTimeSetListener ()
+				{
+					@Override
+					public void onTimeSet (TimePicker view, int hour, int minute)
+					{
+						formDate.set (Calendar.HOUR_OF_DAY, hour);
+						formDate.set (Calendar.MINUTE, minute);
+						updateDisplay ();
+					}
+				};
+				return new TimePickerDialog (this, timeSetListener, formDate.get (Calendar.HOUR_OF_DAY), formDate.get (Calendar.MINUTE), true);
+				
+			case STATUS_DIALOG_ID :
+				OnDateSetListener statusDateSetListener = new OnDateSetListener ()
+				{
+					@Override
+					public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth)
+					{
+						statusDate.set (year, monthOfYear, dayOfMonth);
+						updateDisplay ();
+					}
+				};
+				return new DatePickerDialog (this, statusDateSetListener, statusDate.get (Calendar.YEAR), statusDate.get (Calendar.MONTH), statusDate.get (Calendar.DAY_OF_MONTH));
+		}
+		return null;
 	}
 }
