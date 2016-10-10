@@ -46,7 +46,7 @@ public class MainActivity extends Activity
 		MainActivity.resetPreferences (this);      //loading preferences
 		
 		super.onCreate (savedInstanceState);
-		
+	
 		try
 		{
 			dbUtil = new DatabaseUtil (this);	

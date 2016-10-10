@@ -42,6 +42,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -71,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -89,9 +91,10 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 
 	MyTextView 			troubleshootingNumberTextView;
 	MyEditText 			troubleshootingNumber;
+	MyButton			verifyButton;
 	
 	MyTextView			statusTextView;
-	MySpinner			status;
+	Spinner				status;
 	
 	MyTextView			statusDateTextView;
 	MyButton			statusDateButton;
@@ -194,15 +197,19 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
 		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
+		verifyButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.verify, R.string.verify);
 		
 		statusTextView = new MyTextView (context, R.style.text, R.string.troubleshoot_status);
-		status = new MySpinner (context, getResources ().getStringArray (R.array.troubleshoot_statuses), R.string.troubleshoot_status, R.string.option_hint);
-		
+		status =  new Spinner(this);
+	    ArrayAdapter<String> statusArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.troubleshoot_statuses));
+	    statusArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
+	    status.setAdapter(statusArrayAdapter);
+	    
 		statusDateTextView = new MyTextView (context, R.style.text, R.string.date);
 		statusDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.date, R.string.date);
 		
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
-							   {troubleshootingNumberTextView, troubleshootingNumber},
+							   {troubleshootingNumberTextView, troubleshootingNumber, verifyButton},
 								{statusTextView, status,  statusDateTextView, statusDateButton}
 							   };
 		
@@ -235,8 +242,8 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 		// Set event listeners
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
-		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
-										formDateButton, scanBarcodeButton, statusDateButton
+		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton, verifyButton,
+										formDateButton, scanBarcodeButton, statusDateButton, status
 										};
 		
 		for (View v : setListener) {
@@ -257,7 +264,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 		
 		pager.setOnPageChangeListener (this);
 		
-		views = new View[] {uniqueIdGenerated, troubleshootingNumber};
+		views = new View[] {uniqueIdGenerated, troubleshootingNumber, status};
 		// Detect RTL language
 		if (App.isLanguageRTL ())
 		{
@@ -275,6 +282,46 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 				}
 			}
 		}
+		
+		uniqueIdGenerated.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				  
+				  if(!App.get(uniqueIdGenerated).equals("") && !App.get(troubleshootingNumber).equals("")){
+					  saveButton.setEnabled(true);
+					  verifyButton.setVisibility(View.VISIBLE);
+				  }
+				  else{
+					  saveButton.setEnabled(false);
+					  verifyButton.setVisibility(View.GONE);
+				  }
+				
+			  }
+	       });
+		
+		troubleshootingNumber.addTextChangedListener(new TextWatcher() {
+
+	          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			  @Override
+			  public void afterTextChanged(Editable s) {
+				  
+				  if(!App.get(uniqueIdGenerated).equals("") && !App.get(troubleshootingNumber).equals("")){
+					  saveButton.setEnabled(true);
+					  verifyButton.setVisibility(View.VISIBLE);
+				  }
+				  else{
+					  saveButton.setEnabled(false);
+					  verifyButton.setVisibility(View.GONE);
+				  }
+				
+			  }
+	       });
 
 	}
 
@@ -288,6 +335,9 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 		formDate.setTime(date);
 		statusDate = Calendar.getInstance();
 		statusDate.setTime(date);
+		
+		saveButton.setEnabled(false);
+		verifyButton.setVisibility(View.GONE);
 		
 		updateDisplay ();
 	}
@@ -354,7 +404,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 					
 		if (!valid)
 		{
-			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
+			App.getDialog (this, AlertType.ERROR, message.toString (), Gravity.CENTER_HORIZONTAL).show ();
 		}
 		return valid;
 	}
@@ -413,12 +463,12 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success), Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
 					}
 					loading.dismiss ();
 				}
@@ -450,7 +500,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 		}
 		else if (view == clearButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.clear_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -471,7 +521,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -503,6 +553,71 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
 			}
 		}
+		else if (view == verifyButton){
+			
+			//TODO: Validation Check for id...
+			
+			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			{
+
+				@Override
+				protected HashMap<String, String> doInBackground(String... params) {
+					runOnUiThread (new Runnable ()
+					{
+						@Override
+						public void run ()
+						{
+							loading.setIndeterminate (true);
+							loading.setCancelable (false);
+							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+							loading.show ();
+						}
+					});
+					
+					
+					HashMap<String, String> hm = serverService.getUVGITroubleshootStatusRecord (App.get(uniqueIdGenerated), App.get(troubleshootingNumber));
+					//String result = "SUCCESS";
+					return hm;
+				}
+				
+				@Override
+				protected void onProgressUpdate (String... values)
+				{
+				};
+
+				@Override
+				protected void onPostExecute (HashMap<String, String> result)
+				{
+					super.onPostExecute (result);
+					if(result.get("status").equals("SUCCESS")){
+						String resultString = "<b>UVGI Light Id:</b> " + result.get("id") +
+								"<br> <b>Troubleshoot Id:</b> " + result.get("troubleshootId") + "<br>" +
+								"<br> <b>Location:</b> " + result.get("location") + 
+								"<br> <b>OPD:</b> " + result.get("opd") + 
+								"<br> <b>OPD Area:</b> " +result.get("opd_area") +
+								"<br><br> <b>Problem:</b> " +result.get("problem");
+						          
+						if(!result.get("no").equals("0")){
+							int no = Integer.parseInt(result.get("no"));
+							resultString = resultString + "<br><br> <b><u> Status Update </u></b>";
+							
+							for(int i=1; i<=no; i++){
+								resultString = resultString + "<br>" + result.get("status_"+i) + " - " + result.get("status_date_"+i);
+							}
+						}
+						
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
+					}
+					else{
+						App.getDialog (UvgiTroubleshootStatusActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+					}
+					
+					loading.dismiss ();
+				}
+				
+			};
+			updateTask.execute ("");
+		}
 		
 	}
 	
@@ -513,7 +628,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 	@Override
 	public void onBackPressed ()
 	{
-		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close));
+		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close), Gravity.CENTER_HORIZONTAL);
 		App.setDialogTitle(d, getResources ().getString (R.string.close_form));
 		
 		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -542,7 +657,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 	@Override
 	public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
 	{
-
+		((TextView) view).setTextColor(getResources().getColor(R.color.mainTheme));
 		
 	}
 
@@ -569,7 +684,7 @@ public class UvgiTroubleshootStatusActivity extends AbstractFragmentActivity
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancel
 				App.getDialog(this, AlertType.ERROR,
-						getResources().getString(R.string.operation_cancelled))
+						getResources().getString(R.string.operation_cancelled), Gravity.CENTER_HORIZONTAL)
 						.show();
 			}
 			// Set the locale again, since the Barcode app restores system's

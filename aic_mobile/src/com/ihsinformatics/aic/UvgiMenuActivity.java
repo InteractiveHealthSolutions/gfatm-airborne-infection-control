@@ -8,6 +8,8 @@ package com.ihsinformatics.aic;
  */
 
 import com.ihsinformatics.aic.shared.AlertType;
+import com.ihsinformatics.aic.shared.Metadata;
+import com.ihsinformatics.aic.shared.Privilege;
 import com.ihsinformatics.aic.util.ServerService;
 import com.ihsinformatics.aic.R;
 
@@ -19,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +71,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 			int count = serverService.countSavedForms (App.getUsername ());
 			if (count > 0)
 			{
-				App.getDialog(this, AlertType.INFO, getResources().getString(R.string.offline_forms)).show();
+				App.getDialog(this, AlertType.INFO, getResources().getString(R.string.offline_forms), Gravity.CENTER_HORIZONTAL).show();
 			}
 		}
 		
@@ -78,9 +81,25 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		uvgiTroubleshootStatusButton.setOnClickListener(this);
 		uvgiTroubleshootResolutionButton.setOnClickListener(this);
 		
+		if(serverService.userHasPrivilge(Privilege.AIC_UVGI_FORMS)){
+			uvgiInstallationButton.setVisibility(View.VISIBLE);
+			uvgiMaintenanceButton.setVisibility(View.VISIBLE);
+			uvgiTroubleshootResolutionButton.setVisibility(View.VISIBLE);
+		}
+		else{
+			uvgiInstallationButton.setVisibility(View.GONE);
+			uvgiMaintenanceButton.setVisibility(View.GONE);
+			uvgiTroubleshootResolutionButton.setVisibility(View.GONE);
+		}
+		
+		if(serverService.userHasPrivilge(Privilege.AIC_UVGI_STATUS)){
+			uvgiTroubleshootStatusButton.setVisibility(View.VISIBLE);
+		}
+		else{
+			uvgiTroubleshootStatusButton.setVisibility(View.GONE);
+		}
+		
 	}
-	
-
 	
 	/**
 	 * Shows options to Exit and Log out

@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -72,6 +73,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 	// Views displayed in pages, sorted w.r.t. appearance on pager
 	MyTextView			formDateTextView;
 	MyButton			formDateButton;
+	MyButton			verifyButton;
 
 	MyTextView			uniqueIdGeneratedTextView;
 	MyEditText			uniqueIdGenerated;
@@ -174,6 +176,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		// Create views for pages
 		formDateTextView = new MyTextView (context, R.style.text, R.string.form_date);
 		formDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.form_date, R.string.form_date);
+		verifyButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.verify, R.string.verify);
 		
 		uniqueIdGeneratedTextView = new MyTextView (context, R.style.text, R.string.unique_id);
 		uniqueIdGenerated = new MyEditText(context, R.string.unique_id, R.string.unique_id_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.idLength, false); 
@@ -193,7 +196,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
 		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
 		
-		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
+		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton, verifyButton},
 							   {problemTextView, problem},
 							   { mobileNumberTextView, mobileNumber, troubleshootingNumberTextView, troubleshootingNumber}
 							   };
@@ -208,6 +211,14 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 			{
 				
 				View v = viewGroups[i][j];
+				
+				if(i == 0 && j == 5){
+					
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+					params.setMargins(0, 15, 0, 0); 
+					v.setLayoutParams(params);
+					
+				}
 				
 				if(j%2 == 0){
 					
@@ -225,13 +236,9 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 			groups.add (scrollView);
 		}
 		// Set event listeners
-		firstButton.setOnClickListener (this);
-		lastButton.setOnClickListener (this);
-		clearButton.setOnClickListener (this);
-		saveButton.setOnClickListener(this);
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
-		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
+		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,verifyButton,
 										formDateButton, scanBarcodeButton};
 		
 		for (View v : setListener) {
@@ -278,6 +285,11 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 
 			  @Override
 			  public void afterTextChanged(Editable s) {
+				  
+				  if(App.get(uniqueIdGenerated).equals(""))
+					  verifyButton.setVisibility(View.GONE);
+				  else
+					  verifyButton.setVisibility(View.VISIBLE);
 				
 				  if(!(App.get(problem).equals("")) && !(App.get(mobileNumber).equals("")) &&
 						  !(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals(""))){
@@ -354,6 +366,8 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		Date date = new Date();
 		formDate.setTime(date);
 		
+		verifyButton.setVisibility(View.GONE);
+		
 		updateDisplay ();
 		
 	    troubleshootingNumber.setEnabled(false);
@@ -399,17 +413,6 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		{
 			message.append (getResources ().getString (R.string.empty_data) + "\n");
 		}
-		
-		// Check ID
-		/*if (!RegexUtil.isValidId(App.get(uniqueIdGenerated))) {
-			valid = false;
-			message.append(uniqueIdGenerated.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			uniqueIdGenerated.setTextColor(getResources().getColor(
-					R.color.Red));
-		}*/
 					
 		// Check Date
 		try {
@@ -423,10 +426,47 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 			}
 			
 		} catch (NumberFormatException e) { }
+		
+		Boolean f = true;
+		// Check ID
+		/*if (!RegexUtil.isValidId(App.get(uniqueIdGenerated))) {
+			valid = false;
+			f = false;
+			message.append (view.getTag () + ". ");
+			uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.Red));
+		  }
+		 else{
+				uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.mainTheme));
+		}*/
+		
+		// Problem...
+		if(App.get(problem).length() < 3){
+			valid = false;
+			f = false;
+			message.append (problem.getTag () + ". ");
+			problem.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			problem.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
+		// Phone Number
+		if (App.get(mobileNumber).length() != mobileNumber.getMaxLength()) {
+				valid = false;
+				f = false;
+				message.append (mobileNumber.getTag () + ". ");
+				mobileNumber.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			mobileNumber.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
+		if (!f)
+		{
+			message.append (getResources ().getString (R.string.invalid_data) + "\n");
+		}
 				
 		if (!valid)
 		{
-			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
+			App.getDialog (this, AlertType.ERROR, message.toString (), Gravity.CENTER_HORIZONTAL).show ();
 		}
 		return valid;
 	}
@@ -463,7 +503,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "PROBLEM",  App.get(problem)});
 					observations.add(new String[] { "MOBILE_NUMBER",  App.get(mobileNumber)});
 					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
-					observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
+					observations.add(new String[] { "starttime", App.getSqlDateTime(startDateTime)});
 					
 					String result = serverService.saveUVGIForm(RequestType.UVGI_TROUBLESHOOTING, values, observations.toArray(new String[][] {}));
 					//String result = "SUCCESS";
@@ -481,12 +521,12 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success), Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
 					}
 					loading.dismiss ();
 				}
@@ -515,7 +555,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		}
 		else if (view == clearButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.clear_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -536,7 +576,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -568,6 +608,60 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 				showAlert(getResources().getString(R.string.barcode_scanner_missing),AlertType.ERROR);
 			}
 		}
+		else if (view == verifyButton){
+			
+			//TODO: Validation Check for id...
+			
+			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			{
+
+				@Override
+				protected HashMap<String, String> doInBackground(String... params) {
+					runOnUiThread (new Runnable ()
+					{
+						@Override
+						public void run ()
+						{
+							loading.setIndeterminate (true);
+							loading.setCancelable (false);
+							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+							loading.show ();
+						}
+					});
+					
+					
+					HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
+					//String result = "SUCCESS";
+					return hm;
+				}
+				
+				@Override
+				protected void onProgressUpdate (String... values)
+				{
+				};
+
+				@Override
+				protected void onPostExecute (HashMap<String, String> result)
+				{
+					super.onPostExecute (result);
+					if(result.get("status").equals("SUCCESS")){
+						String resultString =  "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
+								"<b>UVGI Light Id:</b> " + result.get("id") + "<br>" +
+								"<br> <b>Location:</b> " + result.get("location") + 
+								"<br> <b>OPD:</b> " + result.get("opd") + 
+								"<br> <b>OPD Area:</b> " +result.get("opd_area");
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
+					}
+					else{
+						App.getDialog (UvgiTroubleshootLogActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+					}
+					
+					loading.dismiss ();
+				}
+				
+			};
+			updateTask.execute ("");
+		}
 	}
 	
 	/**
@@ -577,7 +671,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 	@Override
 	public void onBackPressed ()
 	{
-		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close));
+		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close), Gravity.CENTER_HORIZONTAL);
 		App.setDialogTitle(d, getResources ().getString (R.string.close_form));
 		
 		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -633,7 +727,7 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancel
 				App.getDialog(this, AlertType.ERROR,
-						getResources().getString(R.string.operation_cancelled))
+						getResources().getString(R.string.operation_cancelled), Gravity.CENTER_HORIZONTAL)
 						.show();
 			}
 			// Set the locale again, since the Barcode app restores system's

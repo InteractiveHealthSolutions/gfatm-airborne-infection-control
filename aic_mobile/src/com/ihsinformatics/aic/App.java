@@ -24,16 +24,20 @@ import org.json.JSONObject;
 
 import com.ihsinformatics.aic.model.OpenMrsObject;
 import com.ihsinformatics.aic.shared.AlertType;
+import com.ihsinformatics.aic.shared.RequestType;
+import com.ihsinformatics.aic.util.ServerService;
 import com.ihsinformatics.aic.R;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -340,7 +344,7 @@ public class App
 		return dialog;
 	}
 	
-	public static Dialog getDialog (Context context, AlertType type, String message)
+	public static Dialog getDialog (Context context, AlertType type, String message, int gravity)
 	{
 		final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -349,12 +353,15 @@ public class App
         dialog.setContentView(R.layout.custom_alert_dialog);
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
-        text.setText(message);
+        text.setText(Html.fromHtml(message));
         text.setGravity(Gravity.CENTER);
         
         ImageView imageView = (ImageView) dialog.findViewById(R.id.a);
         Button dialogButton = (Button) dialog.findViewById(R.id.center_button);
         TextView title = (TextView) dialog.findViewById(R.id.title_dialog);
+        
+        if(gravity != 0)
+        	text.setGravity(gravity);
         
         switch (type)
 		{
@@ -372,7 +379,7 @@ public class App
 				break;
 			case INFO :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_info));
-				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.orange_background));
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.blue_background));
 				dialogButton.setBackgroundResource(R.drawable.blue_button);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
@@ -465,6 +472,62 @@ public class App
 		
 		return button;
 		
+	}
+	
+	public static Dialog getGuestLoginDialog (final Context context)
+	{
+		final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));    
+        dialog.setContentView(R.layout.guest_login_dialog);
+        
+        TextView close = (TextView) dialog.findViewById(R.guest_id.closeTextView);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        
+        Button guestLogin = (Button) dialog.findViewById(R.guest_id.loginButton);
+        guestLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            	final ContentValues values = new ContentValues ();
+				
+				values.put ("username", "admin");
+				values.put ("password", "jkjk");
+				values.put ("starttime", App.getSqlDate(new Date()));
+				values.put ("location", "IHS");
+				values.put ("entereddate",  App.getSqlDate(new Date()));
+			
+				ServerService serverService = new ServerService(context);
+				String exists = serverService.authenticate (RequestType.LOGIN, values); 
+            	
+				String[] resultArray = exists.split(":;:");
+				if (resultArray[0].equals("SUCCESS")){
+					dialog.dismiss();
+				}
+            }
+        });
+        
+        dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                    KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                }
+                return true;
+            }
+        });
+        
+        
+		return dialog;
 	}
 
 	/**

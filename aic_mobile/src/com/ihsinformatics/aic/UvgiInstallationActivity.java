@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import com.ihsinformatics.aic.custom.MyButton;
@@ -59,6 +60,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -85,19 +87,19 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyButton			formDateButton;
 	
 	MyTextView			facilityNameTextView;
-	MySpinner			facilityName;
+	Spinner				facilityName;
 	
 	MyTextView			otherFacilityNameTextView;
 	MyEditText			otherFacilityName;			
 	
 	MyTextView			opdNameTextView;
-	MySpinner			opdName;
+	Spinner				opdName;
 	
 	MyTextView			otherOpdNameTextView;
 	MyEditText			otherOpdName;
 	
 	MyTextView			opdAreaTextView;
-	MySpinner			opdArea;
+	Spinner				opdArea;
 	
 	MyTextView			otherOpdAreaTextView;
 	MyEditText			otherOpdArea;
@@ -105,6 +107,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	MyTextView			uniqueIdGeneratedTextView;
 	MyEditText			uniqueIdGenerated;
 	MyButton			scanBarcodeButton;
+	MyButton			verifyButton;
 	
 	MyTextView			threeFtUvMeterReadingTextView;
 	MyEditText			threeFtUvMeterReading;
@@ -223,20 +226,27 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		formDateButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.form_date, R.string.form_date);
 		
 		facilityNameTextView = new MyTextView (context, R.style.text, R.string.facility_name);
-		facilityName = new MySpinner (context, getResources ().getStringArray (R.array.facilities_name), R.string.facility_name, R.string.option_hint);
-
+		//facilityName = new Spinner (context, getResources ().getStringArray (R.array.facilities_name), R.string.facility_name, R.string.option_hint);
+		facilityName = new Spinner(this);
+	    ArrayAdapter<String> facilityArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.facilities_name));
+	    facilityName.setAdapter(facilityArrayAdapter);
+		
 		otherFacilityNameTextView = new MyTextView (context, R.style.text, R.string.other_facility);
 		otherFacilityName =  new MyEditText(context, R.string.other_facility, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		opdNameTextView = new MyTextView (context, R.style.text, R.string.opd_lights_installed);
-		opdName = new MySpinner (context, getResources ().getStringArray (R.array.opd_names), R.string.opd_lights_installed, R.string.option_hint);
+		opdName = new Spinner(this);
+	    ArrayAdapter<String> opdArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.opd_names));
+	    opdName.setAdapter(opdArrayAdapter);
 		
 		otherOpdNameTextView = new MyTextView (context, R.style.text, R.string.other_opd);
 		otherOpdName = new MyEditText(context, R.string.other_opd, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		opdAreaTextView = new MyTextView (context, R.style.text, R.string.opd_area);
-		opdArea = new MySpinner (context, getResources ().getStringArray (R.array.opd_areas), R.string.opd_area, R.string.option_hint);
-		
+		opdArea = new Spinner(this);
+	    ArrayAdapter<String> opdAreaArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.opd_areas));
+	    opdArea.setAdapter(opdAreaArrayAdapter);
+	    
 		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);
 		otherOpdArea = new MyEditText(context, R.string.other_opd_area, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
@@ -281,7 +291,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		reasonInstallationComplete.setMaxHeight (10);
 		reasonInstallationComplete.setGravity(Gravity.TOP);
 		
-		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
+		verifyButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.verify, R.string.verify);
+		
+		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton, verifyButton},
 							   {facilityNameTextView, facilityName, otherFacilityNameTextView, otherFacilityName},
 							   {opdNameTextView, opdName, otherOpdNameTextView, otherOpdName},
 							   {opdAreaTextView, opdArea, otherOpdAreaTextView, otherOpdArea},
@@ -299,6 +311,12 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				
 				View v = viewGroups[i][j];
 				
+				if(i == 0 && j == 5){
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+					params.setMargins(0, 15, 0, 0); 
+					v.setLayoutParams(params);
+				}
+				
 				if(j%2 == 0){
 					
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -315,13 +333,9 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			groups.add (scrollView);
 		}
 		// Set event listeners
-		firstButton.setOnClickListener (this);
-		lastButton.setOnClickListener (this);
-		clearButton.setOnClickListener (this);
-		saveButton.setOnClickListener(this);
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
-		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
+		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton, verifyButton,
 										formDateButton, scanBarcodeButton, facilityName, opdName, opdArea, yesInstalltionComplete, noInstalltionComplete};
 		
 		for (View v : setListener) {
@@ -375,7 +389,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 						    valNumber = Double.parseDouble(val);
 							 	
 						    if(valNumber > 0.4){
-								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft), Gravity.CENTER_HORIZONTAL).show ();
 						 		threeFtUvMeterReading.requestFocus();
 						 	}	
 								 
@@ -406,7 +420,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					    valNumber = Double.parseDouble(val);
 						 	
 					 	if(valNumber > 0.4)
-							App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+							App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft), Gravity.CENTER_HORIZONTAL).show ();
 							 
 					 } 
 					  
@@ -435,7 +449,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 						    valNumber = Double.parseDouble(val);
 							 	
 						 	if(valNumber > 0.4){
-								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft), Gravity.CENTER_HORIZONTAL).show ();
 						 		threeFtUvMeterReading.requestFocus();
 						 	}	 
 						 } 
@@ -468,7 +482,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 						 		valNumber = Double.parseDouble(val);
 						 	
 						 		if(valNumber > 0.4){
-									App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+									App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft), Gravity.CENTER_HORIZONTAL).show ();
 							 		sixFtUvMeterReading.requestFocus();
 							 	}	
 							 	 	
@@ -499,7 +513,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					 		valNumber = Double.parseDouble(val);
 					 	
 						 	if(valNumber > 0.4)
-								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft),Gravity.CENTER_HORIZONTAL).show ();
 						 	 	
 					 }
 				 	
@@ -528,7 +542,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 						 		valNumber = Double.parseDouble(val);
 						 	
 						 		if(valNumber > 0.4){
-									App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft)).show ();
+									App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_3_6_ft),Gravity.CENTER_HORIZONTAL).show ();
 							 		sixFtUvMeterReading.requestFocus();
 							 	}
 							 	 	
@@ -562,7 +576,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					 		valNumber = Double.parseDouble(val);
 					 	
 						 	if(valNumber < 10){
-								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft),Gravity.CENTER_HORIZONTAL).show ();
 						 		sevenFtUvMeterReading.requestFocus();
 						 	}
 						 	
@@ -593,7 +607,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				 		valNumber = Double.parseDouble(val);
 				 	
 					 	if(valNumber < 10)
-							App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+							App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft), Gravity.CENTER_HORIZONTAL).show ();
 					 	
 				 	}
 					  
@@ -622,7 +636,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					 		valNumber = Double.parseDouble(val);
 					 	
 					 		if(valNumber < 10){
-								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft)).show ();
+								App.getDialog (UvgiInstallationActivity.this, AlertType.URGENT, getResources().getString(R.string.uvgi_reading_warning_10_ft),Gravity.CENTER_HORIZONTAL).show ();
 						 		sevenFtUvMeterReading.requestFocus();
 						 	}				 	
 					 	}
@@ -649,6 +663,11 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 
 			  @Override
 			  public void afterTextChanged(Editable s) {
+				  
+				  if(App.get(uniqueIdGenerated).equals(""))
+					  verifyButton.setVisibility(View.GONE);
+				  else
+					  verifyButton.setVisibility(View.VISIBLE);
 				
 				  if(!(App.get(threeFtUvMeterReading).equals("")) && !(App.get(sixFtUvMeterReadingTextView).equals("")) &&
 						  !(App.get(sevenFtUvMeterReading).equals("")) && !(App.get(uniqueIdGenerated).equals("")) &&
@@ -695,11 +714,14 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		Date date = new Date();
 		formDate.setTime(date);
 		
-		View[] goneView = new View[]{otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea};
+		View[] goneView = new View[]{verifyButton, otherFacilityNameTextView, otherFacilityName, otherOpdNameTextView, otherOpdName, otherOpdAreaTextView, otherOpdArea};
 		
 		for(View v : goneView){
 			v.setVisibility(View.GONE);
 		}
+		
+		reasonInstallationCompleteTextView.setVisibility(View.VISIBLE);
+		reasonInstallationComplete.setVisibility(View.VISIBLE);
 
 		for(View view : views){
 			if(view instanceof TextView)
@@ -815,7 +837,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		
 		if (!valid)
 		{
-			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
+			App.getDialog (this, AlertType.ERROR, message.toString (),Gravity.CENTER_HORIZONTAL).show ();
 			
 		}
 		return valid;
@@ -892,12 +914,12 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiInstallationActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiInstallationActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success),Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
 					}
 					loading.dismiss ();
 				}
@@ -926,7 +948,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		}
 		else if (view == clearButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close),Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.clear_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -946,7 +968,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close),Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -997,6 +1019,60 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				reasonInstallationCompleteTextView.setVisibility(View.GONE);
 			}
 		}
+		else if (view == verifyButton){
+			
+			//TODO: Validation Check for id...
+			
+			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			{
+
+				@Override
+				protected HashMap<String, String> doInBackground(String... params) {
+					runOnUiThread (new Runnable ()
+					{
+						@Override
+						public void run ()
+						{
+							loading.setIndeterminate (true);
+							loading.setCancelable (false);
+							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+							loading.show ();
+						}
+					});
+					
+					
+					HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
+					//String result = "SUCCESS";
+					return hm;
+				}
+				
+				@Override
+				protected void onProgressUpdate (String... values)
+				{
+				};
+
+				@Override
+				protected void onPostExecute (HashMap<String, String> result)
+				{
+					super.onPostExecute (result);
+					if(result.get("status").equals("SUCCESS")){
+						String resultString = "UVGI Light Id <br>" + result.get("id") + "</b> is already in System.<br>" +
+								"<br> <b>Location:</b> " + result.get("location") + 
+								"<br> <b>OPD:</b> " + result.get("opd") + 
+								"<br> <b>OPD Area:</b> " +result.get("opd_area");
+						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, resultString, Gravity.LEFT).show ();
+					}
+					else{
+						App.getDialog (UvgiInstallationActivity.this, AlertType.INFO, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+					}
+					
+					loading.dismiss ();
+				}
+				
+			};
+			updateTask.execute ("");
+			
+		}
 	}
 	
 	/**
@@ -1006,7 +1082,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	@Override
 	public void onBackPressed ()
 	{
-		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close));
+		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close),Gravity.CENTER_HORIZONTAL);
 		App.setDialogTitle(d, getResources ().getString (R.string.close_form));
 		
 		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -1035,7 +1111,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 	@Override
 	public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
 	{
-		MySpinner spinner = (MySpinner) parent;
+		((TextView) view).setTextColor(getResources().getColor(R.color.mainTheme));
+		Spinner spinner = (Spinner) parent;
 		if(spinner == facilityName){
 			if(App.get(spinner).equalsIgnoreCase("Other")){
 				otherFacilityNameTextView.setVisibility(View.VISIBLE);
@@ -1092,7 +1169,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancel
 				App.getDialog(this, AlertType.ERROR,
-						getResources().getString(R.string.operation_cancelled))
+						getResources().getString(R.string.operation_cancelled),Gravity.CENTER_HORIZONTAL)
 						.show();
 			}
 			// Set the locale again, since the Barcode app restores system's

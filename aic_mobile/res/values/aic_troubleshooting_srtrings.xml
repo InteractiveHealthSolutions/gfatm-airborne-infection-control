@@ -19,6 +19,8 @@
    
    <string name="troubleshoot_status">Whats the status?</string>
    
+   <string name="get_status">Get Status</string>
+   
    <string-array name="troubleshoot_statuses">
         <item>Complaint Logged</item>
         <item>Complaint Recieved</item>

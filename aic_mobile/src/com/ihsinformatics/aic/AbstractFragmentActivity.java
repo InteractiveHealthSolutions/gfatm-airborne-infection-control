@@ -22,6 +22,7 @@ import com.ihsinformatics.aic.custom.MyEditText;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.util.ServerService;
 import com.ihsinformatics.aic.R;
+
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ActionBar;
@@ -37,6 +38,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -380,6 +382,6 @@ public abstract class AbstractFragmentActivity extends FragmentActivity
 	
 	public void showAlert(String s, AlertType alertType){
 			
-			App.getDialog (this, alertType, s).show ();
+			App.getDialog (this, alertType, s, Gravity.CENTER_HORIZONTAL).show ();
 		}
 }

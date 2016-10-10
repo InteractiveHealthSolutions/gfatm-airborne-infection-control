@@ -26,7 +26,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +49,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	Button							login;
 	CheckBox						offline;
 	TextView						showPassword;
+	TextView						guestLogin;
 	
 	View[]							views;
 	String                          tempUsername;
@@ -71,11 +74,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 		login = (Button) findViewById(R.login_id.loginButton);
 		offline = (CheckBox) findViewById(R.login_id.offlineCheckBox);
 		showPassword = (TextView) findViewById (R.login_id.showPasswordTextView);
+		guestLogin = (TextView) findViewById(R.login_id.guestLoginTextView);
 		
 		login.setOnClickListener(this);
 		showPassword.setOnClickListener (this);
+		guestLogin.setOnClickListener(this);
 		username.setText(App.getUsername());
 		username.setSelection(username.getText().length());
+		
+		guestLogin.setText(Html.fromHtml(getResources().getString(R.string.guest_login)));
 		
 		views = new View[] {username, password, login};
 		initView (views);
@@ -157,6 +164,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 			int position = password.getText().length(); 
 			password.setSelection(position);
 		}
+		
+		else if (v == guestLogin){
+			
+			App.getGuestLoginDialog(this).show();
+
+		}
 	}
 	
 	/***
@@ -187,7 +200,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						{
 							loading.setIndeterminate (true);
 							loading.setCancelable (false);
-							//loading.show ();
+							loading.show ();
 						}
 					});
 					
@@ -237,10 +250,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 					values.put ("location", "IHS");
 					values.put ("entereddate", App.getSqlDate(enteredDate));
 				
-					//String exists = serverService.authenticate (RequestType.LOGIN, values);     
-					//return exists;
+					String exists = serverService.authenticate (RequestType.LOGIN, values);     
+					return exists;
 					
-					return "SUCCESS";
+					//return "SUCCESS";
 				}
 
 				@Override
@@ -369,7 +382,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	public void showAlert(String s, AlertType alertType){
 		
-		App.getDialog(this, alertType, s).show();
+		App.getDialog(this, alertType, s, Gravity.CENTER_HORIZONTAL).show();
 		
 	}
 }

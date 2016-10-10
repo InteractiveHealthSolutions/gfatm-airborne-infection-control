@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.ihsinformatics.aic.App;
 import com.ihsinformatics.aic.shared.FormType;
 import com.ihsinformatics.aic.shared.Metadata;
+import com.ihsinformatics.aic.shared.Privilege;
 import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.R;
 
@@ -1538,6 +1539,26 @@ public String[][] getClassifications(String id){
 			{
 				String result = jsonResponse.getString ("response");
 				String detail = jsonResponse.getString ("details");
+				
+				dbUtil.delete(Metadata.METADATA_TABLE, "type = '" +  Metadata.PRIVILEGE + "'" , null);
+
+				int privilegeSize = jsonResponse.getInt ("privilege_no");
+				for(int i = 1; i <= privilegeSize; i++){
+					
+					values = new ContentValues ();
+					values.put ("id", i);
+					values.put ("type", Metadata.PRIVILEGE);
+					values.put ("name", jsonResponse.getString ("privilege_"+i));
+										
+					// If the user doesn't exist in DB, save it
+					String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  jsonResponse.getString ("privilege_"+i) + "'");
+					if (id == null)
+					{
+						dbUtil.insert (Metadata.METADATA_TABLE, values);
+					}
+					
+				}
+				
 				return result + ":;:" + detail;
 			}
 			else
@@ -1596,7 +1617,7 @@ public String[][] getClassifications(String id){
 		return Integer.parseInt (dbUtil.getObject ("select count(*) from offline_forms where username='" + username + "'"));
 	}
 	
-	public String[][] getLocations (){
+	/*public String[][] getLocations (){
 		
 		String[][] locations = dbUtil.getTableData ("select id,name from identifiers where type='"+Metadata.LOCATION+"';");
 		return locations;
@@ -1612,7 +1633,7 @@ public String[][] getClassifications(String id){
 		
 		String[][] users = dbUtil.getTableData ("select id,name from identifiers where type='"+Metadata.USER+"' and name like '"+role+"_"+location+"';");
 		return users;
-	}
+	}*/
 	
 	public String saveUVGIForm (String encounterType, ContentValues values, String[][] observations)
 	{
@@ -1657,6 +1678,8 @@ public String[][] getClassifications(String id){
 			if (jsonResponse.has ("response"))
 			{
 				String result = jsonResponse.getString ("response");
+				if(jsonResponse.getString("response").equals("ERROR"))
+					result = result + " <br> " + jsonResponse.getString("details");
 				return result;
 			}
 			return response;
@@ -1667,6 +1690,165 @@ public String[][] getClassifications(String id){
 			response = context.getResources ().getString (R.string.invalid_data);
 		}
 		return response;
+	}
+	
+	public HashMap<String, String> getUVGIInstallationRecord(String id){
+		String response = "";
+		HashMap hm = new HashMap();
+		
+		try
+		{
+			// Save Form
+			JSONObject json = new JSONObject ();
+			json.put ("app_ver", App.getVersion ());
+			json.put ("type", RequestType.UVGI_GET_INSTALLATION_RECORD);
+			json.put ("username", App.getUsername ());
+			json.put ("password", App.getPassword());
+			json.put ("location", "IHS");
+			json.put ("entereddate", App.getSqlDate(new Date()));
+			json.put ("id", id);
+			
+			String val = json.toString();
+			response = post(val);
+			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
+			if (jsonResponse == null)
+			{
+				return hm;
+			}
+			if (jsonResponse.has ("response"))
+			{
+				hm.put("status", jsonResponse.getString ("response"));
+				hm.put("details", jsonResponse.getString ("details"));
+				hm.put("location", jsonResponse.getString ("location"));
+				hm.put("opd", jsonResponse.getString ("opd"));
+				hm.put("opd_area", jsonResponse.getString ("opd_area"));
+				hm.put("id", jsonResponse.getString ("id"));
+				return hm;
+			}
+			return hm;
+		}
+		catch (JSONException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.invalid_data);
+		}
+		return hm;
+	}
+	
+	public HashMap<String, String> getUVGITroubleshootLogRecord(String id, String troubleshootId){
+		String response = "";
+		HashMap hm = new HashMap();
+		
+		try
+		{
+			// Save Form
+			JSONObject json = new JSONObject ();
+			json.put ("app_ver", App.getVersion ());
+			json.put ("type", RequestType.UVGI_GET_TROUBLESHOOT_RECORD);
+			json.put ("username", App.getUsername ());
+			json.put ("password", App.getPassword());
+			json.put ("location", "IHS");
+			json.put ("entereddate", App.getSqlDate(new Date()));
+			json.put ("id", id);
+			json.put ("troubleshootId", troubleshootId);
+			
+			String val = json.toString();
+			response = post(val);
+			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
+			if (jsonResponse == null)
+			{
+				return hm;
+			}
+			if (jsonResponse.has ("response"))
+			{
+				hm.put("status", jsonResponse.getString ("response"));
+				hm.put("details", jsonResponse.getString ("details"));
+				hm.put("id", jsonResponse.getString ("id"));
+				hm.put("troubleshootId", jsonResponse.getString ("troubleshootId"));
+				hm.put("location", jsonResponse.getString ("location"));
+				hm.put("opd", jsonResponse.getString ("opd"));
+				hm.put("opd_area", jsonResponse.getString ("opd_area"));
+				hm.put("problem", jsonResponse.getString ("problem"));
+				return hm;
+			}
+			return hm;
+		}
+		catch (JSONException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.invalid_data);
+		}
+		
+		return hm;
+	}
+	
+	public HashMap<String, String> getUVGITroubleshootStatusRecord(String id, String troubleshootId){
+		String response = "";
+		HashMap hm = new HashMap();
+		
+		try
+		{
+			// Save Form
+			JSONObject json = new JSONObject ();
+			json.put ("app_ver", App.getVersion ());
+			json.put ("type", RequestType.UVGI_GET_TROUBLESHOOT_STATUS_RECORD);
+			json.put ("username", App.getUsername ());
+			json.put ("password", App.getPassword());
+			json.put ("location", "IHS");
+			json.put ("entereddate", App.getSqlDate(new Date()));
+			json.put ("id", id);
+			json.put ("troubleshootId", troubleshootId);
+			
+			String val = json.toString();
+			response = post(val);
+			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
+			if (jsonResponse == null)
+			{
+				return hm;
+			}
+			if (jsonResponse.has ("response"))
+			{
+				hm.put("status", jsonResponse.getString ("response"));
+				hm.put("details", jsonResponse.getString ("details"));
+				hm.put("id", jsonResponse.getString ("id"));
+				hm.put("troubleshootId", jsonResponse.getString ("troubleshootId"));
+				hm.put("location", jsonResponse.getString ("location"));
+				hm.put("opd", jsonResponse.getString ("opd"));
+				hm.put("opd_area", jsonResponse.getString ("opd_area"));
+				hm.put("problem", jsonResponse.getString ("problem"));
+				hm.put("no", jsonResponse.getString ("no"));
+				
+				int no = Integer.parseInt(jsonResponse.getString ("no"));
+				for(int i = 1; i <= no; i++){
+					
+					hm.put("status_"+i, jsonResponse.getString ("status_"+i));
+					hm.put("status_date_"+i, jsonResponse.getString ("status_date_"+i));
+					
+				}
+				
+				return hm;
+			}
+			return hm;
+		}
+		catch (JSONException e)
+		{
+			Log.e (TAG, e.getMessage ());
+			response = context.getResources ().getString (R.string.invalid_data);
+		}
+		
+		return hm;
+	}
+	
+	public boolean userHasPrivilge (String privilge){
+		
+		
+		String[][] locations = dbUtil.getTableData ("select id,name from identifiers where type='"+Metadata.PRIVILEGE+"';");
+		int i = locations.length;
+		
+		String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  privilge + "'");
+		if(id == null) return false;
+		else return true;
+		
 	}
 
 }

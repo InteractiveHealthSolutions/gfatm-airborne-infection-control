@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -81,6 +82,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 	MyTextView 			troubleshootingNumberTextView;
 	MyEditText 			troubleshootingNumber;
+	MyButton			verifyButton;
 
 	MyTextView 			problemResolvedTextView;
 	MyRadioGroup 		problemResolved;
@@ -169,7 +171,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		
 		FORM_NAME = FormType.UVGI_TROUBLESHOOT_RESOLUTION;
 		TAG = "UVGITroubleshootResolutionActivity";
-		PAGE_COUNT = 3;
+		PAGE_COUNT = 4;
 		pager = (ViewPager) findViewById (R.template_id.pager);
 		navigationSeekbar.setMax (PAGE_COUNT - 1);
 		navigatorLayout = (LinearLayout) findViewById (R.template_id.navigatorLayout);
@@ -194,7 +196,8 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 		troubleshootingNumberTextView = new MyTextView (context, R.style.text, R.string.troubleshooting_number);
 		troubleshootingNumber = new MyEditText(context,R.string.troubleshooting_number, R.string.troubleshooting_number_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, 50, false);
-
+		verifyButton = new MyButton (context, R.style.text, R.drawable.form_button, R.string.verify, R.string.verify);
+		
 		problemResolvedTextView = new MyTextView (context, R.style.text, R.string.problem_resolved);
 		noProblemResolved = new MyRadioButton(context, R.string.problem_resolved, R.style.radio,R.string.no);
 		yesProblemResolved = new MyRadioButton(context, R.string.problem_resolved, R.style.radio,R.string.yes);
@@ -224,8 +227,9 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 		
 		View[][] viewGroups = {{formDateTextView,formDateButton,uniqueIdGeneratedTextView, uniqueIdGenerated, scanBarcodeButton},
-							   {troubleshootingNumberTextView, troubleshootingNumber,  problemResolvedTextView, problemResolved, reasonProblemNotResolvedTextView, reasonProblemNotResolved, problemTextView,problem},
-								{resolvedByTextView,resolvedBy, contactNumberTextView, contactNumber}
+							   {troubleshootingNumberTextView, troubleshootingNumber, verifyButton},
+							   {problemResolvedTextView, problemResolved, reasonProblemNotResolvedTextView, reasonProblemNotResolved, problemTextView,problem},
+							   {resolvedByTextView,resolvedBy, contactNumberTextView, contactNumber}
 							   };
 		
 		// Create layouts and store in ArrayList
@@ -255,13 +259,9 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			groups.add (scrollView);
 		}
 		// Set event listeners
-		firstButton.setOnClickListener (this);
-		lastButton.setOnClickListener (this);
-		clearButton.setOnClickListener (this);
-		saveButton.setOnClickListener(this);
 		navigationSeekbar.setOnSeekBarChangeListener (this);
 		
-		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton,
+		View[] setListener = new View[]{firstButton, lastButton, clearButton, saveButton, navigationSeekbar, nextButton, verifyButton,
 										formDateButton, scanBarcodeButton, noProblemResolved, yesProblemResolved
 										};
 		
@@ -301,7 +301,6 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 				}
 			}
 		}
-		
 		
 		reasonProblemNotResolved.addTextChangedListener(new TextWatcher() {
 
@@ -356,6 +355,11 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 			  @Override
 			  public void afterTextChanged(Editable s) {
+				  
+				  if(!App.get(uniqueIdGenerated).equals("") && !App.get(troubleshootingNumber).equals(""))
+					  verifyButton.setVisibility(View.VISIBLE);
+				  else
+					  verifyButton.setVisibility(View.GONE);
 				
 				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
@@ -426,6 +430,11 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  @Override
 			  public void afterTextChanged(Editable s) {
 				
+				  if(!App.get(uniqueIdGenerated).equals("") && !App.get(troubleshootingNumber).equals(""))
+					  verifyButton.setVisibility(View.VISIBLE);
+				  else
+					  verifyButton.setVisibility(View.GONE);
+				  
 				  if(!(App.get(troubleshootingNumber).equals("")) && !(App.get(uniqueIdGenerated).equals("")) && !(App.get(resolvedBy).equals("")) && !(App.get(contactNumber).equals(""))){
 					  
 					  if(noProblemResolved.isChecked() && !(App.get(reasonProblemNotResolved).equals("")))
@@ -457,6 +466,8 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 		problemTextView.setVisibility(View.GONE);
 		problem.setVisibility(View.GONE);
+		
+		verifyButton.setVisibility(View.GONE);
 		
 		yesProblemResolved.setChecked(false);
 		noProblemResolved.setChecked(false);
@@ -502,16 +513,6 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		{
 			message.append (getResources ().getString (R.string.empty_data) + "\n");
 		}
-		// Check ID
-		/*if (!RegexUtil.isValidId(App.get(uniqueIdGenerated))) {
-			valid = false;
-			message.append(uniqueIdGenerated.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			uniqueIdGenerated.setTextColor(getResources().getColor(
-					R.color.Red));
-		}*/
 					
 		// Check Date
 		try {
@@ -526,20 +527,68 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			
 		} catch (NumberFormatException e) { }
 		
+		Boolean f = true;
+		// Check ID
+		/*if (!RegexUtil.isValidId(App.get(uniqueIdGenerated))) {
+			valid = false;
+			f = false;
+			message.append (view.getTag () + ". ");
+			uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.Red));
+		  }
+		 else{
+				uniqueIdGenerated.setTextColor (getResources ().getColor (R.color.mainTheme));
+		}*/
+		
+		if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE){
+			if(App.get(reasonProblemNotResolved).length() < 3){
+				valid = false;
+				f = false;
+				message.append (reasonProblemNotResolved.getTag () + ". ");
+				reasonProblemNotResolved.setTextColor (getResources ().getColor (R.color.Red));
+			}
+			else
+				reasonProblemNotResolved.setTextColor (getResources ().getColor (R.color.mainTheme));
+		}
+		
+		if(problem.getVisibility() == View.VISIBLE){
+			if(App.get(problem).length() < 3){
+				valid = false;
+				f = false;
+				message.append (problem.getTag () + ". ");
+				problem.setTextColor (getResources ().getColor (R.color.Red));
+			}
+			else
+				problem.setTextColor (getResources ().getColor (R.color.mainTheme));
+		}
+		
+		// name..
+		if(App.get(resolvedBy).length() < 3){
+			valid = false;
+			f = false;
+			message.append (resolvedBy.getTag () + ". ");
+			resolvedBy.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			resolvedBy.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
 		// Phone Number
 		if (App.get(contactNumber).length() != contactNumber.getMaxLength()) {
-			valid = false;
-			message.append(contactNumber.getTag().toString()
-					+ ": "
-					+ getResources().getString(
-							R.string.invalid_data) + "\n");
-			contactNumber.setTextColor(getResources().getColor(
-					R.color.Red));
+				valid = false;
+				f = false;
+				message.append (contactNumber.getTag () + ". ");
+				contactNumber.setTextColor (getResources ().getColor (R.color.Red));
+		}
+		else
+			contactNumber.setTextColor (getResources ().getColor (R.color.mainTheme));
+		
+		if (!f)
+		{
+			message.append (getResources ().getString (R.string.invalid_data) + "\n");
 		}
 					
 		if (!valid)
 		{
-			App.getDialog (this, AlertType.ERROR, message.toString ()).show ();
+			App.getDialog (this, AlertType.ERROR, message.toString (), Gravity.CENTER_HORIZONTAL).show ();
 		}
 		return valid;
 	}
@@ -599,12 +648,12 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 					super.onPostExecute (result);
 					if (result.equals ("SUCCESS"))
 					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success)).show ();
+						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success), Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
 					}
 					else
 					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result).show ();
+						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
 					}
 					loading.dismiss ();
 				}
@@ -633,7 +682,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		}
 		else if (view == clearButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.clear_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.clear_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -654,7 +703,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close));
+			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close), Gravity.CENTER_HORIZONTAL);
 			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
 			
 			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -718,6 +767,62 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			  else
 				  saveButton.setEnabled(false);
 		}
+		else if (view == verifyButton){
+			
+			//TODO: Validation Check for id...
+			
+			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			{
+
+				@Override
+				protected HashMap<String, String> doInBackground(String... params) {
+					runOnUiThread (new Runnable ()
+					{
+						@Override
+						public void run ()
+						{
+							loading.setIndeterminate (true);
+							loading.setCancelable (false);
+							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+							loading.show ();
+						}
+					});
+					
+					
+					HashMap<String, String> hm = serverService.getUVGITroubleshootLogRecord (App.get(uniqueIdGenerated), App.get(troubleshootingNumber));
+					//String result = "SUCCESS";
+					return hm;
+				}
+				
+				@Override
+				protected void onProgressUpdate (String... values)
+				{
+				};
+
+				@Override
+				protected void onPostExecute (HashMap<String, String> result)
+				{
+					super.onPostExecute (result);
+					if(result.get("status").equals("SUCCESS")){
+						String resultString = "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
+								"<b>UVGI Light Id:</b> " + result.get("id") +
+								"<br> <b>Troubleshoot Id:</b> " + result.get("troubleshootId") + "<br>" +
+								"<br> <b>Location:</b> " + result.get("location") + 
+								"<br> <b>OPD:</b> " + result.get("opd") + 
+								"<br> <b>OPD Area:</b> " +result.get("opd_area") +
+								"<br><br> <b>Problem:</b> " +result.get("problem");
+						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
+					}
+					else{
+						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+					}
+					
+					loading.dismiss ();
+				}
+				
+			};
+			updateTask.execute ("");
+		}
 	}
 	
 	/**
@@ -727,7 +832,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 	@Override
 	public void onBackPressed ()
 	{
-		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close));
+		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.confirm_close), Gravity.CENTER_HORIZONTAL);
 		App.setDialogTitle(d, getResources ().getString (R.string.close_form));
 		
 		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
@@ -783,7 +888,7 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancel
 				App.getDialog(this, AlertType.ERROR,
-						getResources().getString(R.string.operation_cancelled))
+						getResources().getString(R.string.operation_cancelled), Gravity.CENTER_HORIZONTAL)
 						.show();
 			}
 			// Set the locale again, since the Barcode app restores system's

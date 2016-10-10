@@ -19,14 +19,12 @@ You can also access the license on the internet at the address: http://www.gnu.o
 
 Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors. */
 
-package com.ihsinformatics.aic.util;
+package com.ihsinformatics.aic.shared;
 
-public class RoleType
+public class Privilege
 {
 
-	public static final String	ADMIN				= "ADMIN";
-	public static final String	LHW					= "LHW";
-	public static final String	PYSICIAN			= "PYSICIAN";
-	public static final String  SUPERVISOR			= "SUPERVISOR";
+	public static final String	AIC_UVGI_FORMS				= "MANAGE AIC_UVGI_FORMS";
+	public static final String	AIC_UVGI_STATUS				= "MANAGE AIC_UVGI_STATUS";
 	
 }

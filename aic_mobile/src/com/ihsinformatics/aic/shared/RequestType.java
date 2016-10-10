@@ -26,4 +26,8 @@ public class RequestType {
 	public static final String UVGI_TROUBLESHOOT_STATUS = "uvgi_troubleshoot_status";
 	public static final String UVGI_RESOLUTION = "uvgi_resolution";
 	
+	public static final String UVGI_GET_INSTALLATION_RECORD = "uvgi_get_installation_record";
+	public static final String UVGI_GET_TROUBLESHOOT_RECORD = "uvgi_get_troubleshoot_record";
+	public static final String UVGI_GET_TROUBLESHOOT_STATUS_RECORD = "uvgi_get_troubleshoot_status_record";
+	
 }

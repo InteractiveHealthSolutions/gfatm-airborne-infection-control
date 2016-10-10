@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +60,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 			int count = serverService.countSavedForms (App.getUsername ());
 			if (count > 0)
 			{
-				App.getDialog(this, AlertType.INFO, getResources().getString(R.string.offline_forms)).show();
+				App.getDialog(this, AlertType.INFO, getResources().getString(R.string.offline_forms), Gravity.CENTER_HORIZONTAL).show();
 			}
 		}
 		
@@ -88,7 +89,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 	public void onBackPressed ()
 	{
 		
-		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.exit_operation));
+		final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.exit_operation), Gravity.CENTER_HORIZONTAL);
 		App.setDialogTitle(d, getResources ().getString (R.string.exit_application));
 		
 		Button logoutButton = App.addDialogButton(d, getResources ().getString (R.string.logout), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.NEGATIVE);
