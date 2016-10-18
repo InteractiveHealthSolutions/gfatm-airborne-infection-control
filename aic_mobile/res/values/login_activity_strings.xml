@@ -7,8 +7,9 @@
     <string name="password_hint">Enter your password</string>
     <string name="login">Login</string>
     <string name="work_offline">Work Offline</string>
-    <string name="guest_login">Login as &#60;b&#62; GUEST &#60;&#47;b&#62; user</string>
-    <string name="show_pass">Show Password</string>
+    <string name="guest_login">Login as &#60;b&#62; Guest &#60;&#47;b&#62; user</string>
+    <string name="show_pass">"Show Password "</string>
+    <string name="hide_pass">"Hide Password "</string>
     <string name="version_no">Version - 0.0.1</string>
 
 </resources>

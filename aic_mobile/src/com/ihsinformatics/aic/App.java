@@ -68,6 +68,9 @@ public class App
 	private static String			country			= "";
 	private static String			version			= "";
 	private static String			screenerName	= "";
+	private static String			email           = "";
+	private static String			name			= "";
+	private static String			contactNumber	= "";
 	private static int				delay			= 3000;
 	private static boolean			useSsl			= true;
 	private static boolean			autoLogin		= true;
@@ -245,6 +248,30 @@ public class App
 	public static void setScreenerName(String screenerName) {
 		App.screenerName = screenerName;
 	}
+	
+	public static String getName(){
+		return name;
+	}
+	
+	public static void setName(String name){
+		App.name = name;
+	}
+	
+	public static String getContactNumber(){
+		return contactNumber;
+	}
+	
+	public static void setContactNumber(String contactNumber){
+		App.contactNumber = contactNumber;
+	}
+	
+	public static String getEmail(){
+		return email;
+	}
+	
+	public static void setEmail(String email){
+		App.email = email;
+	}
 
 	/**
 	 * Returns true if system language is Right-to-Left
@@ -350,7 +377,7 @@ public class App
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));    
-        dialog.setContentView(R.layout.custom_alert_dialog);
+        dialog.setContentView(R.layout.dialog_custom_alert);
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(Html.fromHtml(message));
@@ -474,7 +501,7 @@ public class App
 		
 	}
 	
-	public static Dialog getGuestLoginDialog (final Context context)
+	/*public static Dialog getGuestLoginDialog (final Context context)
 	{
 		final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -498,7 +525,7 @@ public class App
             	final ContentValues values = new ContentValues ();
 				
 				values.put ("username", "admin");
-				values.put ("password", "jkjk");
+				values.put ("password", "Admin123");
 				values.put ("starttime", App.getSqlDate(new Date()));
 				values.put ("location", "IHS");
 				values.put ("entereddate",  App.getSqlDate(new Date()));
@@ -528,7 +555,7 @@ public class App
         
         
 		return dialog;
-	}
+	}*/
 
 	/**
 	 * Returns date in sql date string format

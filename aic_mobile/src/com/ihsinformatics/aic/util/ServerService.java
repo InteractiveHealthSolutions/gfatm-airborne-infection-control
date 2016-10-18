@@ -1542,23 +1542,24 @@ public String[][] getClassifications(String id){
 				
 				dbUtil.delete(Metadata.METADATA_TABLE, "type = '" +  Metadata.PRIVILEGE + "'" , null);
 
-				int privilegeSize = jsonResponse.getInt ("privilege_no");
-				for(int i = 1; i <= privilegeSize; i++){
-					
-					values = new ContentValues ();
-					values.put ("id", i);
-					values.put ("type", Metadata.PRIVILEGE);
-					values.put ("name", jsonResponse.getString ("privilege_"+i));
-										
-					// If the user doesn't exist in DB, save it
-					String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  jsonResponse.getString ("privilege_"+i) + "'");
-					if (id == null)
-					{
-						dbUtil.insert (Metadata.METADATA_TABLE, values);
+				if (jsonResponse.has ("privilege_no")){
+					int privilegeSize = jsonResponse.getInt ("privilege_no");
+					for(int i = 1; i <= privilegeSize; i++){
+						
+						values = new ContentValues ();
+						values.put ("id", i);
+						values.put ("type", Metadata.PRIVILEGE);
+						values.put ("name", jsonResponse.getString ("privilege_"+i));
+											
+						// If the user doesn't exist in DB, save it
+						String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  jsonResponse.getString ("privilege_"+i) + "'");
+						if (id == null)
+						{
+							dbUtil.insert (Metadata.METADATA_TABLE, values);
+						}
+						
 					}
-					
 				}
-				
 				return result + ":;:" + detail;
 			}
 			else

@@ -360,8 +360,9 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 	@Override
 	public void initView (View[] views)
 	{
-		startDateTime = Calendar.getInstance ();
 		super.initView (views);
+		
+		startDateTime = Calendar.getInstance ();
 		formDate = Calendar.getInstance ();
 		Date date = new Date();
 		formDate.setTime(date);
@@ -374,6 +375,9 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 	    Long tsLong = System.currentTimeMillis()/1000;
 	    String ts = tsLong.toString();
 	    troubleshootingNumber.setText(App.getUsername() + "_" + ts);
+	    
+	    if(App.getUsername().equals("guest"))
+			mobileNumber.setText(App.getContactNumber());
 		
 	}
 
@@ -504,6 +508,11 @@ public class UvgiTroubleshootLogActivity extends AbstractFragmentActivity
 					observations.add(new String[] { "MOBILE_NUMBER",  App.get(mobileNumber)});
 					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
 					observations.add(new String[] { "starttime", App.getSqlDateTime(startDateTime)});
+					
+					if(App.getUsername().equalsIgnoreCase("guest")){
+						observations.add(new String[] { "NAME",  App.getName()});
+						observations.add(new String[] { "EMAIL",  App.getEmail()});
+					}
 					
 					String result = serverService.saveUVGIForm(RequestType.UVGI_TROUBLESHOOTING, values, observations.toArray(new String[][] {}));
 					//String result = "SUCCESS";

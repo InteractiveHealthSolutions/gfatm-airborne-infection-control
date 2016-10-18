@@ -22,14 +22,25 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center"
                 android:text="@string/app_name"
-                android:textSize="30dp"
+                android:textSize="@dimen/xlarge"
                 android:textStyle="bold" />
+            
+            <TextView
+		        android:id="@+login_id/TextView01"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:layout_alignParentRight="true"
+		        android:layout_below="@+login_id/loginButton"
+		        android:gravity="right"
+		        android:text="@string/version_no"
+		        android:textColor="@color/mainTheme" />
 
             <TextView
                 android:id="@+login_id/usernameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="@dimen/large"
                 android:text="@string/username"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/Black" />
@@ -39,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="12"
+                android:maxLength="35"
                 android:hint="@string/username_hint"
                 android:tag="@string/username" />
 	
@@ -59,6 +71,7 @@
 	        android:layout_below="@+login_id/passwordTextView"
 	        android:layout_centerHorizontal="true"
 	        android:ems="12"
+	        android:maxLength="35"
 	        android:hint="@string/password_hint"
 	        android:inputType="textPassword"
 	        android:tag="@string/password" />
@@ -69,6 +82,7 @@
 	        android:layout_height="wrap_content"
 	        android:clickable="true"
 	        android:gravity="right"
+	        android:textStyle="italic"
 	        android:text="@string/show_pass"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@color/mainTheme" />
@@ -79,8 +93,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignLeft="@+login_id/passwordEditText"
 	        android:layout_below="@+login_id/showPasswordTextView"
-	        android:paddingLeft="@dimen/medium"
+	        android:paddingLeft="25dp"
 	        android:text="@string/work_offline"
+	        android:layout_gravity="left"
 	        android:textColor="@color/Black" />
 	
 	    <Button
@@ -94,41 +109,31 @@
 	        android:paddingRight="@dimen/medium"
 	        android:text="@string/login" />
 	    
-	    
 	    <TextView
-	        android:id="@+login_id/guestLoginTextView"
+	        android:id="@+login_id/orTextView"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:clickable="true"
 	        android:gravity="center"
 	        android:layout_marginTop="@dimen/small"
+	        android:text="or"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="@color/mainTheme" />
+
+	    <TextView
+	        android:id="@+login_id/guestLoginTextView"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="@dimen/small"
+	        android:clickable="true"
+	        android:gravity="center"
 	        android:text="@string/guest_login"
-	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:textStyle="italic"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:textColor="@color/mainTheme" />
 	    
 	</LinearLayout>
-        
-    </ScrollView>
-    
-     <LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_alignParentBottom="true"
-	    >
 	
-	    <TextView
-	        android:id="@+login_id/TextView01"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentRight="true"
-	        android:layout_below="@+login_id/loginButton"
-	        android:layout_marginTop="27dp"
-	        android:gravity="center"
-	        android:text="@string/version_no"
-	        android:textColor="@color/mainTheme" />
-
-    </LinearLayout>
+    </ScrollView>
    
 </RelativeLayout>

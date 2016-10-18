@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -83,11 +84,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 		username.setSelection(username.getText().length());
 		
 		guestLogin.setText(Html.fromHtml(getResources().getString(R.string.guest_login)));
+		guestLogin.setPaintFlags(guestLogin.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+		showPassword.setPaintFlags(showPassword.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
 		
 		views = new View[] {username, password, login};
 		initView (views);
+		
 	}
-
+	
 	public void initView (View[] views)
 	{
 		
@@ -105,17 +109,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 				finish ();
 			}
 		}
-		
-		
-		username.setText (App.getUsername ());
-		
+	
 		loginAttempt = 0;	
 		
-		View view = this.getCurrentFocus();
-	    if (view != null) {
-	        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-	        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-	    }
 	}
 
 	@Override
@@ -151,14 +147,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 			
 			// Hide & Show Password Text
 			String status = showPassword.getText().toString();
-			if(status.equals("Show Password"))
+			if(status.equals(getResources().getString(R.string.show_pass)))
 			{
 				password.setInputType( InputType.TYPE_TEXT_VARIATION_PASSWORD);
-				showPassword.setText("Hide Password");
+				showPassword.setText(getResources().getString(R.string.hide_pass));
 			}
 			else{
 				password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-				showPassword.setText("Show Password");
+				showPassword.setText(getResources().getString(R.string.show_pass));
 			}
 		
 			int position = password.getText().length(); 
@@ -167,7 +163,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		else if (v == guestLogin){
 			
-			App.getGuestLoginDialog(this).show();
+			Intent GuestLoginIntent = new Intent (this, GuestLoginActivity.class);
+			startActivity (GuestLoginIntent);
+			finish ();
 
 		}
 	}
@@ -297,7 +295,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						App.setUsername (tempUsername);
 						App.setPassword (tempPassword);
 						
-						showAlert(resultArray[0] + "\n" + resultArray[1], AlertType.ERROR);
+						showAlert(resultArray[0] + "<br>" + resultArray[1], AlertType.ERROR);
 					
 					}
 					else if(result.equals("CONNECTION_ERROR"))
