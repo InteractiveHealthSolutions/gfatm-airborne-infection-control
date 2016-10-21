@@ -57,7 +57,6 @@ public class MainActivity extends Activity
 			Log.e (TAG, e.getMessage ());
 		}
 		
-	
 		// Start Login Activity...
 		Intent intent = new Intent (this, LoginActivity.class); 
 		startActivity (intent);

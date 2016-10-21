@@ -5,6 +5,7 @@
     <string name="app_name">Airborne Infection Control</string>
     <string name="action_settings">Settings</string>
     <string name="use_secure">Use SSL/TLS</string>
+    <string name="loading_message_fetching_metadata">Fetching Metadata...</string>
     <string name="loading_message_signing_in">Signing in..</string>
     <string name="loading_message_saving_trees">Saving trees..</string>
     <string name="loading_message_saving_form">Saving form...</string>

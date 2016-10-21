@@ -30,6 +30,7 @@ import com.ihsinformatics.aic.custom.MySpinner;
 import com.ihsinformatics.aic.custom.MyTextView;
 import com.ihsinformatics.aic.shared.AlertType;
 import com.ihsinformatics.aic.shared.FormType;
+import com.ihsinformatics.aic.shared.Metadata;
 import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
@@ -228,7 +229,8 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		facilityNameTextView = new MyTextView (context, R.style.text, R.string.facility_name);
 		//facilityName = new Spinner (context, getResources ().getStringArray (R.array.facilities_name), R.string.facility_name, R.string.option_hint);
 		facilityName = new Spinner(this);
-	    ArrayAdapter<String> facilityArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.facilities_name));
+		ArrayList<String> facilityList = serverService.getMetaDataFromLocalDb(Metadata.LOCATION);
+	    ArrayAdapter<String> facilityArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, facilityList);
 	    facilityName.setAdapter(facilityArrayAdapter);
 		
 		otherFacilityNameTextView = new MyTextView (context, R.style.text, R.string.other_facility);
@@ -236,15 +238,17 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		
 		opdNameTextView = new MyTextView (context, R.style.text, R.string.opd_lights_installed);
 		opdName = new Spinner(this);
-	    ArrayAdapter<String> opdArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.opd_names));
-	    opdName.setAdapter(opdArrayAdapter);
+		ArrayList<String> opdList = serverService.getMetaDataFromLocalDb(Metadata.OPD);
+		ArrayAdapter<String> opdArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdList);
+		opdName.setAdapter(opdArrayAdapter);
 		
 		otherOpdNameTextView = new MyTextView (context, R.style.text, R.string.other_opd);
 		otherOpdName = new MyEditText(context, R.string.other_opd, R.string.other_hint, InputType.TYPE_CLASS_TEXT, R.style.edit, RegexUtil.textLength, false);
 		
 		opdAreaTextView = new MyTextView (context, R.style.text, R.string.opd_area);
 		opdArea = new Spinner(this);
-	    ArrayAdapter<String> opdAreaArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources ().getStringArray (R.array.opd_areas));
+		ArrayList<String> opdAreaList = serverService.getMetaDataFromLocalDb(Metadata.OPD_AREA);
+	    ArrayAdapter<String> opdAreaArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdAreaList);
 	    opdArea.setAdapter(opdAreaArrayAdapter);
 	    
 		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);

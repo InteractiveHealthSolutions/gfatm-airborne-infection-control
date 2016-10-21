@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.InputType;
@@ -282,7 +283,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 						editor.putString (Preferences.USERNAME, App.getUsername ());
 						editor.putString (Preferences.PASSWORD, App.getPassword ());
 						editor.putString(Preferences.LAST_LOGIN, App.getLastLogin());
-						editor.apply ();
+						editor.apply ();	
+						
+						serverService.updateLoginTime();
+						
+						if(resultArray[2].equals("false")){
+							publishProgress (getResources ().getString (R.string.loading_message_fetching_metadata)); 
+							getMetadata();
+						}
 						
 						//Start Main Menu Activity
 						Intent intent = new Intent (LoginActivity.this, MainMenuActivity.class);
@@ -327,6 +335,47 @@ public class LoginActivity extends Activity implements OnClickListener {
 			authenticationTask.execute ("");
 	
 		}
+		
+	}
+	
+	
+	public void getMetadata(){
+
+			// Authenticate from server
+			AsyncTask<String, String, String> authenticationTask = new AsyncTask<String, String, String> ()
+			{
+				@Override
+				protected String doInBackground (String... params)
+				{
+					runOnUiThread (new Runnable ()
+					{
+						@Override
+						public void run ()
+						{
+							/*loading.setIndeterminate (true);
+							loading.setCancelable (false);
+							loading.show ();*/
+						}
+					});
+					
+					serverService.fetchMetadata();   
+					return "SUCCESS";
+					
+				}
+
+				@Override
+				protected void onProgressUpdate (String... values)
+				{
+					//loading.setMessage (values[0]);
+				};
+
+				@Override
+				protected void onPostExecute (String result)
+				{
+					//loading.dismiss ();
+				}
+			};
+			authenticationTask.execute ("");
 		
 	}
 	
@@ -383,4 +432,5 @@ public class LoginActivity extends Activity implements OnClickListener {
 		App.getDialog(this, alertType, s, Gravity.CENTER_HORIZONTAL).show();
 		
 	}
+
 }

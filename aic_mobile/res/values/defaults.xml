@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="trust_store_password">jingle94</string>
-	<string name="server_address">"localhost:8080"</string>
+	<string name="server_address">"10.0.2.2:8080"</string>
     <string name="http_port">80</string>
     <string name="https_port">443</string>
     <string name="support_contact">+3132882088</string>

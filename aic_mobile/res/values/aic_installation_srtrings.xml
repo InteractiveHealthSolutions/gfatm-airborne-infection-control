@@ -19,6 +19,8 @@
     <string name="ft_7_reading_hint">Enter 7 ft UV Reading (µW/cm²)</string>
     <string name="installation_complete">Installation Complete?</string>
     
+     <string name="other">Other</string>
+    
     <string-array name="facilities_name">
         <item>Indus Hospital (TIH)</item>
         <item>Jinnah Post-Medical Complex (JPMC)</item>
