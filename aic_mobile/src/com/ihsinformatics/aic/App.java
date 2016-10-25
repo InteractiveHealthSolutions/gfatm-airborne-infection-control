@@ -42,11 +42,13 @@ import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -406,14 +408,14 @@ public class App
 				break;
 			case INFO :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_info));
-				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.blue_background));
-				dialogButton.setBackgroundResource(R.drawable.blue_button);
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.khaki_background));
+				dialogButton.setBackgroundResource(R.drawable.button);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case QUESTION:
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_question));
-				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.orange_background));
-				dialogButton.setBackgroundResource(R.drawable.blue_button);
+				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.khaki_background));
+				dialogButton.setBackgroundResource(R.drawable.button);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case URGENT:
@@ -454,6 +456,28 @@ public class App
 		text.setText(title);
 		text.setVisibility(View.VISIBLE);
 		
+	}
+	
+	public static TextView addTroubleshootId (Dialog dialog, String id){
+		LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.listsLayout);
+		
+		LinearLayout innerLayout = new LinearLayout (dialog.getContext());
+		innerLayout.setOrientation (LinearLayout.HORIZONTAL);
+		innerLayout.setLayoutParams (new LayoutParams (LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		
+		TextView text1 = new TextView(dialog.getContext());
+		text1.setText(layout.getChildCount()+1 + ".");
+		text1.setTextColor(dialog.getContext().getResources().getColor(R.color.mainTheme));
+		innerLayout.addView(text1);
+		TextView text = new TextView(dialog.getContext());
+		text.setText(id);
+		innerLayout.addView(text);
+		
+		layout.addView(innerLayout);
+		
+		layout.setVisibility(View.VISIBLE);
+		
+		return text;
 	}
 	
 	public static Button addDialogButton (Dialog dialog, String message, dialogButtonPosition pos, dialogButtonStatus status){
@@ -576,7 +600,7 @@ public class App
 	 */
 	public static String getSqlDateTime (Calendar date)
 	{
-		return DateFormat.format ("yyyy-MM-dd HH:mm:ss", date).toString ();
+		return DateFormat.format ("yyyy-MM-dd hh:mm:ss", date).toString ();
 	}
 
 	/**
@@ -598,7 +622,7 @@ public class App
 	 */
 	public static String getSqlDateTime (Date date)
 	{
-		return DateFormat.format ("yyy-MM-dd HH:mm:ss", date).toString ();
+		return DateFormat.format ("yyy-MM-dd hh:mm:ss", date).toString ();
 	}
 
 	/**

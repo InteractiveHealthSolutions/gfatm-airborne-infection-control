@@ -18,6 +18,7 @@ package com.ihsinformatics.aic.custom;
 import com.ihsinformatics.aic.R;
 
 import android.content.Context;
+import android.text.style.StyleSpan;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 

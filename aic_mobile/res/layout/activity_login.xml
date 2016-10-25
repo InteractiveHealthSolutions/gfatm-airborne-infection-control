@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightGrey"
+    android:background="@color/honey_dew"
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.ihsinformatics.aic.LoginActivity" >
     
@@ -26,15 +26,16 @@
                 android:textStyle="bold" />
             
             <TextView
-		        android:id="@+login_id/TextView01"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentLeft="true"
-		        android:layout_alignParentRight="true"
-		        android:layout_below="@+login_id/loginButton"
-		        android:gravity="right"
-		        android:text="@string/version_no"
-		        android:textColor="@color/mainTheme" />
+                android:id="@+login_id/TextView01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+login_id/loginButton"
+                android:gravity="right"
+                android:text="@string/version_no"
+                android:textColor="@color/mainTheme"
+                android:textSize="@dimen/medium" />
 
             <TextView
                 android:id="@+login_id/usernameTextView"
@@ -82,10 +83,11 @@
 	        android:layout_height="wrap_content"
 	        android:clickable="true"
 	        android:gravity="right"
-	        android:textStyle="italic"
 	        android:text="@string/show_pass"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
-	        android:textColor="@color/mainTheme" />
+	        android:textColor="@color/mainTheme"
+	        android:textSize="@dimen/medium"
+	        android:textStyle="italic" />
 	
 	    <CheckBox
 	        android:id="@+login_id/offlineCheckBox"
@@ -113,12 +115,13 @@
 	        android:id="@+login_id/orTextView"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
+	        android:layout_marginTop="@dimen/small"
 	        android:clickable="true"
 	        android:gravity="center"
-	        android:layout_marginTop="@dimen/small"
 	        android:text="or"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:textColor="@color/mainTheme" />
+	        android:textColor="@color/mainTheme"
+	        android:textSize="@dimen/medium" />
 
 	    <TextView
 	        android:id="@+login_id/guestLoginTextView"
@@ -128,9 +131,9 @@
 	        android:clickable="true"
 	        android:gravity="center"
 	        android:text="@string/guest_login"
-	        android:textStyle="italic"
-	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:textColor="@color/mainTheme" />
+	        android:textColor="@color/mainTheme"
+	        android:textSize="@dimen/large"
+	        android:textStyle="italic" />
 	    
 	</LinearLayout>
 	

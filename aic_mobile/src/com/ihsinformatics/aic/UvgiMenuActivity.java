@@ -37,6 +37,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	Button uvgiInstallationButton;
 	Button uvgiMaintenanceButton;
 	Button uvgiTroubleshootLogButton;
+	Button uvgiTroubleshootStatusUpdateButton;
 	Button uvgiTroubleshootStatusButton;
 	Button uvgiTroubleshootResolutionButton;
 
@@ -51,6 +52,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		uvgiInstallationButton = (Button) findViewById(R.main_id.installation_form);
 		uvgiMaintenanceButton = (Button) findViewById(R.main_id.maintenance_form);
 		uvgiTroubleshootLogButton = (Button) findViewById(R.main_id.troubleshootingLog_form);
+		uvgiTroubleshootStatusUpdateButton = (Button) findViewById(R.main_id.troubleshootingStatusUpdate_form);
 		uvgiTroubleshootStatusButton = (Button) findViewById(R.main_id.troubleshootingStatus_form);
 		uvgiTroubleshootResolutionButton = (Button) findViewById(R.main_id.troubleshootingResolution_form);
 		
@@ -78,6 +80,7 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		uvgiInstallationButton.setOnClickListener(this);
 		uvgiMaintenanceButton.setOnClickListener(this);
 		uvgiTroubleshootLogButton.setOnClickListener(this);
+		uvgiTroubleshootStatusUpdateButton.setOnClickListener(this);
 		uvgiTroubleshootStatusButton.setOnClickListener(this);
 		uvgiTroubleshootResolutionButton.setOnClickListener(this);
 		
@@ -93,10 +96,12 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 		}
 		
 		if(serverService.userHasPrivilge(Privilege.AIC_UVGI_STATUS)){
-			uvgiTroubleshootStatusButton.setVisibility(View.VISIBLE);
+			uvgiTroubleshootStatusUpdateButton.setVisibility(View.VISIBLE);
+			uvgiTroubleshootStatusButton.setVisibility(View.GONE);
 		}
 		else{
-			uvgiTroubleshootStatusButton.setVisibility(View.GONE);
+			uvgiTroubleshootStatusUpdateButton.setVisibility(View.GONE);
+			uvgiTroubleshootStatusButton.setVisibility(View.VISIBLE);
 		}
 		
 	}
@@ -165,6 +170,12 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 
 			Intent UvgiTroubleshootResolutionIntent = new Intent (this, UvgiTroubleshootResolutionActivity.class);
 			startActivity (UvgiTroubleshootResolutionIntent);
+			finish();
+		}
+		else if(v == uvgiTroubleshootStatusUpdateButton){
+			
+			Intent uvgiTroubleshootStatusUpdateButton = new Intent (this, UvgiTroubleshootStatusUpdateActivity.class);
+			startActivity (uvgiTroubleshootStatusUpdateButton);
 			finish();
 		}
 		else if(v == uvgiTroubleshootStatusButton){

@@ -160,39 +160,41 @@ public class ServerService {
 				String result = jsonResponse.getString ("response");
 				String detail = jsonResponse.getString ("details");
 				
-				dbUtil.delete(Metadata.METADATA_TABLE, "type = '" +  Metadata.PRIVILEGE + "'" , null);
-
-				if (jsonResponse.has ("privilege_no")){
-					int privilegeSize = jsonResponse.getInt ("privilege_no");
-					for(int i = 1; i <= privilegeSize; i++){
-						
-						values = new ContentValues ();
-						values.put ("id", i);
-						values.put ("type", Metadata.PRIVILEGE);
-						values.put ("name", jsonResponse.getString ("privilege_"+i));
-											
-						// If the user doesn't exist in DB, save it
-						String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  jsonResponse.getString ("privilege_"+i) + "'");
-						if (id == null)
-						{
-							dbUtil.insert (Metadata.METADATA_TABLE, values);
-						}
-						
-					}
-				}
-				
-				int serverOpdSize = jsonResponse.getInt("opd_size");
-				int serverAreaOpdSize = jsonResponse.getInt("opd_area_size");
-				int serverLocSize = jsonResponse.getInt("loc_size");
-				
-				int localOpdSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.OPD+"'"));
-				int localOpdAreaSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.OPD_AREA+"'"));
-				int localLocSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.LOCATION+"'"));
-				
 				String updatedFlag = "true";
-				if(serverOpdSize > localOpdSize || serverAreaOpdSize > localOpdAreaSize || serverLocSize > localLocSize)
-					updatedFlag = "false";
-
+				if(result.equalsIgnoreCase("SUCCESS")){
+				
+					dbUtil.delete(Metadata.METADATA_TABLE, "type = '" +  Metadata.PRIVILEGE + "'" , null);
+	
+					if (jsonResponse.has ("privilege_no")){
+						int privilegeSize = jsonResponse.getInt ("privilege_no");
+						for(int i = 1; i <= privilegeSize; i++){
+							
+							values = new ContentValues ();
+							values.put ("id", i);
+							values.put ("type", Metadata.PRIVILEGE);
+							values.put ("name", jsonResponse.getString ("privilege_"+i));
+												
+							// If the user doesn't exist in DB, save it
+							String id = dbUtil.getObject (Metadata.METADATA_TABLE, "id", "type='" + Metadata.PRIVILEGE + "' AND name='" +  jsonResponse.getString ("privilege_"+i) + "'");
+							if (id == null)
+							{
+								dbUtil.insert (Metadata.METADATA_TABLE, values);
+							}
+							
+						}
+					}
+					
+					int serverOpdSize = jsonResponse.getInt("opd_size");
+					int serverAreaOpdSize = jsonResponse.getInt("opd_area_size");
+					int serverLocSize = jsonResponse.getInt("loc_size");
+					
+					int localOpdSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.OPD+"'"));
+					int localOpdAreaSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.OPD_AREA+"'"));
+					int localLocSize = Integer.parseInt(dbUtil.getObject(Metadata.METADATA_TABLE,"count(*)","type='"+Metadata.LOCATION+"'"));
+					
+					if(serverOpdSize > localOpdSize || serverAreaOpdSize > localOpdAreaSize || serverLocSize > localLocSize)
+						updatedFlag = "false";
+				}
 				
 				return result + ":;:" + detail + ":;:" + updatedFlag;
 			}
@@ -424,6 +426,17 @@ public class ServerService {
 			}
 			if (jsonResponse.has ("response"))
 			{
+				
+				if(jsonResponse.has ("troubleShoot_no")){
+					hm.put("troubleshoot_no", jsonResponse.getString ("troubleShoot_no"));
+					
+					int no = Integer.parseInt(jsonResponse.getString ("troubleShoot_no"));
+					for(int i = no-1; i >= 0; i--){
+						
+						hm.put("troubleshoot_"+i, jsonResponse.getString ("troubleShoot_"+i));
+					}
+				}
+				
 				hm.put("status", jsonResponse.getString ("response"));
 				hm.put("details", jsonResponse.getString ("details"));
 				hm.put("id", jsonResponse.getString ("id"));
@@ -442,7 +455,6 @@ public class ServerService {
 					
 				}
 				
-				return hm;
 			}
 			return hm;
 		}

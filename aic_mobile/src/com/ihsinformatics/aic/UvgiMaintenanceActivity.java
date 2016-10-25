@@ -1434,9 +1434,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 
 	public boolean submit ()
 	{
-		if (validate ())
-		{			
-			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
+		AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 			{
 				@Override
 				protected String doInBackground (String... params)
@@ -1517,7 +1515,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 				}
 			};
 			updateTask.execute ("");
-		}
+
 		return true;
 	}
 
@@ -1560,23 +1558,31 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close),Gravity.CENTER_HORIZONTAL);
-			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
-			
-			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
-			yesButton.setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	            	
-	            	d.dismiss();
-	            	submit();
-	            	
-	            }
-	        });
-			
-			App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
-			
-			d.show ();
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
+			{
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
+			else if (validate ())
+			{			
+				final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close),Gravity.CENTER_HORIZONTAL);
+				App.setDialogTitle(d, getResources ().getString (R.string.save_form));
+				
+				Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+				yesButton.setOnClickListener(new View.OnClickListener() {
+		            @Override
+		            public void onClick(View v) {
+		            	
+		            	d.dismiss();
+		            	submit();
+		            	
+		            }
+		        });
+				
+				App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+				
+				d.show ();
+			}
 		}
 		else if (view == scanBarcodeButton) {
 			try {
@@ -1593,59 +1599,62 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			}
 		}
 		else if (view == verifyButton){
-			
-			//TODO: Validation Check for id...
-			
-			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
 			{
-
-				@Override
-				protected HashMap<String, String> doInBackground(String... params) {
-					runOnUiThread (new Runnable ()
-					{
-						@Override
-						public void run ()
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
+			else {
+				AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+				{
+	
+					@Override
+					protected HashMap<String, String> doInBackground(String... params) {
+						runOnUiThread (new Runnable ()
 						{
-							loading.setIndeterminate (true);
-							loading.setCancelable (false);
-							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
-							loading.show ();
+							@Override
+							public void run ()
+							{
+								loading.setIndeterminate (true);
+								loading.setCancelable (false);
+								loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+								loading.show ();
+							}
+						});
+						
+						
+						HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
+						//String result = "SUCCESS";
+						return hm;
+					}
+					
+					@Override
+					protected void onProgressUpdate (String... values)
+					{
+					};
+	
+					@Override
+					protected void onPostExecute (HashMap<String, String> result)
+					{
+						super.onPostExecute (result);
+						if(result.get("status").equals("SUCCESS")){
+							String resultString = "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
+									"<b>UVGI Light Id:</b> " + result.get("id") + "<br>" +
+									"<br> <b>Location:</b> " + result.get("location") + 
+									"<br> <b>OPD:</b> " + result.get("opd") + 
+									"<br> <b>OPD Area:</b> " +result.get("opd_area");
+							App.getDialog (UvgiMaintenanceActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
 						}
-					});
+						else{
+							App.getDialog (UvgiMaintenanceActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+						}
+						
+						loading.dismiss ();
+					}
 					
-					
-					HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
-					//String result = "SUCCESS";
-					return hm;
-				}
-				
-				@Override
-				protected void onProgressUpdate (String... values)
-				{
 				};
-
-				@Override
-				protected void onPostExecute (HashMap<String, String> result)
-				{
-					super.onPostExecute (result);
-					if(result.get("status").equals("SUCCESS")){
-						String resultString = "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
-								"<b>UVGI Light Id:</b> " + result.get("id") + "<br>" +
-								"<br> <b>Location:</b> " + result.get("location") + 
-								"<br> <b>OPD:</b> " + result.get("opd") + 
-								"<br> <b>OPD Area:</b> " +result.get("opd_area");
-						App.getDialog (UvgiMaintenanceActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
-					}
-					else{
-						App.getDialog (UvgiMaintenanceActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
-					}
-					
-					loading.dismiss ();
-				}
-				
-			};
-			updateTask.execute ("");
-			
+				updateTask.execute ("");
+			}
 		}
 		
 	}

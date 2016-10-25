@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/tiny"
-    android:background="@color/LightGrey" >
+    android:background="@color/honey_dew" >
 
     <ScrollView
         android:id="@+main_id/scrollView"
@@ -100,6 +100,23 @@
                     android:text="@string/troubleshooting_status"
                     android:layout_marginBottom="10sp"
                     android:textSize="20sp" />
+            </TableRow> 
+            
+            <TableRow
+                android:id="@+main_id/row2TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+main_id/troubleshootingStatusUpdate_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/status_icon"
+                    android:text="@string/troubleshooting_status_update"
+                    android:layout_marginBottom="10sp"
+                    android:textSize="20sp" />
             </TableRow>
             
             <TableRow
@@ -121,26 +138,5 @@
             
         </LinearLayout>
     </ScrollView>
-    
-    <LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_alignParentBottom="true"
-	    >
-	
-	    <TextView
-	        android:id="@+login_id/TextView01"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentRight="true"
-	        android:layout_below="@+login_id/loginButton"
-	        android:layout_marginTop="27dp"
-	        android:gravity="center"
-	        android:text="@string/version_no"
-	        android:textColor="@color/mainTheme" />
-
-    </LinearLayout>
 
 </RelativeLayout>

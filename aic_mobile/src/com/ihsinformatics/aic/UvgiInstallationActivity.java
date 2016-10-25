@@ -231,6 +231,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		facilityName = new Spinner(this);
 		ArrayList<String> facilityList = serverService.getMetaDataFromLocalDb(Metadata.LOCATION);
 	    ArrayAdapter<String> facilityArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, facilityList);
+	    facilityArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 	    facilityName.setAdapter(facilityArrayAdapter);
 		
 		otherFacilityNameTextView = new MyTextView (context, R.style.text, R.string.other_facility);
@@ -240,6 +241,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		opdName = new Spinner(this);
 		ArrayList<String> opdList = serverService.getMetaDataFromLocalDb(Metadata.OPD);
 		ArrayAdapter<String> opdArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdList);
+		opdArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 		opdName.setAdapter(opdArrayAdapter);
 		
 		otherOpdNameTextView = new MyTextView (context, R.style.text, R.string.other_opd);
@@ -249,6 +251,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		opdArea = new Spinner(this);
 		ArrayList<String> opdAreaList = serverService.getMetaDataFromLocalDb(Metadata.OPD_AREA);
 	    ArrayAdapter<String> opdAreaArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdAreaList);
+	    opdAreaArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 	    opdArea.setAdapter(opdAreaArrayAdapter);
 	    
 		otherOpdAreaTextView = new MyTextView (context, R.style.text, R.string.other_opd_area);
@@ -849,10 +852,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 
 	public boolean submit ()
 	{
-		if (validate ())
-		{
-			
-			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
+		AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 			{
 				@Override
 				protected String doInBackground (String... params)
@@ -921,6 +921,16 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 						App.getDialog (UvgiInstallationActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success),Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
 					}
+					else if(result.equals("CONNECTION_ERROR"))
+					{
+						showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+					
+					}
+					else if(result.equals("SERVER_NOT_RESPONDING"))
+					{
+						showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+					
+					}
 					else
 					{
 						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
@@ -929,7 +939,6 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 				}
 			};
 			updateTask.execute ("");
-		}
 		return true;
 	}
 
@@ -972,23 +981,33 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close),Gravity.CENTER_HORIZONTAL);
-			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
 			
-			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
-			yesButton.setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	            	
-	            	d.dismiss();
-	            	submit();
-	            	
-	            }
-	        });
-			
-			App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
-			
-			d.show ();
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
+			{
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
+			else if (validate ())
+			{
+				
+				final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close),Gravity.CENTER_HORIZONTAL);
+				App.setDialogTitle(d, getResources ().getString (R.string.save_form));
+				
+				Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+				yesButton.setOnClickListener(new View.OnClickListener() {
+		            @Override
+		            public void onClick(View v) {
+		            	
+		            	d.dismiss();
+		            	submit();
+		            	
+		            }
+		        });
+				
+				App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+				
+				d.show ();
+			}
 		}
 		else if (view == scanBarcodeButton) {
 			try {
@@ -1024,58 +1043,62 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 			}
 		}
 		else if (view == verifyButton){
-			
-			//TODO: Validation Check for id...
-			
-			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
 			{
-
-				@Override
-				protected HashMap<String, String> doInBackground(String... params) {
-					runOnUiThread (new Runnable ()
-					{
-						@Override
-						public void run ()
-						{
-							loading.setIndeterminate (true);
-							loading.setCancelable (false);
-							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
-							loading.show ();
-						}
-					});
-					
-					
-					HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
-					//String result = "SUCCESS";
-					return hm;
-				}
-				
-				@Override
-				protected void onProgressUpdate (String... values)
-				{
-				};
-
-				@Override
-				protected void onPostExecute (HashMap<String, String> result)
-				{
-					super.onPostExecute (result);
-					if(result.get("status").equals("SUCCESS")){
-						String resultString = "UVGI Light Id <br>" + result.get("id") + "</b> is already in System.<br>" +
-								"<br> <b>Location:</b> " + result.get("location") + 
-								"<br> <b>OPD:</b> " + result.get("opd") + 
-								"<br> <b>OPD Area:</b> " +result.get("opd_area");
-						App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, resultString, Gravity.LEFT).show ();
-					}
-					else{
-						App.getDialog (UvgiInstallationActivity.this, AlertType.INFO, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
-					}
-					
-					loading.dismiss ();
-				}
-				
-			};
-			updateTask.execute ("");
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
 			
+			else {
+				AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+				{
+	
+					@Override
+					protected HashMap<String, String> doInBackground(String... params) {
+						runOnUiThread (new Runnable ()
+						{
+							@Override
+							public void run ()
+							{
+								loading.setIndeterminate (true);
+								loading.setCancelable (false);
+								loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+								loading.show ();
+							}
+						});
+						
+						
+						HashMap<String, String> hm = serverService.getUVGIInstallationRecord (App.get(uniqueIdGenerated));
+						//String result = "SUCCESS";
+						return hm;
+					}
+					
+					@Override
+					protected void onProgressUpdate (String... values)
+					{
+					};
+	
+					@Override
+					protected void onPostExecute (HashMap<String, String> result)
+					{
+						super.onPostExecute (result);
+						if(result.get("status").equals("SUCCESS")){
+							String resultString = "UVGI Light Id <br>" + result.get("id") + "</b> is already in System.<br>" +
+									"<br> <b>Location:</b> " + result.get("location") + 
+									"<br> <b>OPD:</b> " + result.get("opd") + 
+									"<br> <b>OPD Area:</b> " +result.get("opd_area");
+							App.getDialog (UvgiInstallationActivity.this, AlertType.ERROR, resultString, Gravity.LEFT).show ();
+						}
+						else{
+							App.getDialog (UvgiInstallationActivity.this, AlertType.INFO, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+						}
+						
+						loading.dismiss ();
+					}
+					
+				};
+				updateTask.execute ("");
+			}
 		}
 	}
 	

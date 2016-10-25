@@ -96,6 +96,23 @@
                     android:text="@string/troubleshooting_status"
                     android:layout_marginBottom="10sp"
                     android:textSize="20sp" />
+            </TableRow> 
+            
+            <TableRow
+                android:id="@+main_id/row2TableRow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+main_id/troubleshootingStatusUpdate_form"
+                    style="@style/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/status_icon"
+                    android:text="@string/troubleshooting_status_update"
+                    android:layout_marginBottom="10sp"
+                    android:textSize="20sp" />
             </TableRow>
             
             <TableRow

@@ -85,8 +85,6 @@ public class HttpRequest
 	        urlConnection = (HttpURLConnection) url
 	                .openConnection();
 	        
-	        urlConnection.setConnectTimeout(20);
-	        
 	        BufferedReader in = new BufferedReader(new InputStreamReader(
 	        		urlConnection.getInputStream()));
 			String inputLine;

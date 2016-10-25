@@ -595,71 +595,69 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 
 	public boolean submit ()
 	{
-		if (validate ())
+	
+		AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
 		{
-			
-			AsyncTask<String, String, String> updateTask = new AsyncTask<String, String, String> ()
+			@Override
+			protected String doInBackground (String... params)
 			{
-				@Override
-				protected String doInBackground (String... params)
+				runOnUiThread (new Runnable ()
 				{
-					runOnUiThread (new Runnable ()
+					@Override
+					public void run ()
 					{
-						@Override
-						public void run ()
-						{
-							loading.setIndeterminate (true);
-							loading.setCancelable (false);
-							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
-							loading.show ();
-						}
-					});
-					
-					final ArrayList<String[]> observations = new ArrayList<String[]>();
-					final ContentValues values = new ContentValues ();
-					
-					values.put ("location", "IHS");
-					values.put ("entereddate", App.getSqlDate(formDate));
-					
-					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
-					observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
-					observations.add(new String[] { "PROBLEM_RESOLVED",  yesProblemResolved.isChecked() ? "Y" : "N"});
-					if(problemTextView.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "PROBLEM",  App.get(problem)});
-					if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE)
-						observations.add(new String[] { "REASON_PROBLEM_UNRESOLVED",  App.get(reasonProblemNotResolved)});
-					observations.add(new String[] { "TROUBLESHOOTER_NAME",  App.get(resolvedBy)});
-					observations.add(new String[] { "TROUBLESHOOTER_CONTACT",  App.get(contactNumber)});
-					observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
-					
-					String result = serverService.saveUVGIForm(RequestType.UVGI_RESOLUTION, values, observations.toArray(new String[][] {}));
-					//String result = "SUCCESS";
-					return result;
-				}
-
-				@Override
-				protected void onProgressUpdate (String... values)
-				{
-				};
-
-				@Override
-				protected void onPostExecute (String result)
-				{
-					super.onPostExecute (result);
-					if (result.equals ("SUCCESS"))
-					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success), Gravity.CENTER_HORIZONTAL).show ();
-						initView (views);
+						loading.setIndeterminate (true);
+						loading.setCancelable (false);
+						loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+						loading.show ();
 					}
-					else
-					{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
-					}
-					loading.dismiss ();
-				}
+				});
+				
+				final ArrayList<String[]> observations = new ArrayList<String[]>();
+				final ContentValues values = new ContentValues ();
+				
+				values.put ("location", "IHS");
+				values.put ("entereddate", App.getSqlDate(formDate));
+				
+				observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
+				observations.add(new String[] { "TROUBLESHOOT_NUMBER",  App.get(troubleshootingNumber)});
+				observations.add(new String[] { "PROBLEM_RESOLVED",  yesProblemResolved.isChecked() ? "Y" : "N"});
+				if(problemTextView.getVisibility() == View.VISIBLE)
+					observations.add(new String[] { "PROBLEM",  App.get(problem)});
+				if(reasonProblemNotResolvedTextView.getVisibility() == View.VISIBLE)
+					observations.add(new String[] { "REASON_PROBLEM_UNRESOLVED",  App.get(reasonProblemNotResolved)});
+				observations.add(new String[] { "TROUBLESHOOTER_NAME",  App.get(resolvedBy)});
+				observations.add(new String[] { "TROUBLESHOOTER_CONTACT",  App.get(contactNumber)});
+				observations.add(new String[] {"starttime", App.getSqlDateTime(startDateTime)});
+				
+				String result = serverService.saveUVGIForm(RequestType.UVGI_RESOLUTION, values, observations.toArray(new String[][] {}));
+				//String result = "SUCCESS";
+				return result;
+			}
+
+			@Override
+			protected void onProgressUpdate (String... values)
+			{
 			};
-			updateTask.execute ("");
-		}
+
+			@Override
+			protected void onPostExecute (String result)
+			{
+				super.onPostExecute (result);
+				if (result.equals ("SUCCESS"))
+				{
+					App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success), Gravity.CENTER_HORIZONTAL).show ();
+					initView (views);
+				}
+				else
+				{
+					App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result, Gravity.CENTER_HORIZONTAL).show ();
+				}
+				loading.dismiss ();
+			}
+		};
+		updateTask.execute ("");
+	
 		return true;
 	}
 
@@ -703,23 +701,32 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 		}
 		else if (view == saveButton)
 		{
-			final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close), Gravity.CENTER_HORIZONTAL);
-			App.setDialogTitle(d, getResources ().getString (R.string.save_form));
-			
-			Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
-			yesButton.setOnClickListener(new View.OnClickListener() {
-	            @Override
-	            public void onClick(View v) {
-	            	
-	            	d.dismiss();
-	            	submit();
-	            	
-	            }
-	        });
-			
-			App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
-			
-			d.show ();
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
+			{
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
+			else if (validate ())
+			{
+				
+				final Dialog d = App.getDialog(this, AlertType.QUESTION, getResources ().getString (R.string.save_close), Gravity.CENTER_HORIZONTAL);
+				App.setDialogTitle(d, getResources ().getString (R.string.save_form));
+				
+				Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+				yesButton.setOnClickListener(new View.OnClickListener() {
+		            @Override
+		            public void onClick(View v) {
+		            	
+		            	d.dismiss();
+		            	submit();
+		            	
+		            }
+		        });
+				
+				App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+				
+				d.show ();
+			}
 		}
 		else if (view == scanBarcodeButton) {
 			try {
@@ -768,60 +775,64 @@ public class UvgiTroubleshootResolutionActivity extends AbstractFragmentActivity
 				  saveButton.setEnabled(false);
 		}
 		else if (view == verifyButton){
-			
-			//TODO: Validation Check for id...
-			
-			AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+			// Check connection with server or offline mode
+			if (!serverService.checkInternetConnection ())
 			{
-
-				@Override
-				protected HashMap<String, String> doInBackground(String... params) {
-					runOnUiThread (new Runnable ()
-					{
-						@Override
-						public void run ()
+				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+			}
+			else {
+				AsyncTask<String, String, HashMap<String, String>> updateTask = new AsyncTask<String, String, HashMap<String, String>> ()
+				{
+	
+					@Override
+					protected HashMap<String, String> doInBackground(String... params) {
+						runOnUiThread (new Runnable ()
 						{
-							loading.setIndeterminate (true);
-							loading.setCancelable (false);
-							loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
-							loading.show ();
+							@Override
+							public void run ()
+							{
+								loading.setIndeterminate (true);
+								loading.setCancelable (false);
+								loading.setMessage (getResources ().getString (R.string.loading_message_saving_trees));
+								loading.show ();
+							}
+						});
+						
+						
+						HashMap<String, String> hm = serverService.getUVGITroubleshootLogRecord (App.get(uniqueIdGenerated), App.get(troubleshootingNumber));
+						//String result = "SUCCESS";
+						return hm;
+					}
+					
+					@Override
+					protected void onProgressUpdate (String... values)
+					{
+					};
+	
+					@Override
+					protected void onPostExecute (HashMap<String, String> result)
+					{
+						super.onPostExecute (result);
+						if(result.get("status").equals("SUCCESS")){
+							String resultString = "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
+									"<b>UVGI Light Id:</b> " + result.get("id") +
+									"<br> <b>Troubleshoot Id:</b> " + result.get("troubleshootId") + "<br>" +
+									"<br> <b>Location:</b> " + result.get("location") + 
+									"<br> <b>OPD:</b> " + result.get("opd") + 
+									"<br> <b>OPD Area:</b> " +result.get("opd_area") +
+									"<br><br> <b>Problem:</b> " +result.get("problem");
+							App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
 						}
-					});
+						else{
+							App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
+						}
+						
+						loading.dismiss ();
+					}
 					
-					
-					HashMap<String, String> hm = serverService.getUVGITroubleshootLogRecord (App.get(uniqueIdGenerated), App.get(troubleshootingNumber));
-					//String result = "SUCCESS";
-					return hm;
-				}
-				
-				@Override
-				protected void onProgressUpdate (String... values)
-				{
 				};
-
-				@Override
-				protected void onPostExecute (HashMap<String, String> result)
-				{
-					super.onPostExecute (result);
-					if(result.get("status").equals("SUCCESS")){
-						String resultString = "<p align=\"center\"><u><b>DETAILS</b></u></p>" + 
-								"<b>UVGI Light Id:</b> " + result.get("id") +
-								"<br> <b>Troubleshoot Id:</b> " + result.get("troubleshootId") + "<br>" +
-								"<br> <b>Location:</b> " + result.get("location") + 
-								"<br> <b>OPD:</b> " + result.get("opd") + 
-								"<br> <b>OPD Area:</b> " +result.get("opd_area") +
-								"<br><br> <b>Problem:</b> " +result.get("problem");
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.INFO, resultString, Gravity.LEFT).show ();
-					}
-					else{
-						App.getDialog (UvgiTroubleshootResolutionActivity.this, AlertType.ERROR, result.get("details"), Gravity.CENTER_HORIZONTAL).show ();
-					}
-					
-					loading.dismiss ();
-				}
-				
-			};
-			updateTask.execute ("");
+				updateTask.execute ("");
+			}
 		}
 	}
 	
