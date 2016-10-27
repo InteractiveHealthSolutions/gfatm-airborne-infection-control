@@ -29,7 +29,7 @@
                     android:gravity="center"
                     android:text="@string/uvgi_lights"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/BlueShade"
                     android:textStyle="bold" />
             </TableRow>
             

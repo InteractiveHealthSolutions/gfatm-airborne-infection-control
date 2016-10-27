@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+menu_id/loctionMenu"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="@string/location_setup">
+    </item>
+    
+    <item
+        android:id="@+menu_id/updateMetada"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/update_metadata">
+    </item>
+    
+    <item
         android:id="@+menu_id/formsActivity"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/saved_forms">
-    </item>
-    
-    <item
-        android:id="@+menu_id/language"
-        android:icon="@android:drawable/ic_menu_save"
-        android:title="@string/language_change">
-    </item>
-    
-    <item
-        android:id="@+menu_id/aboutUs"
-        android:icon="@android:drawable/ic_menu_save"
-        android:title="@string/about_us">
     </item>
 
 </menu>

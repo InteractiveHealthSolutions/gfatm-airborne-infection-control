@@ -33,6 +33,7 @@ import com.ihsinformatics.aic.shared.FormType;
 import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -1454,7 +1455,7 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					final ArrayList<String[]> observations = new ArrayList<String[]>();
 					final ContentValues values = new ContentValues ();
 					
-					values.put ("location", "IHS");
+					values.put ("location", App.getLocation());
 					values.put ("entereddate", App.getSqlDate(formDate));
 					
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
@@ -1506,6 +1507,14 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 					{
 						App.getDialog (UvgiMaintenanceActivity.this, AlertType.SUCCESS, FORM_NAME + " " + getResources ().getString (R.string.form_send_success),Gravity.CENTER_HORIZONTAL).show ();
 						initView (views);
+					}
+					else if(result.equals("CONNECTION_ERROR"))
+					{
+						switchToOffline();					
+					}
+					else if(result.equals("SERVER_NOT_RESPONDING"))
+					{
+						switchToOffline();
 					}
 					else
 					{
@@ -1559,9 +1568,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		else if (view == saveButton)
 		{
 			// Check connection with server or offline mode
-			if (!serverService.checkInternetConnection ())
+			if (!serverService.checkInternetConnection () && !App.isOfflineMode())
 			{
-				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+				switchToOffline();
+				//showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
 			}
 			else if (validate ())
 			{			
@@ -1600,7 +1610,10 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 		}
 		else if (view == verifyButton){
 			// Check connection with server or offline mode
-			if (!serverService.checkInternetConnection ())
+			if(App.isOfflineMode()){
+				App.getDialog (this,  AlertType.ERROR, getResources ().getString (R.string.offline_mode_error), Gravity.CENTER_HORIZONTAL).show ();
+			}
+			else if (!serverService.checkInternetConnection ())
 			{
 				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
 			}
@@ -1770,5 +1783,32 @@ public class UvgiMaintenanceActivity extends AbstractFragmentActivity
 			getApplicationContext().getResources().updateConfiguration(config,
 					null);
 		}
+	}
+	
+	void switchToOffline(){
+		final Dialog d = App.getDialog(this, AlertType.ERROR, getResources ().getString (R.string.data_connection_error) + "<br><br>" + getResources ().getString (R.string.switch_to_offlinemode),Gravity.CENTER_HORIZONTAL);
+		App.setDialogTitle(d, getResources ().getString (R.string.error_title));
+		
+		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+		yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            		
+            	App.setOfflineMode(true);
+            	ActionBar actionBar = getActionBar();
+        		actionBar.setTitle(FORM_NAME);
+             
+        		if(App.isOfflineMode())
+        			actionBar.setSubtitle("-- Offline Mode --");
+        		
+        		d.dismiss();
+        		submit();
+				
+            }
+        });
+		
+		App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+		
+		d.show ();
 	}
 }

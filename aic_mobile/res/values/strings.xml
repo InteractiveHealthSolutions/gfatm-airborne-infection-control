@@ -38,6 +38,10 @@
     <string name="verify">Verify</string>
     <string name="unique_id_hint">Enter 9-14 character unique Id</string>
     
+    <string name="location_setup">Location Setup</string>
+    <string name="update_metadata">Update Metadata</string>
+    
+    
     <string name="report_menu">Report Menu</string>
     <string name="child_info">Child Information and Vitals</string>
     <string name="forms_a">"Infant less than 2 months"</string>

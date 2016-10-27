@@ -17,7 +17,9 @@ import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.ServerService;
 import com.ihsinformatics.aic.R;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -212,7 +214,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						if (App.getUsername ().equalsIgnoreCase (App.get (username)) && App.getPassword ().equals (App.get (password)))
 						{
 							App.setOfflineMode(true);
-							return "SUCCESS";
+							return "SUCCESS:;:Logged in successfully:;:true";
 						}
 						
 						else{// if offline login fails
@@ -246,7 +248,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 					values.put ("username", App.getUsername());
 					values.put ("password", App.getPassword());
 					values.put ("starttime", startDateTime);
-					values.put ("location", "IHS");
+					if(App.getLocation().equals(""))
+						values.put ("location", "IHS");
+					else
+						values.put ("location", App.getLocation());
+					
 					values.put ("entereddate", App.getSqlDate(enteredDate));
 				
 					String exists = serverService.authenticate (RequestType.LOGIN, values);     
@@ -287,13 +293,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 						
 						serverService.updateLoginTime();
 						
-						if(resultArray[2].equals("false")){
-							publishProgress (getResources ().getString (R.string.loading_message_fetching_metadata)); 
-							getMetadata();
-						}
+						Intent intent = new Intent (LoginActivity.this, MainMenuActivity.class);
+						
+						if(resultArray[2].equals("false"))
+							intent.putExtra("updateMetadata", true);
+						else
+							intent.putExtra("updateMetadata", false);
 						
 						//Start Main Menu Activity
-						Intent intent = new Intent (LoginActivity.this, MainMenuActivity.class);
 						startActivity (intent);
 						finish ();
 					}
@@ -312,7 +319,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 						App.setUsername (tempUsername);
 						App.setPassword (tempPassword);
 						
-						showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+						switchToOffline();
+						//showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
 					
 					}
 					else if(result.equals("MISSING_PROVIDER")) 
@@ -337,48 +345,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 		
 	}
-	
-	
-	public void getMetadata(){
-
-			// Authenticate from server
-			AsyncTask<String, String, String> authenticationTask = new AsyncTask<String, String, String> ()
-			{
-				@Override
-				protected String doInBackground (String... params)
-				{
-					runOnUiThread (new Runnable ()
-					{
-						@Override
-						public void run ()
-						{
-							/*loading.setIndeterminate (true);
-							loading.setCancelable (false);
-							loading.show ();*/
-						}
-					});
-					
-					serverService.fetchMetadata();   
-					return "SUCCESS";
-					
-				}
-
-				@Override
-				protected void onProgressUpdate (String... values)
-				{
-					//loading.setMessage (values[0]);
-				};
-
-				@Override
-				protected void onPostExecute (String result)
-				{
-					//loading.dismiss ();
-				}
-			};
-			authenticationTask.execute ("");
-		
-	}
-	
 	
 	/**
 	 * 
@@ -431,6 +397,27 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		App.getDialog(this, alertType, s, Gravity.CENTER_HORIZONTAL).show();
 		
+	}
+	
+	void switchToOffline(){
+		final Dialog d = App.getDialog(this, AlertType.ERROR, getResources ().getString (R.string.data_connection_error) + "<br><br>" + getResources ().getString (R.string.switch_to_offlinemode),Gravity.CENTER_HORIZONTAL);
+		App.setDialogTitle(d, getResources ().getString (R.string.error_title));
+		
+		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+		yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	
+        		offline.setChecked(true);
+        		d.dismiss();
+        		login();
+				
+            }
+        });
+		
+		App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+		
+		d.show ();
 	}
 
 }

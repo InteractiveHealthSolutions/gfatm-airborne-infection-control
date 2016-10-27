@@ -34,6 +34,7 @@ import com.ihsinformatics.aic.shared.Metadata;
 import com.ihsinformatics.aic.shared.RequestType;
 import com.ihsinformatics.aic.util.RegexUtil;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -230,6 +231,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		//facilityName = new Spinner (context, getResources ().getStringArray (R.array.facilities_name), R.string.facility_name, R.string.option_hint);
 		facilityName = new Spinner(this);
 		ArrayList<String> facilityList = serverService.getMetaDataFromLocalDb(Metadata.LOCATION);
+		facilityList.add("Other");
 	    ArrayAdapter<String> facilityArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, facilityList);
 	    facilityArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 	    facilityName.setAdapter(facilityArrayAdapter);
@@ -240,6 +242,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		opdNameTextView = new MyTextView (context, R.style.text, R.string.opd_lights_installed);
 		opdName = new Spinner(this);
 		ArrayList<String> opdList = serverService.getMetaDataFromLocalDb(Metadata.OPD);
+		opdList.add("Other");
 		ArrayAdapter<String> opdArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdList);
 		opdArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 		opdName.setAdapter(opdArrayAdapter);
@@ -250,6 +253,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		opdAreaTextView = new MyTextView (context, R.style.text, R.string.opd_area);
 		opdArea = new Spinner(this);
 		ArrayList<String> opdAreaList = serverService.getMetaDataFromLocalDb(Metadata.OPD_AREA);
+		opdAreaList.add("Other");
 	    ArrayAdapter<String> opdAreaArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opdAreaList);
 	    opdAreaArrayAdapter.setDropDownViewResource(R.drawable.textview_to_spinner);
 	    opdArea.setAdapter(opdAreaArrayAdapter);
@@ -872,7 +876,7 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					final ArrayList<String[]> observations = new ArrayList<String[]>();
 					final ContentValues values = new ContentValues ();
 					
-					values.put ("location", "IHS");
+					values.put ("location", App.getLocation());
 					values.put ("entereddate", App.getSqlDate(formDate));
 					
 					observations.add(new String[] { "ID",  App.get(uniqueIdGenerated)});
@@ -923,13 +927,11 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 					}
 					else if(result.equals("CONNECTION_ERROR"))
 					{
-						showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
-					
+						switchToOffline();					
 					}
 					else if(result.equals("SERVER_NOT_RESPONDING"))
 					{
-						showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
-					
+						switchToOffline();
 					}
 					else
 					{
@@ -983,9 +985,10 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		{
 			
 			// Check connection with server or offline mode
-			if (!serverService.checkInternetConnection ())
+			if (!serverService.checkInternetConnection () && !App.isOfflineMode())
 			{
-				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
+				switchToOffline();	
+				//showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
 			}
 			else if (validate ())
 			{
@@ -1044,7 +1047,10 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		}
 		else if (view == verifyButton){
 			// Check connection with server or offline mode
-			if (!serverService.checkInternetConnection ())
+			if(App.isOfflineMode()){
+				App.getDialog (this,  AlertType.ERROR, getResources ().getString (R.string.offline_mode_error), Gravity.CENTER_HORIZONTAL).show ();
+			}
+			else if (!serverService.checkInternetConnection ())
 			{
 				showAlert(getResources ().getString (R.string.data_connection_error), AlertType.ERROR);
 			}
@@ -1209,6 +1215,31 @@ public class UvgiInstallationActivity extends AbstractFragmentActivity
 		}
 	}
 	
-	
+	void switchToOffline(){
+		final Dialog d = App.getDialog(this, AlertType.ERROR, getResources ().getString (R.string.data_connection_error) + "<br><br>" + getResources ().getString (R.string.switch_to_offlinemode),Gravity.CENTER_HORIZONTAL);
+		App.setDialogTitle(d, getResources ().getString (R.string.error_title));
+		
+		Button yesButton = App.addDialogButton(d, getResources ().getString (R.string.yes), App.dialogButtonPosition.LEFT, App.dialogButtonStatus.POSITIVE);
+		yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            		
+            	App.setOfflineMode(true);
+            	ActionBar actionBar = getActionBar();
+        		actionBar.setTitle(FORM_NAME);
+             
+        		if(App.isOfflineMode())
+        			actionBar.setSubtitle("-- Offline Mode --");
+        		
+        		d.dismiss();
+        		submit();
+				
+            }
+        });
+		
+		App.addDialogButton(d, getResources ().getString (R.string.no), App.dialogButtonPosition.CENTER, App.dialogButtonStatus.NEGATIVE);
+		
+		d.show ();
+	}
 	
 }

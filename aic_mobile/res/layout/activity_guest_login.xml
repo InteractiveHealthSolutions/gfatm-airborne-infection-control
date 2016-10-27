@@ -26,7 +26,8 @@
 		    android:layout_gravity="center"
 		    android:layout_marginTop="@dimen/small"
 		    android:text="@string/guest_login_heading"
-		    android:textSize="20dp"
+		    android:textSize="@dimen/large"
+		    android:textColor="@color/BlueShade"
 		    android:textStyle="bold" />
 
 		    <LinearLayout
@@ -41,7 +42,7 @@
 				    android:layout_marginTop="@dimen/small"
 				    android:layout_marginRight="@dimen/small"
 				    android:text="@string/name"
-				    android:textSize="@dimen/medium" />
+				    android:textAppearance="?android:attr/textAppearanceLarge" />
 		        
 		        <EditText
 				    android:id="@+guest_id/name"
@@ -51,7 +52,8 @@
 				    android:inputType="textPersonName"
 				    android:tag="@string/name"
 				    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-				    android:maxLength="35"/>
+				    android:maxLength="35"
+				    android:textColor="@color/mainTheme"/>
 		        
 		    </LinearLayout>
 		    
@@ -61,13 +63,12 @@
 		        android:orientation="horizontal" >
 		        
 		        <TextView
-				    android:id="@+guest_id/phoneTextView"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:layout_marginTop="@dimen/small"
-				    android:layout_marginRight="@dimen/small"
-				    android:text="@string/contact"
-				    android:textSize="@dimen/medium" />
+		            android:id="@+guest_id/phoneTextView"
+		            android:layout_width="106dp"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="@dimen/small"
+		            android:text="@string/contact"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
 		        
 		        <EditText
 				    android:id="@+guest_id/phone"
@@ -77,6 +78,7 @@
 				    android:inputType="phone"
 				    android:tag="@string/contact"
 				    android:digits="0123456789"
+				    android:textColor="@color/mainTheme"
 				    android:maxLength="11" />
 		        
 		    </LinearLayout>
@@ -93,7 +95,7 @@
 				    android:layout_marginTop="@dimen/small"
 				    android:layout_marginRight="@dimen/small"
 				    android:text="@string/email"
-				    android:textSize="@dimen/medium" />
+				    android:textAppearance="?android:attr/textAppearanceLarge" />
 		        
 		        <EditText
 				    android:id="@+guest_id/email"
@@ -102,7 +104,8 @@
 				    android:hint="@string/email_hint"
 				    android:tag="@string/email"
 				    android:inputType="textEmailAddress"
-				    android:maxLength="35"/>
+				    android:maxLength="35"
+				    android:textColor="@color/mainTheme"/>
 		        
 		    </LinearLayout>
 
@@ -112,7 +115,8 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="@dimen/medium"
-		        android:text="@string/login_as_guest" />
+		        android:text="@string/login_as_guest"
+		        android:textSize="@dimen/large" />
 	
 	</LinearLayout>
 	

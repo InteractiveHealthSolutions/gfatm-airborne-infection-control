@@ -67,16 +67,6 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	
 		}
 		
-		// When online, check if there are offline forms for current user
-		if (!App.isOfflineMode ())
-		{
-			int count = serverService.countSavedForms (App.getUsername ());
-			if (count > 0)
-			{
-				App.getDialog(this, AlertType.INFO, getResources().getString(R.string.offline_forms), Gravity.CENTER_HORIZONTAL).show();
-			}
-		}
-		
 		uvgiInstallationButton.setOnClickListener(this);
 		uvgiMaintenanceButton.setOnClickListener(this);
 		uvgiTroubleshootLogButton.setOnClickListener(this);
@@ -104,6 +94,9 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 			uvgiTroubleshootStatusButton.setVisibility(View.VISIBLE);
 		}
 		
+		if(App.isOfflineMode())
+			uvgiTroubleshootStatusButton.setVisibility(View.GONE);
+		
 	}
 	
 	/**
@@ -121,8 +114,6 @@ public class UvgiMenuActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu (Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater ().inflate (R.menu.main_menu, menu);
 		return true;
 	}
 

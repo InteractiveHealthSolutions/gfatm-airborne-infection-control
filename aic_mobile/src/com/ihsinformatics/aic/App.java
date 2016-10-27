@@ -14,6 +14,7 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -34,9 +35,12 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.view.Gravity;
@@ -46,9 +50,13 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -409,13 +417,13 @@ public class App
 			case INFO :
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_info));
 				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.khaki_background));
-				dialogButton.setBackgroundResource(R.drawable.button);
+				dialogButton.setBackgroundResource(R.drawable.khaki_background);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case QUESTION:
 				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dialog_question));
 				imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.khaki_background));
-				dialogButton.setBackgroundResource(R.drawable.button);
+				dialogButton.setBackgroundResource(R.drawable.khaki_background);
 				title.setTextColor(context.getResources().getColor(R.color.question_color));
 				break;
 			case URGENT:
@@ -448,6 +456,77 @@ public class App
         });
         
 		return dialog;
+	}
+	
+	public static Dialog getDialog (Context context, String title, ArrayList<String> arrayOption)
+	{
+		final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));    
+        dialog.setContentView(R.layout.dialog_radio_button_alert);
+        
+        TextView titleTextView = (TextView) dialog.findViewById(R.id.imageView);
+        titleTextView.setText(title);
+       
+        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.listAlert);
+        
+        RadioGroup rg = new RadioGroup(dialog.getContext());
+        for(String option : arrayOption){
+        	RadioButton rb = new RadioButton(dialog.getContext());
+    		rb.setText(option);
+    		
+    		if(App.getLocation().equals(option)){
+    			rb.setChecked(true);
+    			
+    		}
+    		
+    		rb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					
+					if(isChecked){
+						App.setLocation(buttonView.getText().toString());
+						
+						SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences (dialog.getContext());
+						SharedPreferences.Editor editor = preferences.edit ();
+						editor.putString (Preferences.LOCATION, App.getLocation());
+						editor.apply ();
+						
+						dialog.dismiss();
+					}
+					
+				}
+			});
+    		
+    		rg.addView(rb);
+        }
+        
+        layout.addView(rg);
+        
+        Button okButton = (Button) dialog.findViewById(R.id.okButton);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+			@Override
+			public boolean onKey(DialogInterface dialog, int keyCode,
+					KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.cancel();
+                    return true;
+                 }
+              return false;
+			}
+        });
+        
+        
+        return dialog;
 	}
 	
 	public static void setDialogTitle (Dialog dialog, String title){

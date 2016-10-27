@@ -86,6 +86,11 @@
             android:windowSoftInputMode="stateHidden" android:label="@string/app_name">
         </activity>
         <activity
+            android:name="com.ihsinformatics.aic.SavedFormsActivity"
+            android:configChanges="keyboardHidden|orientation" 
+            android:windowSoftInputMode="stateHidden" android:label="@string/app_name">
+        </activity>
+        <activity
             android:name="com.ihsinformatics.aic.Barcode"
             android:configChanges="keyboardHidden|orientation" 
             android:windowSoftInputMode="stateHidden" android:label="@string/app_name">

@@ -38,5 +38,8 @@
 	<string name="barcode_scanner_missing">Missing Barcode Scanner. Please download and install Barcode Scanner from Play Store to be able to scan the QR Codes.</string>
 	<string name="missing_provider">Missing or Invalid Provider. Please contact Administrator.</string>
 	<string name="no_value_selected">No option selected. Select one to continue.</string>
+	<string name="missing_location">No Location selected. Select one to continue.</string>
+	<string name="offline_mode_error">Option not available in offline mode. Please sign-in and try again.</string>
+	
 	
 </resources>

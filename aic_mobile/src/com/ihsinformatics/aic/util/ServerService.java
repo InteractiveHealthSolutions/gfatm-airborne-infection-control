@@ -287,6 +287,28 @@ public class ServerService {
 			json.put ("results", obs);
 			
 			String val = json.toString();
+			
+			// Save form locally if in offline mode
+			if (App.isOfflineMode ())
+			{
+				String id = "";
+				String troubleshootId = "";
+				for (int i = 0; i < observations.length; i++)
+				{
+					if ("".equals (observations[i][0]) || "".equals (observations[i][1]))
+						continue;
+					if( observations[i][0].equals("ID"))
+						id = observations[i][1];
+					else if( observations[i][0].equals("TROUBLESHOOT_NUMBER"))
+						troubleshootId = observations[i][1];
+				}
+				
+				if(!troubleshootId.equals(""))
+					id = id + " (" + troubleshootId + ")";
+				saveOfflineForm (encounterType, val, id);
+				return "SUCCESS";
+			}
+			
 			response = post(val);
 			JSONObject jsonResponse = JsonUtil.getJSONObject (response);
 			if (jsonResponse == null)
@@ -601,9 +623,7 @@ public class ServerService {
 		
 		String[] columnData = dbUtil.getColumnData(Metadata.METADATA_TABLE,"name","type='"+type+"'",true);
 		for(int i = 0; i < columnData.length; i++)
-			list.add(columnData[i]);
-		
-		list.add("Other");	
+			list.add(columnData[i]);	
 		
 		return list;
 		

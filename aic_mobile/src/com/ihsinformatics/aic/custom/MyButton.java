@@ -64,8 +64,8 @@ public class MyButton extends Button
 		}
 		
 		setTextColor(getResources().getColor(R.color.mainTheme));
-		setHeight(90);
-		setTextSize(20);
+		/*setHeight(90);
+		setTextSize(20);*/
 
 	}
 
