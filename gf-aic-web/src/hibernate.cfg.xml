@@ -6,9 +6,9 @@
     <session-factory >
         <property name="hibernate.connection.autocommit">true</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">Abierto</property>
-        <property name="hibernate.connection.username">babar</property>
-        <property name="hibernate.connection.url">jdbc:mysql://199.172.1.13:3306/gf_aic?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.password">Bhinno5</property>
+        <property name="hibernate.connection.username">rabbia</property>
+        <property name="hibernate.connection.url">jdbc:mysql://199.172.1.13:3306/tbreach_api?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
@@ -22,6 +22,7 @@
 		<property name="hibernate.c3p0.timeout">300</property>
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.testConnectionOnCheckout">true</property>
         
         <mapping class="com.ihsinformatics.tbreachapi.model.DataLog" />
         <mapping class="com.ihsinformatics.tbreachapi.model.Definition" />

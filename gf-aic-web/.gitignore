@@ -1,0 +1,7 @@
+/build/
+/target/
+/.settings/
+/.classpath
+/.project
+/.tern-project
+/tbreach_api.log
