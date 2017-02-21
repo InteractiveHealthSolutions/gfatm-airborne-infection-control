@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.autocommit">true</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">jingle94</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gf_aic?zeroDateTimeBehavior=convertToNull</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.search.autoregister_listeners">false</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.use_sql_comments">false</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">300</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+
+		<mapping class="com.ihsinformatics.tbreachapi.model.DataLog" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Definition" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.DefinitionType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Element" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Encounter" />
+		<mapping
+			class="com.ihsinformatics.tbreachapi.model.EncounterPrerequisite" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.EncounterResult" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.EncounterType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Location" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.LocationAttribute" />
+		<mapping
+			class="com.ihsinformatics.tbreachapi.model.LocationAttributeType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Patient" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Person" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.PersonAttribute" />
+		<mapping
+			class="com.ihsinformatics.tbreachapi.model.PersonAttributeType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.PersonContact" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Privilege" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Role" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.RolePrivilege" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserAttribute" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserAttributeType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserForm" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserFormResult" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserFormType" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserLocation" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.UserRole" />
+		<mapping class="com.ihsinformatics.tbreachapi.model.Users" />
+	</session-factory>
+</hibernate-configuration>

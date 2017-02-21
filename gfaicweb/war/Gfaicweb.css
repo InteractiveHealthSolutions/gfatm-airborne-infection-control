@@ -1,0 +1,476 @@
+/** Most GWT widgets already have a style name defined */
+.serverResponseLabelError {
+	color: red;
+}
+
+.label {
+	color: darkgreen;
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 14px;
+	font-family: Verdana;
+}
+
+.reason-label{
+	color: darkgrey;
+	font-size: 8px;
+	font-family: Verdana;
+}
+
+.textbox {
+	background: white;
+	outline: none;
+	height: 32px;
+	color: Black;
+	padding: 1px 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid darkgreen;
+	font-size: 14px;
+	font-family: Verdana;
+}
+
+
+.textbox:disabled {
+	background: #dddddd;
+	border: 1px solid grey;
+}
+
+.message {
+	color: darkblue;
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 11px;
+	font-family: Verdana;
+}
+
+.question {
+	color: Orange;
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 11px;
+	font-family: Verdana;
+}
+
+.error {
+	color: Red;
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 11px;
+	font-family: Verdana;
+}
+
+.heading {
+	color: orange;
+	border-top: thin solid Gray;
+	border-bottom: thick groove darkgreen;
+	font-size: 24px;
+	font-family: Verdana;
+}
+
+.sub-label {
+	color: darkgreen;
+	font-size: 11px;
+	font-family: Verdana;
+	vertical-align: middle;
+	line-height: 18px;
+	text-align: center;
+}
+
+
+.sub-label2 {
+	color: grey;
+	font-size: 11px;
+	font-family: Verdana;
+	vertical-align: middle;
+	line-height: 18px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+
+.link {
+	color: Blue;
+	font-size: 12px;
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.footer {
+	color: White;
+	padding: 5px 10px;
+	border-top: medium double Gray;
+	font-family: Verdana;
+	vertical-align: bottom;
+	background-color: Green;
+}
+
+.footer-links {
+	padding-right: 10px;
+	padding-left: 10px;
+	word-spacing: 5px;
+}
+
+.account {
+	border-bottom: thin groove Green;
+	border-left: thick groove Gray;
+}
+
+.sub-header {
+	border-right: 15px;
+	border-left: 15px;
+}
+
+.title {
+	color: darkgreen;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-size: 18px;
+	font-family: Verdana;
+	font-weight: bold;
+}
+
+.submit-button {
+	position: relative;
+	float: left;
+	text-shadow: 0px -2px darkgreen;
+	/* Animation */
+	transition: all 0.1s;
+	color: White;
+	margin: 5px 10px 10px 5px;
+	padding: 5px;
+	border-bottom: 5px solid darkgreen;
+	font-size: 14px;
+	font-family: Verdana;
+	text-decoration: none;
+	background-color: darkgreen;
+	-webkit-transition: all 0.1s;
+}
+
+.submit-button:hover,.submit-button:focus {
+	text-decoration: underline;
+}
+
+.submit-button:active {
+	transform: translate(0px, 5px);
+	-webkit-transform: translate(0px, 5px);
+	border-bottom: 1px solid;
+}
+
+.submit-button:disabled {
+	background: #dddddd;
+}
+
+.operation-button {
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
+	margin: 5px 10px 10px 5px;
+	padding: 5px;
+	color: Navy;
+	border: none;
+	font-size: 14px;
+	font-family: Verdana;
+	background-color: Silver;
+}
+
+.operation-button:hover,.operation-button:focus {
+	color: Black;
+}
+
+.operation-button:active {
+	border-bottom: 1px solid;
+}
+
+
+.operation-button:disabled{
+	color: grey;
+	background-color: Silver;
+	border-bottom: 1px solid;
+}
+
+.cursor-button {
+	padding: 5px;
+	color: Navy;
+	border: none;
+	font-size: 14px;
+	font-family: Verdana;
+	background-color: Silver;
+}
+
+.cursor-button:disabled {
+	background: #dddddd;
+	color: grey;
+	
+}
+
+.search-button {
+	position: relative;
+	float: left;
+	text-shadow: 0px -2px #2980B9;
+	/* Animation */
+	transition: all 0.1s;
+	color: White;
+	margin: 0px 5px 5px 0px;
+	padding: 10px;
+	border-bottom: 5px solid cadetblue;
+	font-size: 14px;
+	font-family: Verdana;
+	text-decoration: none;
+	background-color: darkgreen;
+	background-image: url(home.gif);
+	-webkit-transition: all 0.1s;
+}
+
+.toggle-button {
+	position: relative;
+	float: left;
+	text-shadow: 0px -2px darkgreen;
+	/* Animation */
+	transition: all 0.1s;
+	color: White;
+	margin: 0px 0px 5px;
+	padding: 10px;
+	border-bottom: 5px solid darkgreen;
+	font-size: 14px;
+	font-family: Verdana;
+	text-align: center;
+	background-color: darkgreen;
+	cursor: default;
+	-webkit-transition: all 0.1s;
+}
+
+.toggle-button-down {
+	background-color: darkred;
+	border-bottom: 5px solid darkgrey;
+}
+
+.toggle-button-up-hovering {
+	background-color: darkred;
+	border-bottom: 5px solid darkgrey;
+}
+
+.toggle-button-down-hovering {
+	background-color: darkred;
+	border-bottom: 5px solid darkgrey;
+}
+
+.toggle-button-up-disabled {
+	color: Grey;
+	background: #dddddd;
+}
+
+.toggle-button-down-disabled {
+	color: Grey;
+	background: #dddddd;
+}
+
+.list {
+	width: 98%;
+	color: darkgreen;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-family: Verdana;
+}
+
+.list:last-child {
+	color: darkgreen;
+	border: none;
+	font-family: Verdana;
+}
+
+.list:disabled {
+	width: 98%;
+	color: grey;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-family: Verdana;
+	border: 1px solid grey;
+	
+}
+
+.list:last-child:disabled {
+	color: grey;
+	border: none;
+	font-family: Verdana;
+}
+.list a {
+	-webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-o-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+	/* Animation */
+	transition: font-size 0.3s ease, background-color 0.3s ease;
+	display: block;
+	color: Black;
+	text-decoration: none;
+}
+
+.list a:hover {
+	background: #f6f6f6;
+	color: darkgreen;
+	font-family: Verdana;
+	font-weight: bold;
+}
+
+.list-box {
+	width: 100px;
+	color: darkgreen;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: medium solid darkgreen;
+	font-size: 14px;
+	font-family: Verdana;
+	vertical-align: middle;
+	text-decoration: underline;
+}
+
+.list-box:disabled {
+	width: 100px;
+	color: grey;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: medium solid Silver;
+	font-size: 14px;
+	font-family: Verdana;
+	vertical-align: middle;
+	text-decoration: underline;
+}
+
+.list-box:last-child {
+	color: darkgreen;
+	border: medium solid Silver;
+	font-family: Verdana;
+}
+
+
+.list-box:last-child:disabled {
+	color: grey;
+	border: medium solid Silver;
+	font-family: Verdana;
+}
+
+
+
+
+
+.list-box a {
+	-webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-o-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+	/* Animation */
+	transition: font-size 0.3s ease, background-color 0.3s ease;
+	display: block;
+	color: Black;
+	border: medium solid Silver;
+	text-decoration: none;
+}
+
+.list-box a:hover {
+	background: #f6f6f6;
+	color: darkgreen;
+	font-family: Verdana;
+	font-weight: bold;
+}
+
+.checkbox {
+	color: darkgreen;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-variant: normal;
+	font-size: 14px;
+	font-family: Verdana;
+}
+
+.main-menu {
+	color: White;
+	padding: 5px 10px;
+	font-size: 16px;
+	font-family: Verdana;
+	font-weight: bold;
+	vertical-align: bottom;
+	text-align: center;
+	word-spacing: 2px;
+	background-color: darkgreen;
+}
+
+.sub-menu {
+	color: White;
+	padding-right: 10px;
+	padding-left: 10px;
+	border-bottom: thick groove;
+	font-size: 16px;
+	font-family: Verdana;
+	background-color: darkgreen;
+	cursor: pointer;
+}
+
+.menu-button {
+	color: White;
+	padding: 5px;
+	border-left: medium solid Silver;
+	font-size: 14px;
+	font-family: Verdana;
+	background-color: darkgreen;
+}
+
+.menu-button:hover,.menu-button:focus {
+	color: darkgreen;
+	padding: 10px;
+	border-left: thick solid White;
+	font-weight: bold;
+	background-color: Silver;
+}
+
+.list-cell {
+	border: 1px solid Green;
+	font-family: Verdana;
+}
+
+
+
+
+.search-location-button {
+	position: relative;
+	float: left;
+	text-shadow: 0px -2px #2980B9;
+	/* Animation */
+	transition: all 0.1s;
+	color: White;
+	margin: 0px 5px 5px 0px;
+	margin-top: 10px;
+	padding: 8px;
+	border-bottom: 3px solid cadetblue;
+	font-size: 9px;
+	font-family: Verdana;
+	text-decoration: none;
+	background-color: darkgreen;
+	background-image: url(home.gif);
+	-webkit-transition: all 0.1s;
+}
+
+
+
+.search-user-button {
+	position: relative;
+	float: left;
+	text-shadow: 0px -2px #2980B9;
+	/* Animation */
+	transition: all 0.1s;
+	color: White;
+	margin: 0px 5px 5px 0px;
+	padding: 8px;
+	border-bottom: 3px solid cadetblue;
+	font-size: 9px;
+	font-family: Verdana;
+	text-decoration: none;
+	background-color: darkgreen;
+	background-image: url(home.gif);
+	-webkit-transition: all 0.1s;
+}
+
