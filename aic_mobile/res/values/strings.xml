@@ -23,7 +23,6 @@
     <string name="logout">Log out</string>
     <string name="form_date">Form Date</string>
     <string name="send">Send</string>
-    
     <string name="main_menu">Main Menu</string>
     <string name="installation">Installation</string>
     <string name="maintenance">Maintenance</string>
@@ -31,17 +30,12 @@
     <string name="troubleshooting_status">Troubleshooting Status</string>
     <string name="troubleshooting_status_update">Troubleshooting Status Update</string>
     <string name="troubleshooting_resolution">Troubleshooting Resolution</string>
-    
     <string name="uvgi_lights">UVGI Lights</string>
-    
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="verify">Verify</string>
-    <string name="unique_id_hint">Enter 9-14 character unique Id</string>
-    
+    <string name="unique_id_hint">Enter 9 to 14 character unique Id</string>
     <string name="location_setup">Location Setup</string>
     <string name="update_metadata">Update Metadata</string>
-    
-    
     <string name="report_menu">Report Menu</string>
     <string name="child_info">Child Information and Vitals</string>
     <string name="forms_a">"Infant less than 2 months"</string>
@@ -57,44 +51,29 @@
     <string name="reports">Reports</string>
     <string name="referral_status">Referrals Status</string>
     <string name="reverse_referral">Reverse Referrals</string>
-     
     <string name="feedback_form">Feedback</string>
     <string name="age_in_months">ageInMonths</string>
-    
     <string name="separator">" - "</string>
-    
     <string name="saved_forms">Saved Forms</string>
-    
     <string name="classification">Classification(s)\n</string>
-    
     <string name="language_change">Language Change</string>
-    
     <string name="referral_completed">Referral Completed</string>
-    
     <string name="empty_string">""</string>
-    
     <string name="text_copied">Patient ID copied..</string>
-    
-     <string name="child_search">Child Search</string>
-    
+    <string name="child_search">Child Search</string>
     <string name="about_us">About us</string>
-    
-    <string name="about">An innovation by &lt;font color=#005166&gt; Interactive Research and Development &lt;/font&gt; &lt;br&gt; &lt;br&gt; 
+    <string name="about">An innovation by &lt;font color=#005166&gt; Interactive Health Solutions &lt;/font&gt; &lt;br&gt; &lt;br&gt; 
        	&lt;b&gt; Collaborators: &lt;/b&gt; &lt;br&gt; 
-        Policy and Strategic Planning Unit, Health Department Punjab, Pakistan.  &lt;br&gt; 
-        Interactive Health Solutions &lt;br&gt; 
-        Development Strategies &lt;br&gt; &lt;br&gt; 
+        .  &lt;br&gt; 
+        Interactive Research and Development &lt;br&gt; 
+        ٰGlobal Health Directorate, Indus Health Network &lt;br&gt; &lt;br&gt; 
         
-        Funded by &lt;font color=#005166&gt; Palladium Group Inc. &lt;/font&gt; &lt;br&gt; </string>
-        
+        Funded by &lt;font color=#005166&gt; Global Fund TB. &lt;/font&gt; &lt;br&gt; </string>
     <string name="search_again">Search Again</string>
     <string name="search_children">Search Children</string>
-    
     <string name="search_name">Name</string>
     <string name="name_hint">Enter name</string>
-    
     <string name="important">Important!</string>
-    
     <string name="performance_report">Performance Report</string>
-    
+
 </resources>

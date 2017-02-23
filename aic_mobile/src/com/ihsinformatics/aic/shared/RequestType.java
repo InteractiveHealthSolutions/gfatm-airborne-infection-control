@@ -8,7 +8,7 @@
  * You can also access the license on the internet at the address: http://www.gnu.org/licenses/gpl-3.0.html
  * Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors.
  * Contributors: Rabbia
-*/
+ */
 
 package com.ihsinformatics.aic.shared;
 
@@ -25,10 +25,10 @@ public class RequestType {
 	public static final String UVGI_TROUBLESHOOTING = "uvgi_troubleshooting";
 	public static final String UVGI_TROUBLESHOOT_STATUS = "uvgi_troubleshoot_status";
 	public static final String UVGI_RESOLUTION = "uvgi_resolution";
-	
+
 	public static final String UVGI_GET_INSTALLATION_RECORD = "uvgi_get_installation_record";
 	public static final String UVGI_GET_TROUBLESHOOT_RECORD = "uvgi_get_troubleshoot_record";
 	public static final String UVGI_GET_TROUBLESHOOT_STATUS_RECORD = "uvgi_get_troubleshoot_status_record";
 	public static final String UVGI_GET_METADATA = "uvgi_get_metadata";
-	
+
 }

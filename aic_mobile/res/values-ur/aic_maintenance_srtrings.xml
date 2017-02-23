@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="reading_before_3ft_cleaning">Meter Reading at 3ft Before Cleaning?</string>
-    <string name="reading_before_6ft_cleaning">Meter Reading at 6ft Before Cleaning?</string>
-    <string name="reading_before_7ft_cleaning">Meter Reading at 7ft Before Cleaning?</string>
-
-    <string name="maintenance_checklist">Maintenance Checklist</string>
-
-    <string name="power_disconnected">Power Disconnected?</string>
-    <string name="louver_open">Louver Panel Opened?</string>
-    <string name="lamps_removed">Lamps Removed?</string>
-    <string name="lamps_microfiber">Lamps cleaned with microfiber alcohol wipe?</string>
-    <string name="interior_microfiber">Interior of fixture cleaned with microfiber alcohol wipe?</string>
-    <string name="lamp_replacement">Replacement of any part?</string>
-    <string name="parts_replaced">What parts where replaced?</string>
-    <string name="lamps_reinstalled">Lamps re-installed correctly?</string>
-    <string name="louver_closed">Louver Closed?</string>
-    <string name="power_connect">Power fixture on?</string>
-    <string name="light_working">Fixture working?</string>
-    <string name="reading_after_3ft_cleaning">Meter Reading at 6ft after cleaning?</string>
-    <string name="reading_after_6ft_cleaning">Meter Reading at 6ft after Cleaning?</string>
-    <string name="reading_after_7ft_cleaning">Meter Reading at 7ft after Cleaning?</string>
-    <string name="maintenance_person_name">What is the First and Last Name of the person who conducted the maintenance?</string>
+    <string name="unique_id_maintenance">انفرادی آئی ڈی</string>
+    <string name="reading_before_3ft_cleaning">صفائی سے قبل تین فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="reading_before_6ft_cleaning">صفائی سے قبل چھ فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="reading_before_7ft_cleaning">صفائی سے قبل سات فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="maintenance_checklist">معمولات کی فہرست</string>
+    <string name="power_disconnected">کیا آپ نے بجلی منقطع کی ہے؟</string>
+    <string name="louver_open">کیا آپ نے لوئر پینل کھول لیا ہے؟</string>
+    <string name="lamps_removed">کیا آپ نے قمقمے علیحدہ کر لیے ہیں؟</string>
+    <string name="lamps_microfiber">کیا آپ نے قمقموں کو مائکروفائبر الکحل سے صاف کیا ہے؟</string>
+    <string name="interior_microfiber">کیا آپ نے اندرونی حصہ مائکروفائبر الکحل سے صاف کیا ہے؟</string>
+    <string name="parts_replacement">کیا کسی پرزے کی تبدیلی درکار ہے؟</string>
+    <string name="parts_replaced">کون سے پرزوں کی تبدیلی درکار ہے؟</string>
+    <string name="parts_replaced_hint">پرزوں کے نام درج کریں</string>
+    <string name="lamps_reinstalled">کیا آپ نے قمقمے درست طریقے سے دوبار منسلک کر دیے ہیں؟</string>
+    <string name="louver_closed">کیا آپ نے لوئر پینل دوبارہ بند کر دیا ہے؟</string>
+    <string name="power_connect">کیا آپ نے لائٹ کو دوبارہ بجلی سے منسلک کر لیا ہے؟</string>
+    <string name="light_working">کیا لائٹ کام کر رہی ہے؟</string>
+    <string name="reading_after_3ft_cleaning">صفائی کے بعد تین فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="reading_after_6ft_cleaning">صفائی کے بعد چھ فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="reading_after_7ft_cleaning">صفائی کے بعد سات فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="maintenance_person_name">کاریگر یا انجنئیر کا مکمل نام</string>
+    <string name="maintenance_person_name_hint">مکمل نام درج کریں</string>
+    <string name="maintenance_contact_number">کاریگر یا انجنئیر کا موبائل نمبر</string>
+    <string name="maintenance_contact_number_hint">###########</string>
 
 </resources>

@@ -18,7 +18,6 @@ package com.ihsinformatics.aic.shared;
  * @author owais.hussain@irdresearch.org
  * 
  */
-public enum AlertType
-{
+public enum AlertType {
 	ERROR, SUCCESS, INFO, QUESTION, URGENT
 }

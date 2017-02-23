@@ -21,11 +21,9 @@ import android.widget.CheckBox;
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class MyCheckBox extends CheckBox
-{
-	public MyCheckBox (Context context)
-	{
-		super (context);
+public class MyCheckBox extends CheckBox {
+	public MyCheckBox(Context context) {
+		super(context);
 	}
 
 	/**
@@ -38,21 +36,18 @@ public class MyCheckBox extends CheckBox
 	 * @param checked
 	 *            Initial checked state
 	 */
-	public MyCheckBox (Context context, int tag, int style, int text, boolean checked)
-	{
-		super (context);
-		if (tag != -1)
-		{
-			setTag (getResources ().getString (tag));
+	public MyCheckBox(Context context, int tag, int style, int text,
+			boolean checked) {
+		super(context);
+		if (tag != -1) {
+			setTag(getResources().getString(tag));
 		}
-		if (style != -1)
-		{
-			setTextAppearance (context, style);
+		if (style != -1) {
+			setTextAppearance(context, style);
 		}
-		if (text != -1)
-		{
-			setText (text);
+		if (text != -1) {
+			setText(text);
 		}
-		setChecked (checked);
+		setChecked(checked);
 	}
 }

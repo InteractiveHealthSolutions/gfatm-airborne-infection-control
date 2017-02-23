@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="username">یوزر نیم</string>
+    <string name="username">یوزر کا نام</string>
     <string name="password">پاس ورڈ</string>
-    <string name="username_hint">Enter your username</string>
-    <string name="password_hint">Enter your password</string>
+    <string name="username_hint">اپنا یوزر نام درج کریں</string>
+    <string name="password_hint">اپنا خفیہ پاس ورڈ درج کریں</string>
     <string name="login">لاگ ان</string>
     <string name="work_offline">آف لائن</string>
-	<string name="show_pass">Show Password</string>
-	<string name="version_no">Version - 1.2.1</string>
-    
+    <string name="show_pass">پاس ورڈ ظاہر کریں</string>
+    <string name="guest_login">بطور گیسٹ لاگ ان کریں</string>
+    <string name="hide_pass">پاس ورڈ اوجھل کریں</string>
+    <string name="version_no">ورژن نمبر-1.0.0</string>
+
 </resources>

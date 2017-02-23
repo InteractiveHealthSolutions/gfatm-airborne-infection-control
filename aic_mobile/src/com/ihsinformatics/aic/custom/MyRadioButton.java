@@ -21,11 +21,9 @@ import android.widget.RadioButton;
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class MyRadioButton extends RadioButton
-{
-	public MyRadioButton (Context context)
-	{
-		super (context);
+public class MyRadioButton extends RadioButton {
+	public MyRadioButton(Context context) {
+		super(context);
 	}
 
 	/**
@@ -38,15 +36,13 @@ public class MyRadioButton extends RadioButton
 	 * @param text
 	 *            Text Id from resources. Pass -1 if not to be set
 	 */
-	public MyRadioButton (Context context, int tag, int style, int text)
-	{
-		super (context);
-		if (tag != -1)
-		{
-			setTag (getResources ().getString (tag));
+	public MyRadioButton(Context context, int tag, int style, int text) {
+		super(context);
+		if (tag != -1) {
+			setTag(getResources().getString(tag));
 		}
-		setTextAppearance (context, style);
-		setText (text);
-		
+		setTextAppearance(context, style);
+		setText(text);
+
 	}
 }

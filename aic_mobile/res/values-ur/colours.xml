@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="mainTheme">#3399ff</color>
+    <color name="mainTheme">#9D9C62</color>
 	
+	<color name="BlueShade">#2B4570</color>
 	
-	<color name="BlueShade">#005166</color>
-	
-	<color name="GreenShade">#CFF1CA</color>
-	<color name="LightGreenShade">#e1f6de</color>
-	<color name="YellowShade">#FFFFB3</color>
-	<color name="RedShade">#FFC5C5</color>
-	
-	<color name="error_color">#BC4949</color>
-	<color name="success_color">#70d561</color>
-	<color name="question_color">#327384</color>
+	<color name="error_color">#E4572E</color>
+	<color name="success_color">#A8C686</color>
+	<color name="question_color">#9D9C62</color>
 	<color name="info_color">#ff1919</color>
+	
+	<color name="honey_dew">#F0F8EA</color>
 	
     <color name="Transparent">#00000000</color>
     <color name="Snow">#FFFAFA</color>

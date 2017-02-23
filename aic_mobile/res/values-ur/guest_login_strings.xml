@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="guest_login_heading">گیسٹ لاگ ان</string>
+    <string name="close">بند کریں</string>
+    
+     <string name="name">نام</string>
+     <string name="contact">موبائل نمبر</string>
+     <string name="email">ای میل ایڈریس</string>
+     <string name="email_hint">example@gmail.com</string>
+     <string name="login_as_guest">بطور گیسٹ لاگ ان کریں</string>
+
+</resources>

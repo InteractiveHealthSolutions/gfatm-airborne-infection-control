@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="unique_id_fixture">What is the unique ID as written on the fixture?</string>
-    <string name="problem_with_fixture">What is the problem?</string>
-    <string name="mobile_number">Please enter your mobile number in case of more information needed.</string>
-    <string name="troubleshooting_number">Trouble shooting number</string>
+    <string name="unique_id_fixture">نصب شدہ فکسچر پر موجود آئی ڈی درج کریں۔</string>
+    <string name="problem_with_fixture">نقص بیان کریں۔</string>
+    <string name="mobile_number">مذید معلومات کے لیے اپنا موبائل نمبر فراہم کریں۔</string>
+    <string name="troubleshooting_number">مسئلہ نمبر فراہم کریں۔</string>
+    
+    <string name="problem_with_fixture_hint">نقص بیان کریں</string>
+    <string name="mobile_number_hint">XXXXXXXXXXX</string>
+    <string name="troubleshooting_number_hint"></string>
+    <string name="problem_resolved">کیا شکایت دور ہو گئی ہے؟</string>
+    <string name="reason_problem_not_resolved">شکایت دور نہ ہونے کا سبب</string>
+    <string name="reason_problem_not_resolved_hint">سبب تفصیلاً درج کریں</string>
+    <string name="problem">نقص کی نوعیت</string>
+    <string name="problem_resolved_by">نقص دور کرنے والے کا نام</string>
+    <string name="troubleshoot_contact_number">نقص دور کرنے والے کا موبائل نمبر</string>
+    <string name="troubleshoot_status">شکایت کی موجودہ صورتحال</string>
+    <string name="get_status">صورتحال معلوم کریں</string>
+
+    <string-array name="troubleshoot_statuses">
+        <item>Complaint Logged</item>
+        <item>Complaint Recieved</item>
+        <item>Complaint Processed</item>
+        <item>Team Dispatched</item>
+        <item>Issue Resolved</item>
+    </string-array>
+
+    <string name="date">تاریخ</string>
+    <string name="status_unique_id">انفرادی آئی ڈی*</string>
+    <string name="get_troubleshoot_number">شکایت نمبر معلوم کریں</string>
 
 </resources>

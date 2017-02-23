@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
-    android:background="@color/LightGrey" >
-
+    android:background="@color/honey_dew" >
+    
     <ScrollView
         android:id="@+main_id/scrollView"
         android:layout_width="match_parent"
@@ -29,23 +29,124 @@
                     android:gravity="center"
                     android:text="@string/main_menu"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/BlueShade"
                     android:textStyle="bold" />
             </TableRow>
 
+            <ImageView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitXY"
+                android:src="@android:drawable/divider_horizontal_textfield" />
+
+            	<LinearLayout
+            	    android:layout_width="match_parent"
+            	    android:layout_height="match_parent"
+            	    android:orientation="horizontal" >
+
+            	    <TextView
+            	        android:id="@+id/textView1"
+            	        android:layout_width="wrap_content"
+            	        android:layout_height="wrap_content"
+            	        android:text="Selected Location: "
+            	        android:textSize="@dimen/large" />
+
+            	    <Button
+            	        android:id="@+id/locationButton"
+            	        android:layout_width="wrap_content"
+            	        android:layout_height="wrap_content"
+            	        android:text="|||"
+            	        android:textStyle="bold" />
+            	</LinearLayout>
+                
+                <TextView
+                    android:id="@+id/selectedLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold"
+                    android:textColor="@color/BlueShade"
+                 />
+             
+              <ImageView
+			    xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:src="@android:drawable/divider_horizontal_textfield"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:scaleType="fitXY"
+			    android:paddingLeft="5dp"
+			    android:paddingRight="5dp"
+			    android:paddingBottom="10dp"
+			    android:paddingTop="10dp" />
+              
+              <LinearLayout
+            	    android:layout_width="match_parent"
+            	    android:layout_height="match_parent"
+            	    android:orientation="horizontal" >
+
+            	    <TextView
+            	        android:id="@+id/textView2"
+            	        android:layout_width="wrap_content"
+            	        android:layout_height="wrap_content"
+            	        android:text="Pending Offline Saved Forms: "
+            	        android:textSize="18sp" />
+
+            	    <Button
+            	        android:id="@+id/formButton"
+            	        android:layout_width="wrap_content"
+            	        android:layout_height="wrap_content"
+            	        android:text="|||"
+            	        android:textStyle="bold" />
+            	</LinearLayout>
+                
+                <TextView
+                    android:id="@+id/formCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold"
+                    android:textColor="@color/BlueShade"
+                 />
+              
+              <ImageView
+			    xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:src="@android:drawable/divider_horizontal_textfield"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:scaleType="fitXY"
+			    android:paddingLeft="5dp"
+			    android:paddingRight="5dp"
+			    android:paddingBottom="10dp"
+			    android:paddingTop="10dp" />
+
+              <TextView
+                  android:id="@+id/textView3"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/large"
+                  android:textColor="@color/BlueShade"
+                  android:text="Forms:" />
+
             <TableRow
                 android:id="@+main_id/FirstTableRow"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
                 <Button
                     android:id="@+main_id/uvgibutton"
-                    android:layout_width="215dp"
-                    android:layout_height="121dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/uvgi_lights" />
+                    android:text="@string/uvgi_lights"
+                    android:textSize="@dimen/xlarge"
+                    android:textStyle="bold" />
 
             </TableRow>
 

@@ -33,10 +33,10 @@
         <item>41 - 50</item>
         <item>50 - 100</item>
     </string-array>
-     <string-array name="age_groups">
-        <item>۱ سال سے کم</item>
-        <item> ۱ سے ۲ سال</item>
-        <item>۳ سے ۵ سال</item>
+    <string-array name="age_groups">
+        <item>less than 1 year</item>
+        <item>1 - 2 years</item>
+        <item>3 - 5 years</item>
     </string-array>
     <string-array name="age_groups_values">
         <item>0 - 0</item>

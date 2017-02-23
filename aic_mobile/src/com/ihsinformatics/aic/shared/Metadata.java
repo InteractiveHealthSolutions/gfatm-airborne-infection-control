@@ -11,13 +11,12 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic.shared;
 
-public class Metadata
-{
-	public static final String	METADATA_TABLE			= "identifiers";
-	public static final String  TIME_STAMP              = "timestamp";
-	public static final String  PRIVILEGE				= "privilege";
-	public static final String 	OPD						= "opd";
-	public static final String  OPD_AREA				= "opd_area";
-	public static final String  LOCATION				= "location";
+public class Metadata {
+	public static final String METADATA_TABLE = "identifiers";
+	public static final String TIME_STAMP = "timestamp";
+	public static final String PRIVILEGE = "privilege";
+	public static final String OPD = "opd";
+	public static final String OPD_AREA = "opd_area";
+	public static final String LOCATION = "location";
 
 }

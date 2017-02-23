@@ -14,27 +14,24 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic.custom;
 
-import com.ihsinformatics.aic.R;
-
 import android.content.Context;
 import android.text.InputFilter;
 import android.view.KeyEvent;
 import android.widget.EditText;
 
+import com.ihsinformatics.aic.R;
+
 /**
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class MyEditText extends EditText
-{
-	public MyEditText (Context context)
-	{
-		super (context);
+public class MyEditText extends EditText {
+	public MyEditText(Context context) {
+		super(context);
 	}
 
-	
 	private int maxLength;
-	
+
 	/**
 	 * 
 	 * @param context
@@ -49,71 +46,62 @@ public class MyEditText extends EditText
 	 * @param maxLength
 	 *            Limit of number of maximum characters. Pass 0 for unlimited
 	 */
-	public MyEditText (Context context, int tag, int hint, int inputType, int style, int maxLength, boolean multiline)
-	{
-		super (context);
-		setInputType (inputType);
-		if (style != -1)
-		{
-			setTextAppearance (context, style);
+	public MyEditText(Context context, int tag, int hint, int inputType,
+			int style, int maxLength, boolean multiline) {
+		super(context);
+		setInputType(inputType);
+		if (style != -1) {
+			setTextAppearance(context, style);
 		}
-		if (tag != -1)
-		{
-			setTag (getResources ().getString (tag));
+		if (tag != -1) {
+			setTag(getResources().getString(tag));
 		}
-		if (hint != -1)
-		{
-			setHint (hint);
+		if (hint != -1) {
+			setHint(hint);
 		}
-		if (maxLength > 0)
-		{
+		if (maxLength > 0) {
 			this.setMaxLength(maxLength);
-			setFilters (new InputFilter[] {new InputFilter.LengthFilter (maxLength)});
+			setFilters(new InputFilter[] { new InputFilter.LengthFilter(
+					maxLength) });
 		}
-		if (!multiline)
-		{
-			setMaxLines (1);
+		if (!multiline) {
+			setMaxLines(1);
 		}
-	}
-	
-	
-	public void setEnabled(boolean flag)
-	{
-		super.setEnabled(flag);
-		if(flag){
-			setTextColor(getResources().getColor(R.color.mainTheme));
-		}	
-		else{
-			setTextColor(getResources().getColor(R.color.DarkGray));
-		}	
 	}
 
+	public void setEnabled(boolean flag) {
+		super.setEnabled(flag);
+		if (flag) {
+			setTextColor(getResources().getColor(R.color.mainTheme));
+		} else {
+			setTextColor(getResources().getColor(R.color.DarkGray));
+		}
+	}
 
 	public int getMaxLength() {
 		return maxLength;
 	}
 
-
 	public void setMaxLength(int maxLength) {
 		this.maxLength = maxLength;
 	}
-	
+
 	private KeyImeChange keyImeChangeListener;
 
-    public void setKeyImeChangeListener(KeyImeChange listener){
-        keyImeChangeListener = listener;
-    }
+	public void setKeyImeChangeListener(KeyImeChange listener) {
+		keyImeChangeListener = listener;
+	}
 
-    public interface KeyImeChange {
-        public void onKeyIme(int keyCode, KeyEvent event);
-    }
+	public interface KeyImeChange {
+		public void onKeyIme(int keyCode, KeyEvent event);
+	}
 
-    @Override
-    public boolean onKeyPreIme (int keyCode, KeyEvent event){
-        if(keyImeChangeListener != null){
-            keyImeChangeListener.onKeyIme(keyCode, event);
-        }        
-        return false;
-    }
-	
+	@Override
+	public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+		if (keyImeChangeListener != null) {
+			keyImeChangeListener.onKeyIme(keyCode, event);
+		}
+		return false;
+	}
+
 }

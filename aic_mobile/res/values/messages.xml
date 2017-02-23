@@ -17,11 +17,9 @@
     <string name="offline_forms">Some saved forms are waiting your attention</string>
     <string name="send_form">Send this message?</string>
     <string name="send_close">Are you sure you want to send this message?</string>
-    <string name="missing_union_council">Missing Union Council. Please contact admin to resolve the issue.</string>
     <string name="patients_not_found">No Patients were found matching given parameters</string>
     <string name="success_form_submission">form saved successfully.</string>
     <string name="switch_to_offlinemode">Do you want to submit form in offline mode?</string>
     <string name="no_selection">No form selected. Select atleast one form to continue.</string>
-    
 
 </resources>

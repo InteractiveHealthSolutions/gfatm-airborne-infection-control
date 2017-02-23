@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_type">آپ کی آراء کس متعلق ہیں؟</string>
+    <string name="feedback_hint">اپنی رائے مختصر اور جامع الفاظ میں تحریر کریں۔</string>
+    <string name="feedback_send">ارسال کریں</string>
+    <string name="feedback_send_success">آپ کی رائے ارسال کر دی گئی ہے</string>
+    <string name="feedback">آپ کی آراء</string>
+
+</resources>

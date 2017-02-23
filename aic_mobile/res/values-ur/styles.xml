@@ -1,0 +1,122 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+         <item name="android:buttonStyle">@style/button</item>
+        
+    </style>
+
+    <style name="DayTheme" parent="@android:style/Theme.Light"></style>
+
+    <style name="NightTheme" parent="@android:style/Theme.Black"></style>
+    
+    <style name="button2" parent="@android:style/Widget.Button">
+     	<item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/form_button</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    
+    
+    <style name="button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    
+    <style name="pink_button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/pink_button</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    
+    <style name="BeigeTheme" parent="@style/DayTheme">
+        <item name="android:textColor">@color/mainTheme</item>
+        <item name="android:shadowColor">@color/Black</item>
+        <item name="android:padding">@dimen/tiny</item>
+    </style>
+
+    <style name="global" parent="@style/BeigeTheme">
+        <item name="android:textColorHint">@color/DarkGray</item>
+        <item name="android:textColorHighlight">@color/mainTheme</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">0</item>
+        <item name="android:textSize">@dimen/large</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="plain" parent="@style/DayTheme">
+        <item name="android:textColor">@color/Chocolate</item>
+        <item name="android:textColorHint">@color/DarkGray</item>
+        <item name="android:textColorHighlight">@color/DarkGreen</item>
+        <item name="android:textSize">@dimen/xlarge</item>
+    </style>
+
+    <style name="text" parent="@style/global">
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:background">@color/Transparent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/medium</item>
+        
+    </style>
+
+    <style name="edit" parent="@style/global">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/medium</item>
+    </style>
+
+    <style name="spinner" parent="@style/global">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="radio_disable" parent="@style/plain">
+       <item name="android:textColor">@color/DarkGray</item>
+    </style>
+    
+    <style name="radio" parent="@style/plain">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+       	<item name="android:textColor">@color/mainTheme</item>
+    </style>
+    
+    
+</resources>

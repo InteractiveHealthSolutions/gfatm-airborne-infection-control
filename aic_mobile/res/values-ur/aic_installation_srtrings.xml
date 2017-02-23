@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="facility_name">What facility are the lights installed?</string>
-    <string name="other_facility">Please specify which "Other" facility the fixture has been installed?</string>
-    <string name="opd_lights_installed">Which OPD are the lights installed?</string>
-    <string name="other_opd">Please specify "Other" OPD in which fixture has been installed?</string>
-    <string name="opd_area">In which area of the OPD is the fixtures installed?</string>
-    <string name="other_opd_area">Please specify "Other" Area in which fixture has been installed?</string>
-    <string name="fixture_number">Fixture Number</string>
-    <string name="unique_id">Unique ID Generated</string>
-    <string name="ft_3_reading">What is the UV Meter Reading after installation at 3 ft?</string>
-    <string name="reading_confirmation">Are you sure this is correct?</string>
-    <string name="ft_6_reading">What is the UV Meter Reading after installation at 6 ft?</string>
-    <string name="ft_7_reading">What is the UV Meter Reading after installation at 7 ft?</string>
-    <string name="installation_complete">Installation Complete?</string>
+    <string name="facility_name">لائٹ کس مرکز صحت پر نصب کی گئی ہے؟ انتخاب کریں</string>
+    <string name="other_facility">مرکز صحت کا نام درج کریں</string>
+    <string name="other_hint">فہرست کے علاوہ نام درج کریں</string>
+
+    <string name="opd_lights_installed">لائٹ کس او پی ڈی میں نصب کی گئی ہے؟</string>
+    <string name="other_opd">او پی ڈی کا نام درج کریں</string>
+    <string name="opd_area">لائٹ او پی ڈی میں کس مقام پر نصب کی گئی ہے؟</string>
+    <string name="other_opd_area">او پی ڈی میں لائٹ کا مقام درج کریں</string>
+    <string name="fixture_number">آلہ نمبر</string>
+    <string name="unique_id">انفرادی آئی ڈی</string>
+    <string name="ft_3_reading">تنصیب کے بعد تین فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="ft_3_reading_hint">میٹر کی ریڈنگ درج کریں (µW/cm²)</string>
+    <string name="reading_confirmation">کیا یہ ریڈنگ درست ہے؟</string>
+    <string name="ft_6_reading">تنصیب کے بعد چھ فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="ft_6_reading_hint">میٹر کی ریڈنگ درج کریں (µW/cm²)</string>
+    <string name="ft_7_reading">تنصیب کے بعد سات فٹ اونچائی سے میٹر کی ریڈنگ</string>
+    <string name="ft_7_reading_hint">میٹر کی ریڈنگ درج کریں (µW/cm²)</string>
+    <string name="installation_complete">کیا تنصیب مکمل ہو گئی ہے</string>
+    <string name="uvgi_reading_warning_3_6_ft">خبردار: کیا آپ مطمئین ہیں کہ ریڈنگ درست ہے۔عمومی طور پر یہ ریڈنگ صفر اعشاریہ چار یا اس سے کم ہونی چاہئے</string>
+    <string name="uvgi_reading_warning_10_ft">خبردار: کیا آپ مطمئین ہیں کہ ریڈنگ درست ہے۔عمومی طور پر یہ ریڈنگ دس یا اس سے زائد ہونی چاہئے</string>
+    <string name="reason">وجہ</string>
+    <string name="reason_hint">نامکمل تنصیب کی وجہ درج کریں</string>
+    <string name="other">دیگر</string>
+
+    <string-array name="facilities_name">
+        <item>Indus Hospital (TIH)</item>
+        <item>Jinnah Post-Medical Complex (JPMC)</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="opd_names">
+        <item>TB Clinic (TBC)</item>
+        <item>Accidents &amp; Emergency (A&amp;E)</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="opd_areas">
+        <item>Waiting Area (WA)</item>
+        <item>Dispensary (DIS)</item>
+        <item>Other</item>
+    </string-array>
 
 </resources>

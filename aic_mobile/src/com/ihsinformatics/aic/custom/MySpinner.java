@@ -14,23 +14,21 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic.custom;
 
-import com.ihsinformatics.aic.R;
-
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.ihsinformatics.aic.R;
 
 /**
  * @author owais.hussain@irdresearch.org
  * 
  */
-public class MySpinner extends Spinner
-{
-	private String[]	itemList;
+public class MySpinner extends Spinner {
+	private String[] itemList;
 
-	public MySpinner (Context context)
-	{
-		super (context);
+	public MySpinner(Context context) {
+		super(context);
 	}
 
 	/**
@@ -43,35 +41,35 @@ public class MySpinner extends Spinner
 	 * @param hint
 	 *            Text Id from resources. Pass -1 if no hint is to be set
 	 */
-	public MySpinner (Context context, String[] itemList, int tag, int hint)
-	{
-		super (context, Spinner.MODE_DIALOG);
+	public MySpinner(Context context, String[] itemList, int tag, int hint) {
+		super(context, Spinner.MODE_DIALOG);
 		this.itemList = itemList;
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (context, R.drawable.custom_spinner_item_enabled, this.itemList);
-		arrayAdapter.setDropDownViewResource(android.R.layout.simple_selectable_list_item);
-		setAdapter (arrayAdapter);
-		setLayoutParams (new LayoutParams (LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		if (tag != -1)
-		{
-			setTag (getResources ().getString (tag));
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context,
+				R.drawable.custom_spinner_item_enabled, this.itemList);
+		arrayAdapter
+				.setDropDownViewResource(android.R.layout.simple_selectable_list_item);
+		setAdapter(arrayAdapter);
+		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		if (tag != -1) {
+			setTag(getResources().getString(tag));
 		}
-		if (hint != -1)
-		{
-			setPromptId (hint);
+		if (hint != -1) {
+			setPromptId(hint);
 		}
 		int backgroundResource = R.drawable.custom_spinner_beige;
-		if (backgroundResource != -1)
-		{
-			setBackgroundResource (backgroundResource);
+		if (backgroundResource != -1) {
+			setBackgroundResource(backgroundResource);
 		}
 	}
 
 	@Override
-	public void setEnabled (boolean enabled)
-	{
-		super.setEnabled (enabled);
-		int drawable = enabled ? R.drawable.custom_spinner_item_enabled : R.drawable.custom_spinner_item_disabled;
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (getContext (), drawable, this.itemList);
-		setAdapter (arrayAdapter);
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		int drawable = enabled ? R.drawable.custom_spinner_item_enabled
+				: R.drawable.custom_spinner_item_disabled;
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+				getContext(), drawable, this.itemList);
+		setAdapter(arrayAdapter);
 	}
 }

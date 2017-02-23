@@ -14,53 +14,41 @@ Interactive Health Solutions, hereby disclaims all copyright interest in this pr
 
 package com.ihsinformatics.aic.util;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ihsinformatics.aic.App;
-
 import android.content.Context;
-import android.util.Base64;
 import android.util.Log;
 
 /**
  * @author owais.hussain@irdinformatics.org
  * 
  */
-public class HttpRequest
-{
-	private static final String	TAG			= "HttpRequest";
-	private final Context		context;
-	HttpClient					httpClient	= new DefaultHttpClient ();
+@SuppressWarnings("deprecation")
+public class HttpRequest {
+	private static final String TAG = "HttpRequest";
+	private final Context context;
+	HttpClient httpClient = new DefaultHttpClient();
 
-	public HttpRequest (Context context)
-	{
+	public HttpRequest(Context context) {
 		this.context = context;
 	}
 
@@ -74,19 +62,17 @@ public class HttpRequest
 	 *            https://myserver:port/ws/rest/v1/concept
 	 * @return
 	 */
-	public String clientGet (String requestUri)
-	{
+	public String clientGet(String requestUri) {
 		URL url;
 		String response = "";
-	    HttpURLConnection urlConnection = null;
-	    try {
-	        url = new URL(requestUri);
+		HttpURLConnection urlConnection = null;
+		try {
+			url = new URL(requestUri);
 
-	        urlConnection = (HttpURLConnection) url
-	                .openConnection();
-	        
-	        BufferedReader in = new BufferedReader(new InputStreamReader(
-	        		urlConnection.getInputStream()));
+			urlConnection = (HttpURLConnection) url.openConnection();
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					urlConnection.getInputStream()));
 			String inputLine;
 			StringBuffer responseBuffer = new StringBuffer();
 
@@ -95,17 +81,16 @@ public class HttpRequest
 			}
 			in.close();
 			response = responseBuffer.toString();
-			
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return "CONNECTION_ERROR";
-	    } finally {
-	        if (urlConnection != null) {
-	            urlConnection.disconnect();
-	        }    
-	    }
-	    return response;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "CONNECTION_ERROR";
+		} finally {
+			if (urlConnection != null) {
+				urlConnection.disconnect();
+			}
+		}
+		return response;
 	}
 
 	/**
@@ -116,58 +101,52 @@ public class HttpRequest
 	 * @param content
 	 * @return
 	 */
-	public String clientPost (String postUri, String content)
-	{
-		HttpsClient client = new HttpsClient (context);
+	public String clientPost(String postUri, String content) {
+		HttpsClient client = new HttpsClient(context);
 		HttpUriRequest request = null;
 		HttpResponse response = null;
 		HttpEntity entity;
-		StringBuilder builder = new StringBuilder ();
+		StringBuilder builder = new StringBuilder();
 		String auth = "";
-		try
-		{
-			
-			/* Uncomment if you do not want to send data in Parameters HttpPost
+		try {
+
+			/*
+			 * Uncomment if you do not want to send data in Parameters HttpPost
 			 * httpPost = new HttpPost (postUri); httpPost.setHeader ("Accept",
 			 * "application/json"); httpPost.setHeader ("Content-Type",
 			 * "application/json"); StringEntity stringEntity = new StringEntity
 			 * (content); httpPost.setEntity (stringEntity); request = httpPost;
-			*/
-			
-			HttpPost httpPost = new HttpPost (postUri);
-			httpPost.setHeader ("Accept","application/json"); 
-			httpPost.setHeader ("Content-Type", "application/json");
+			 */
+
+			HttpPost httpPost = new HttpPost(postUri);
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-Type", "application/json");
 			StringEntity stringEntity = new StringEntity(content);
-			httpPost.setEntity (stringEntity);
+			httpPost.setEntity(stringEntity);
 			request = httpPost;
-			response = client.execute (request);
-			entity = response.getEntity ();
-			InputStream is = entity.getContent ();
-			BufferedReader bufferedReader = new BufferedReader (new InputStreamReader (is));
-			builder = new StringBuilder ();
+			response = client.execute(request);
+			entity = response.getEntity();
+			InputStream is = entity.getContent();
+			BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(is));
+			builder = new StringBuilder();
 			String line = null;
-			while ((line = bufferedReader.readLine ()) != null)
-				builder.append (line);
-			entity.consumeContent ();
+			while ((line = bufferedReader.readLine()) != null)
+				builder.append(line);
+			entity.consumeContent();
+		} catch (UnsupportedEncodingException e) {
+			Log.e(TAG, e.getMessage());
+			builder.append("UNSUPPORTED_ENCODING");
+		} catch (ClientProtocolException e) {
+			Log.e(TAG, e.getMessage());
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+			builder.append("SERVER_NOT_RESPONDING");
 		}
-		catch (UnsupportedEncodingException e)
-		{
-			Log.e (TAG, e.getMessage ());
-			builder.append ("UNSUPPORTED_ENCODING");
-		}
-		catch (ClientProtocolException e)
-		{
-			Log.e (TAG, e.getMessage ());
-		}
-		catch (IOException e)
-		{
-			Log.e (TAG, e.getMessage ());
-			builder.append ("SERVER_NOT_RESPONDING");
-		}
-		return builder.toString ();
+		return builder.toString();
 	}
-	
-	public static String makeRequest(String uri, String json){
+
+	public static String makeRequest(String uri, String json) {
 		HttpURLConnection httpConnection = null;
 		int responseCode = 0;
 		String response = "";
@@ -182,7 +161,7 @@ public class HttpRequest
 			httpConnection.setDoOutput(true);
 			httpConnection.connect();
 			responseCode = httpConnection.getResponseCode();
-	         
+
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						httpConnection.getInputStream()));
@@ -199,7 +178,7 @@ public class HttpRequest
 			} else {
 				response = "ERROR";
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -207,47 +186,51 @@ public class HttpRequest
 		}
 		return response.toString();
 	}
-	
-	public static String makeRequests(String uri, String json) {
-	    try {
 
-	    	DefaultHttpClient httpclient = new DefaultHttpClient();
-	    	HttpPost httppostreq = new HttpPost(uri);
-	    	StringEntity se = new StringEntity(json);
-	    	se.setContentType("application/json;charset=UTF-8");
-	    	se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-	    	httppostreq.setEntity(se);
-	    	HttpResponse httpresponse = httpclient.execute(httppostreq);
-	    	
+	public static String makeRequests(String uri, String json) {
+		try {
+
+			DefaultHttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppostreq = new HttpPost(uri);
+			StringEntity se = new StringEntity(json);
+			se.setContentType("application/json;charset=UTF-8");
+			se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+					"application/json;charset=UTF-8"));
+			httppostreq.setEntity(se);
+			HttpResponse httpresponse = httpclient.execute(httppostreq);
+
 			HttpEntity resultentity = httpresponse.getEntity();
 			InputStream inputstream = resultentity.getContent();
-			Header contentencoding = httpresponse.getFirstHeader("Content-Encoding");
-			/*if(contentencoding != null && contentencoding.getValue().equalsIgnoreCase("gzip")) {
-				inputstream = new GZIPInputStream(inputstream);
-			}*/
+			Header contentencoding = httpresponse
+					.getFirstHeader("Content-Encoding");
+			/*
+			 * if(contentencoding != null &&
+			 * contentencoding.getValue().equalsIgnoreCase("gzip")) {
+			 * inputstream = new GZIPInputStream(inputstream); }
+			 */
 			String resultstring = convertStreamToString(inputstream);
 			inputstream.close();
 			return resultstring;
-	    } catch (UnsupportedEncodingException e) {
-	        e.printStackTrace();
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
+
 	private static String convertStreamToString(InputStream is) {
-	    String line = "";
-	    StringBuilder total = new StringBuilder();
-	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	    try {
-	        while ((line = rd.readLine()) != null) {
-	            total.append(line);
-	        }
-	    } catch (Exception e) {
-	    }
-	return total.toString();
+		String line = "";
+		StringBuilder total = new StringBuilder();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		try {
+			while ((line = rd.readLine()) != null) {
+				total.append(line);
+			}
+		} catch (Exception e) {
+		}
+		return total.toString();
 	}
 }
