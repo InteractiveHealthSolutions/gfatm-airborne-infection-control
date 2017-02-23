@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="guest_login_heading">Guest login</string>
+    <string name="close">x close</string>
+    
+     <string name="name">Name</string>
+     <string name="contact">Contact#</string>
+     <string name="email">Email</string>
+     <string name="email_hint">example@gmail.com</string>
+     
+     <string name="login_as_guest">Login as Guest</string>
+
+</resources>
