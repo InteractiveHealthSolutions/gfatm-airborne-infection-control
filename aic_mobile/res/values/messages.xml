@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="delete_form">Delete form(s)?</string>
     <string name="close_form">Close this form?</string>
     <string name="confirm_close">Are you sure you want to close this form? All unsaved changes will be lost.</string>
     <string name="clear_form">Clear this form?</string>
@@ -20,6 +21,7 @@
     <string name="patients_not_found">No Patients were found matching given parameters</string>
     <string name="success_form_submission">form saved successfully.</string>
     <string name="switch_to_offlinemode">Do you want to submit form in offline mode?</string>
+    <string name="no_selection">No form selected. Select atleast one form to continue.</string>
     
 
 </resources>
